@@ -1,0 +1,219 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "Pi_gateway"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable",
+			"target_link_libraries"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 14,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 15,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-fPIC"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "QT_CORE_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_GUI_LIB"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "QT_WIDGETS_LIB"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"path" : "C:/Users/YuYao/source/repos/Pi_gateway/build/VisualGDB/Debug"
+				},
+				{
+					"path" : "C:/Users/YuYao/source/repos/Pi_gateway"
+				},
+				{
+					"backtrace" : 0,
+					"path" : "C:/Users/YuYao/source/repos/Pi_gateway/build/VisualGDB/Debug/Pi_gateway_autogen/include"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "C:/SysGCC/raspberry/arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/qt5"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "C:/SysGCC/raspberry/arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/qt5/QtWidgets"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "C:/SysGCC/raspberry/arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/qt5/QtGui"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "C:/SysGCC/raspberry/arm-linux-gnueabihf/sysroot/usr/include/arm-linux-gnueabihf/qt5/QtCore"
+				},
+				{
+					"backtrace" : 2,
+					"isSystem" : true,
+					"path" : "C:/SysGCC/raspberry/arm-linux-gnueabihf/sysroot/usr/lib/arm-linux-gnueabihf/qt5/mkspecs/linux-g++"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			],
+			"sysroot" : 
+			{
+				"path" : "C:/SysGCC/raspberry/arm-linux-gnueabihf/sysroot"
+			}
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 0,
+			"id" : "Pi_gateway_autogen::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "Pi_gateway::@6890427a1f51a3e7e1df",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-rdynamic",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "C:\\SysGCC\\raspberry\\arm-linux-gnueabihf\\sysroot\\usr\\lib\\arm-linux-gnueabihf\\libQt5Widgets.so.5.11.3",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "C:\\SysGCC\\raspberry\\arm-linux-gnueabihf\\sysroot\\usr\\lib\\arm-linux-gnueabihf\\libQt5Gui.so.5.11.3",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "C:\\SysGCC\\raspberry\\arm-linux-gnueabihf\\sysroot\\usr\\lib\\arm-linux-gnueabihf\\libQt5Core.so.5.11.3",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX",
+		"sysroot" : 
+		{
+			"path" : "C:/SysGCC/raspberry/arm-linux-gnueabihf/sysroot"
+		},
+		"traceableCommandFragments" : 
+		[
+			{
+				"backtrace" : 2,
+				"fragment" : "Qt5::Widgets"
+			}
+		]
+	},
+	"name" : "Pi_gateway",
+	"nameOnDisk" : "Pi_gateway",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2
+			]
+		},
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				3
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 0,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "build/VisualGDB/Debug/Pi_gateway_autogen/mocs_compilation.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "Pi_gateway.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "MainWindow.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "MainWindow.ui",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "EXECUTABLE"
+}

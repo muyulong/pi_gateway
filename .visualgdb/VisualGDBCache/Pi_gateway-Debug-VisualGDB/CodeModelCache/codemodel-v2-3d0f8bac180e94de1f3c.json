@@ -1,0 +1,68 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "2.7"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "DEBUG",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Pi_gateway",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "Pi_gateway::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Pi_gateway-DEBUG-af720dfb56f2b7dd8682.json",
+					"name" : "Pi_gateway",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Pi_gateway_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Pi_gateway_autogen-DEBUG-78211e62b839ad2ae38c.json",
+					"name" : "Pi_gateway_autogen",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/YuYao/source/repos/Pi_gateway/build/VisualGDB/Debug",
+		"source" : "C:/Users/YuYao/source/repos/Pi_gateway"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}
