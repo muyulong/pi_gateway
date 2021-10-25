@@ -14,10 +14,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::ButtonClicked()
+void MainWindow::on_pushButton_tost_clicked()
 {
     QMessageBox msgBox;
-    msgBox.setText("Hello, World!");
-    msgBox.setWindowTitle("VisualGDB Qt Demo");
+    msgBox.setText("He11o, Qt!");
+    msgBox.setWindowTitle("VisualGDB Qt Demo on Pi");
     msgBox.exec();
 }
