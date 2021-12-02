@@ -132,6 +132,7 @@ void Widget::taskTable(int size_row)
     //向表格添加内容
     for(int i=0;i<size_row;++i)
     {
+
         QString time=viewTask[i][0];
         QString task=viewTask[i][1];
         QString status=viewTask[i][2];
