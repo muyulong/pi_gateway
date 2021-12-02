@@ -6,6 +6,8 @@ welcome::welcome(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::welcome)
 {
+    QTextCodec *codec = QTextCodec::codecForName("GBK");//或者"GBK",不分大小写
+    QTextCodec::setCodecForLocale(codec);
     ui->setupUi(this);
     connect(&r,SIGNAL(exitRegist()),this,SLOT(show()));
     connect(&l,SIGNAL(exitLogin()),this,SLOT(show()));
@@ -19,7 +21,7 @@ welcome::~welcome()
 
 void welcome::on_pushButton_register_clicked()
 {
-     //鍒濆鍖栨暟鎹簱鍜岀敤鎴蜂俊鎭〃
+     //初始化数据库和用户信息表
     QString  tableName="userInfo";
     QString columnName[2]={"name","pwd"};
     QString dataType[2]={"varchar","varchar"};

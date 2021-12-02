@@ -15,8 +15,8 @@ public:
     //void getDevicesInfo();
     //void getOperableDevices();
     void commandEncode(QString msg);
-    //void commandDecode(鏈煡绫诲瀷);
-    //void commandSend(鏈煡绫诲瀷);
+    //void commandDecode(未知类型);
+    //void commandSend(未知类型);
     //void commandReceive();
 
 

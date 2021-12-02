@@ -5,6 +5,8 @@ login::login(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::login)
 {
+    QTextCodec *codec = QTextCodec::codecForName("GBK");//»òÕß"GBK",²»·Ö´óĞ¡Ğ´
+    QTextCodec::setCodecForLocale(codec);
     ui->setupUi(this);
 }
 
@@ -17,16 +19,15 @@ void login::on_pushButton_login_clicked()
 {
     QString user;
     QString pwd;
-    user = ui->username->text();//è·å–ç”¨æˆ·å
-    pwd = ui->password->text();//è·å–å¯†ç 
+    user = ui->username->text();//»ñÈ¡ÓÃ»§Ãû
+    pwd = ui->password->text();//»ñÈ¡ÃÜÂë
     if(user == "")
-        QMessageBox::warning(this,"","ç”¨æˆ·åä¸èƒ½ä¸ºç©ºï¼");
+        QMessageBox::warning(this,"","ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡");
     else if(pwd == "")
-        QMessageBox::warning(this,"","å¯†ç ä¸èƒ½ä¸ºç©ºï¼");
+        QMessageBox::warning(this,"","ÃÜÂë²»ÄÜÎª¿Õ£¡");
     else
     {
-
-        //åœ¨æ•°æ®åº“ä¸­è¿›è¡ŒæŸ¥è¯¢éªŒè¯
+        //ÔÚÊı¾İ¿âÖĞ½øĞĞ²éÑ¯ÑéÖ¤
         bool login = U.compareUser(user,pwd);
         if(login)
         {
@@ -38,7 +39,7 @@ void login::on_pushButton_login_clicked()
             emit exitWelcome();
         }
         else
-            QMessageBox::warning(NULL,"Error","ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯ï¼ï¼ï¼");
+            QMessageBox::warning(NULL,"Error","ÓÃ»§Ãû»òÃÜÂë´íÎó£¡£¡£¡");
     }
 }
 void login::closeEvent(QCloseEvent *)

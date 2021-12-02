@@ -24,7 +24,7 @@ private slots:
 
     void on_pushButton_login_clicked();
 signals:
-    void exitLogin();//鏂板缓涓�涓俊鍙锋Ы
+    void exitLogin();//新建一个信号槽
     void exitWelcome();
 private:
     Ui::login *ui;

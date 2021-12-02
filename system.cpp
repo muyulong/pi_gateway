@@ -8,19 +8,19 @@ system::system()
 initSystem()
 initDevices()
 checkTasks()
-杩欎釜绛変細鍎垮啓
+这个等会儿写
 getDevicesInfo()
 getOperableDevices()
 commandEncode(String)
-commandDecode(鏈煡绫诲瀷)
-commandSend(鏈煡绫诲瀷)
+commandDecode(未知类型)
+commandSend(未知类型)
 commandReceive()
 */
 void system::initSystem()
 {
     initDevices();
     checkTasks();
-    L.addLog("绯荤粺",3);
+    L.addLog("系统",3);
 }
 
 void system::initDevices()

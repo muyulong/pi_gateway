@@ -18,11 +18,11 @@ void dataBase::initDatebase()
     }
     if( db.open())
     {
-        qDebug() << "è¿žæŽ¥æ•°æ®åº“æˆåŠŸ!";
+        qDebug() << "Á¬½ÓÊý¾Ý¿â³É¹¦!";
     }
     else
     {
-        qDebug() << "æ‰“å¼€æ•°æ®åº“å¤±è´¥!";
+        qDebug() << "´ò¿ªÊý¾Ý¿âÊ§°Ü!";
     }
 }
 
@@ -70,7 +70,7 @@ int dataBase::sqlSize(QSqlQuery query)
     query.seek(initialPos);
     return pos;
 }
-//sqliteä¸æ”¯æŒç›´æŽ¥è¯»å–ç»“æžœå¤§å°
+//sqlite²»Ö§³ÖÖ±½Ó¶ÁÈ¡½á¹û´óÐ¡
 //https://stackoverflow.com/questions/26495049/qsqlquery-size-always-returns-1
 
 dataBase::~dataBase(){
