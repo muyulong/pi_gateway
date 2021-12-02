@@ -9,6 +9,7 @@ namespace Ui {
 class welcome;
 }
 
+
 class welcome : public QDialog
 {
     Q_OBJECT
