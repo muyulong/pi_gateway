@@ -1,13 +1,11 @@
-#include "log.h"
+ï»¿#include "log.h"
 #include "ui_log.h"
 
 log::log(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::log)
 {
-    QTextCodec *codec = QTextCodec::codecForName("GBK");//»òÕß"GBK",²»·Ö´óĞ¡Ğ´
-    QTextCodec::setCodecForLocale(codec);
-    //³õÊ¼»¯Êı¾İ¿âºÍÈÕÖ¾±í
+    //åˆå§‹åŒ–æ•°æ®åº“å’Œæ—¥å¿—è¡¨
     QString  tableName="logs";
     QString columnName[4]={"time","user","event","type"};
     QString dataType[4]={"varchar","varchar","varchar","varchar"};
@@ -31,16 +29,16 @@ void log::logViewer(int typeId)
     QString type;
     switch (typeId) {
     case 1:
-        type="È«²¿";
+        type="å…¨éƒ¨";
         break;
     case 2:
-        type="¶¨Ê±ÈÎÎñ";
+        type="å®šæ—¶ä»»åŠ¡";
         break;
     case 3:
-        type="²Ù×÷ÈÕÖ¾";
+        type="æ“ä½œæ—¥å¿—";
         break;
     case 4:
-        type="¾¯¸æ";
+        type="è­¦å‘Š";
         break;
     default:
         break;
@@ -48,25 +46,25 @@ void log::logViewer(int typeId)
     viewLog=getLog(type);
 
     size_row = viewLog.size();
-    qDebug() << "½ÓÊÕµ½ÈÕÖ¾ÊıÁ¿£º"<<viewLog.size();
+    qDebug() << "æ¥æ”¶åˆ°æ—¥å¿—æ•°é‡ï¼š"<<viewLog.size();
     tableCreator(size_row);
 }
 void log::tableCreator(int size_row)
 {
-    //¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£
+    //ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
     QStandardItemModel* standItemModel = new QStandardItemModel(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout;       //´¹Ö±²¼¾Ö
-    mainLayout->setSpacing(50);         //ÉèÖÃ¿Ø¼ş¼ä¾à
-    mainLayout->setMargin(70);          //ÉèÖÃ±ßÔµ¼ä¾à
+    QVBoxLayout *mainLayout = new QVBoxLayout;       //å‚ç›´å¸ƒå±€
+    mainLayout->setSpacing(50);         //è®¾ç½®æ§ä»¶é—´è·
+    mainLayout->setMargin(70);          //è®¾ç½®è¾¹ç¼˜é—´è·
     //mainLayout.
-    //Ìí¼ÓQTableView´úÂë
+    //æ·»åŠ QTableViewä»£ç 
     tableView = new QTableView;
-    //Ìí¼Ó±íÍ·
+    //æ·»åŠ è¡¨å¤´
     standItemModel->setColumnCount(3);
-    standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("Ê±¼ä"));   //ÉèÖÃ±íÍ·ÄÚÈİ
-    standItemModel->setHeaderData(1,Qt::Horizontal,QStringLiteral("ÊÂ¼ş"));
-    standItemModel->setHeaderData(2,Qt::Horizontal,QStringLiteral("ÓÃ»§"));
-    //Ïò±í¸ñÌí¼ÓÄÚÈİ
+    standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("æ—¶é—´"));   //è®¾ç½®è¡¨å¤´å†…å®¹
+    standItemModel->setHeaderData(1,Qt::Horizontal,QStringLiteral("äº‹ä»¶"));
+    standItemModel->setHeaderData(2,Qt::Horizontal,QStringLiteral("ç”¨æˆ·"));
+    //å‘è¡¨æ ¼æ·»åŠ å†…å®¹
     for(int i=0;i<size_row;++i)
     {
         QString time=viewLog[i][0];
@@ -75,31 +73,31 @@ void log::tableCreator(int size_row)
         standItemModel->setItem(i, 0, new QStandardItem(time));
         standItemModel->setItem(i, 1, new QStandardItem(event));
         standItemModel->setItem(i, 2, new QStandardItem(user));
-        standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);           //ÉèÖÃ±í¸ñÄÚÈİ¾ÓÖĞ
-        standItemModel->item(i,1)->setTextAlignment(Qt::AlignCenter);           //ÉèÖÃ±í¸ñÄÚÈİ¾ÓÖĞ
-        standItemModel->item(i,2)->setTextAlignment(Qt::AlignCenter);           //ÉèÖÃ±í¸ñÄÚÈİ¾ÓÖĞ
+        standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);           //è®¾ç½®è¡¨æ ¼å†…å®¹å±…ä¸­
+        standItemModel->item(i,1)->setTextAlignment(Qt::AlignCenter);           //è®¾ç½®è¡¨æ ¼å†…å®¹å±…ä¸­
+        standItemModel->item(i,2)->setTextAlignment(Qt::AlignCenter);           //è®¾ç½®è¡¨æ ¼å†…å®¹å±…ä¸­
     }
-    tableView->setModel(standItemModel);    //¹ÒÔØ±í¸ñÄ£ĞÍ
-    //ÉèÖÃ±í¸ñÊôĞÔ
-    //tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);        //±íÍ·ĞÅÏ¢ÏÔÊ¾¾ÓÖĞ
-    tableView->setColumnWidth(0,100);       //Éè¶¨±í¸ñµÚ0ÁĞ¿í¶È
+    tableView->setModel(standItemModel);    //æŒ‚è½½è¡¨æ ¼æ¨¡å‹
+    //è®¾ç½®è¡¨æ ¼å±æ€§
+    //tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);        //è¡¨å¤´ä¿¡æ¯æ˜¾ç¤ºå±…ä¸­
+    tableView->setColumnWidth(0,100);       //è®¾å®šè¡¨æ ¼ç¬¬0åˆ—å®½åº¦
     tableView->setColumnWidth(1,200);
-    //tableView->verticalHeader()->hide();    //Òş²ØÄ¬ÈÏÏÔÊ¾µÄĞĞÍ·
-    tableView->setSelectionBehavior(QAbstractItemView::SelectRows); //ÉèÖÃÑ¡ÖĞÊ±ÕûĞĞÑ¡ÖĞ
-    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);  //ÉèÖÃ±í¸ñÊôĞÔÖ»¶Á£¬²»ÄÜ±à¼­
-    /* ÉèÖÃÁĞ¿íÔÚ¿ÉÊÓ½çÃæ×ÔÊÊÓ¦¿í¶È */
+    //tableView->verticalHeader()->hide();    //éšè—é»˜è®¤æ˜¾ç¤ºçš„è¡Œå¤´
+    tableView->setSelectionBehavior(QAbstractItemView::SelectRows); //è®¾ç½®é€‰ä¸­æ—¶æ•´è¡Œé€‰ä¸­
+    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);  //è®¾ç½®è¡¨æ ¼å±æ€§åªè¯»ï¼Œä¸èƒ½ç¼–è¾‘
+    /* è®¾ç½®åˆ—å®½åœ¨å¯è§†ç•Œé¢è‡ªé€‚åº”å®½åº¦ */
     tableView->horizontalHeader()->setSectionResizeMode (QHeaderView::Stretch);
     //qDebug() <<tableView->horizontalHeader();
-    /* ĞĞÑÕÉ«½»ÌæÏÔÊ¾ */
+    /* è¡Œé¢œè‰²äº¤æ›¿æ˜¾ç¤º */
     tableView->setAlternatingRowColors(true);
-    /* ²»ÔÊĞíÔÚÍ¼ĞÎ½çÃæĞŞ¸ÄÄÚÈİ */
-    //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //ĞèÒªÔÚ±í¸ñÊ¹ÓÃÓÒ¼ü²Ëµ¥£¬ĞèÒªÆô¶¯¸ÃÊôĞÔ
-    //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //±í¸ñµÚ0ÁĞ£¬°´½µĞòÅÅÁĞ
+    /* ä¸å…è®¸åœ¨å›¾å½¢ç•Œé¢ä¿®æ”¹å†…å®¹ */
+    //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //éœ€è¦åœ¨è¡¨æ ¼ä½¿ç”¨å³é”®èœå•ï¼Œéœ€è¦å¯åŠ¨è¯¥å±æ€§
+    //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //è¡¨æ ¼ç¬¬0åˆ—ï¼ŒæŒ‰é™åºæ’åˆ—
     tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    mainLayout->addWidget(tableView);    //Ìí¼Ó¿Ø¼ş
+    mainLayout->addWidget(tableView);    //æ·»åŠ æ§ä»¶
     this->ui->tabWidget->setLayout(mainLayout);
-    //setLayout(mainLayout);        //ÏÔÊ¾´¹Ö±²¼¾Ö
-    //¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£
+    //setLayout(mainLayout);        //æ˜¾ç¤ºå‚ç›´å¸ƒå±€
+    //ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
 }
 void log::on_tabWidget_currentChanged(int index)
 {
@@ -117,8 +115,8 @@ void log::on_pushButton_delLog_clicked()
     //    d.delLogs(i);
     //    delete ui->tabWidget->layout();
     //    logViewer(currentTab);
-    //    QString dlgTitle=QString("É¾³ı");
-    //    QString strInfo=QString("ÒÑÉ¾³ıµÚ%1Ìõ¼ÇÂ¼£¡"). arg(i);
+    //    QString dlgTitle=QString("åˆ é™¤");
+    //    QString strInfo=QString("å·²åˆ é™¤ç¬¬%1æ¡è®°å½•ï¼"). arg(i);
     //    QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok,QMessageBox::NoButton);
     //    qDebug()<<tableView->selectionModel()->selectedRows();
     //    QModelIndexList indexList = tableView->selectionModel()->selectedRows();
@@ -130,12 +128,12 @@ void log::on_pushButton_delLog_clicked()
     //        qDebug()<<row;
     //    }
     //    qDebug()<<count;
-    QString dlgTitle=QString("É¾³ı");
+    QString dlgTitle=QString("åˆ é™¤");
     QString strInfo;
     int clickState=0;
     if(ui->radioButton_MutiSelect->isChecked())
     {
-        //¶àÑ¡
+        //å¤šé€‰
         qDebug()<<tableView->selectionModel()->selectedRows();
         QModelIndexList indexList = tableView->selectionModel()->selectedRows();
         int count=0;
@@ -148,7 +146,7 @@ void log::on_pushButton_delLog_clicked()
         qDebug()<<mutiRow;
         qDebug()<<count;
         delLogs(mutiRow,2,count);
-        strInfo=QString("ÒÑÉ¾³ı%1Ìõ¼ÇÂ¼£¡"). arg(count);
+        strInfo=QString("å·²åˆ é™¤%1æ¡è®°å½•ï¼"). arg(count);
         //QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok,QMessageBox::NoButton);
         if(count==0)
             clickState=0;
@@ -157,12 +155,12 @@ void log::on_pushButton_delLog_clicked()
     }
     else
     {
-        //µ¥Ñ¡
+        //å•é€‰
         // qDebug()<<i;
         //delete ui->tabWidget->layout();
         //logViewer(currentTab);
         //qDebug()<<tableView->currentIndex().row();
-        //QString strInfo=QString("ÒÑÉ¾³ıµÚ%1Ìõ¼ÇÂ¼£¡"). arg(i);
+        //QString strInfo=QString("å·²åˆ é™¤ç¬¬%1æ¡è®°å½•ï¼"). arg(i);
         //QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok,QMessageBox::NoButton);
         //=================
         int i;
@@ -171,7 +169,7 @@ void log::on_pushButton_delLog_clicked()
         vector<int> singleRow(1,i);
         delLogs(singleRow,1,1);
         qDebug()<<singleRow;
-        strInfo=QString("ÒÑÉ¾³ıµÚ%1Ìõ¼ÇÂ¼£¡"). arg(singleRow[0]);
+        strInfo=QString("å·²åˆ é™¤ç¬¬%1æ¡è®°å½•ï¼"). arg(singleRow[0]);
         //QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok,QMessageBox::NoButton);
         if(singleRow[0]==0)
             clickState=0;
@@ -180,7 +178,7 @@ void log::on_pushButton_delLog_clicked()
     }
     if(clickState==0)
     {
-        strInfo="Î´Ñ¡ÖĞÈÎºÎĞĞ£¡";
+        strInfo="æœªé€‰ä¸­ä»»ä½•è¡Œï¼";
     }
     QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok,QMessageBox::NoButton);
     delete ui->tabWidget->layout();
@@ -192,8 +190,8 @@ void log::on_pushButton_delLog_clicked()
 
 void log::on_radioButton_MutiSelect_clicked()
 {
-    //¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£
-    //ÉèÖÃ¶àÑ¡
+    //ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
+    //è®¾ç½®å¤šé€‰
 
 
     if(!checkState)
@@ -211,7 +209,7 @@ void log::on_radioButton_MutiSelect_clicked()
         checkState=0;
     }
     qDebug()<<checkState;
-    //¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£
+    //ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
 }
 
 
@@ -228,7 +226,7 @@ void log::on_pushButton_delAllTab_clicked()
     }
     //on_pushButton_delLog_clicked();
     //tableView->selectRow();
-    //É¾³ı¶àĞĞÊı¾İ¿âËÙ¶ÈºÜÂı
+    //åˆ é™¤å¤šè¡Œæ•°æ®åº“é€Ÿåº¦å¾ˆæ…¢
 }
 
 void log::addLog(QString user,int eventId){
@@ -238,20 +236,20 @@ void log::addLog(QString user,int eventId){
     QString type;
     switch (eventId) {
     case 1:
-        event="µÇÂ¼ÏµÍ³";
-        type="²Ù×÷ÈÕÖ¾";
+        event="ç™»å½•ç³»ç»Ÿ";
+        type="æ“ä½œæ—¥å¿—";
         break;
     case 2:
-        event="ÍË³öÏµÍ³";
-        type="²Ù×÷ÈÕÖ¾";
+        event="é€€å‡ºç³»ç»Ÿ";
+        type="æ“ä½œæ—¥å¿—";
         break;
     case 3:
-        event="³õÊ¼»¯ÏµÍ³";
-        type="²Ù×÷ÈÕÖ¾";
+        event="åˆå§‹åŒ–ç³»ç»Ÿ";
+        type="æ“ä½œæ—¥å¿—";
         break;
     default:
-        event="Î´ÖªÊÂ¼ş";
-        type="È«²¿";
+        event="æœªçŸ¥äº‹ä»¶";
+        type="å…¨éƒ¨";
         break;
     }
     query=QSqlQuery(db);
@@ -266,29 +264,29 @@ void log::addLog(QString user,int eventId){
 
 vector<vector<QString>>  log::getLog(QString type)
 {
-    //ÔÚÊı¾İ¿âÖĞ¼ìË÷¶ÔÓ¦ÀàĞÍµÄÈÕÖ¾
+    //åœ¨æ•°æ®åº“ä¸­æ£€ç´¢å¯¹åº”ç±»å‹çš„æ—¥å¿—
     query=QSqlQuery(db);
     QString search_sql="select * from logs where type=(?)";
     QString search_sql_all="select * from logs";
-    if(type=="È«²¿")
+    if(type=="å…¨éƒ¨")
     {
         query.prepare(search_sql_all);
-        qDebug() << "²éÕÒÈ«²¿ÈÕÖ¾";
+        qDebug() << "æŸ¥æ‰¾å…¨éƒ¨æ—¥å¿—";
     }
     else
     {
         query.prepare(search_sql);
         query.addBindValue(type);
-        qDebug() << "²éÕÒÈÕÖ¾";
+        qDebug() << "æŸ¥æ‰¾æ—¥å¿—";
     }
     query.exec();
     //
     //    query.prepare(search_sql);
     //    query.addBindValue(type);
     //    query.exec();
-    //qDebug()<<"Ö´ĞĞquery. exec()½á¹ûÎª£º"<<query.exec();
-    //qDebug()<<"·µ»Øquery. next()½á¹ûÎª£º"<<query.next();
-    //qDebug() << "Ò»¹²ÓĞ"<<sqlSize(query)<<"ÌõÈÕÖ¾";
+    //qDebug()<<"æ‰§è¡Œquery. exec()ç»“æœä¸ºï¼š"<<query.exec();
+    //qDebug()<<"è¿”å›query. next()ç»“æœä¸ºï¼š"<<query.next();
+    //qDebug() << "ä¸€å…±æœ‰"<<sqlSize(query)<<"æ¡æ—¥å¿—";
     int row=0,col=3;
     //    QString logs[i][3];
     vector<vector<QString> > logs(sqlSize(query),vector<QString>(col,0));
@@ -301,9 +299,9 @@ vector<vector<QString>>  log::getLog(QString type)
         logs[row][1]=query.value(1).toString();
         logs[row][2]=query.value(2).toString();
         row++;
-        //qDebug() << "´æÈëµÚ"<<row<<"¸öÈÕÖ¾";
-        //QString line=QString(str("Ñ§ºÅ")+¡±%1"+str("ĞÕÃû")+¡±%2"+str("Éí¸ß")+¡±%3").arg(number).arg(name).arg(height);
-        //QString line=QString("Ñ§ºÅ %1     ĞÕÃû %2     Éí¸ß %3").arg(number,5).arg(name,10).arg(height,5);
+        //qDebug() << "å­˜å…¥ç¬¬"<<row<<"ä¸ªæ—¥å¿—";
+        //QString line=QString(str("å­¦å·")+â€%1"+str("å§“å")+â€%2"+str("èº«é«˜")+â€%3").arg(number).arg(name).arg(height);
+        //QString line=QString("å­¦å· %1     å§“å %2     èº«é«˜ %3").arg(number,5).arg(name,10).arg(height,5);
         //qDebug()<<line;
         //ui->textEditList->append(line);
 
@@ -312,7 +310,7 @@ vector<vector<QString>>  log::getLog(QString type)
     return logs;
 }
 
-//void Widget::on_listButton_clicked()//ÁĞ±í°´Å¥
+//void Widget::on_listButton_clicked()//åˆ—è¡¨æŒ‰é’®
 //{
 //    int number;
 //    QString name;
@@ -326,8 +324,8 @@ vector<vector<QString>>  log::getLog(QString type)
 //        number=query.value(0).toInt();
 //        name=query.value(1).toString();
 //        height=query.value(2).toInt();
-//        //QString line=QString(str("Ñ§ºÅ")+¡±%1"+str("ĞÕÃû")+¡±%2"+str("Éí¸ß")+¡±%3").arg(number).arg(name).arg(height);
-//        QString line=QString("Ñ§ºÅ %1     ĞÕÃû %2     Éí¸ß %3").arg(number,5).arg(name,10).arg(height,5);
+//        //QString line=QString(str("å­¦å·")+â€%1"+str("å§“å")+â€%2"+str("èº«é«˜")+â€%3").arg(number).arg(name).arg(height);
+//        QString line=QString("å­¦å· %1     å§“å %2     èº«é«˜ %3").arg(number,5).arg(name,10).arg(height,5);
 //        //qDebug()<<line;
 //        ui->textEditList->append(line);
 //    }
@@ -343,7 +341,7 @@ void log::delLogs(vector<int> row,int delType,int count)
         QString del_single_sql=QString("delete from logs where rowid =  '%1'"). arg(row[0]);
         query.prepare(del_single_sql);
         query.exec();
-        qDebug()<<"Ö´ĞĞÁËÉ¾³ıµ¥ĞĞ²Ù×÷";
+        qDebug()<<"æ‰§è¡Œäº†åˆ é™¤å•è¡Œæ“ä½œ";
         break;
     }
     case 2:
@@ -354,7 +352,7 @@ void log::delLogs(vector<int> row,int delType,int count)
             query.prepare(del_muti_sql);
             query.exec();
         }
-        qDebug()<<"Ö´ĞĞÁËÉ¾³ı¶àĞĞ²Ù×÷";
+        qDebug()<<"æ‰§è¡Œäº†åˆ é™¤å¤šè¡Œæ“ä½œ";
         break;
     }
     default:
@@ -362,5 +360,5 @@ void log::delLogs(vector<int> row,int delType,int count)
     }
 
     query.exec("vacuum");
-    qDebug()<<"Ö´ĞĞÁËË¢ĞÂÊı¾İ¿â²Ù×÷";
+    qDebug()<<"æ‰§è¡Œäº†åˆ·æ–°æ•°æ®åº“æ“ä½œ";
 }

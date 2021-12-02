@@ -1,4 +1,4 @@
-#ifndef TASK_H
+﻿#ifndef TASK_H
 #define TASK_H
 
 #include<dataBase.h>

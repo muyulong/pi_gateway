@@ -1,4 +1,4 @@
-#include "welcome.h"
+ï»¿#include "welcome.h"
 #include "ui_welcome.h"
 
 
@@ -6,8 +6,6 @@ welcome::welcome(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::welcome)
 {
-    QTextCodec *codec = QTextCodec::codecForName("GBK");//»òÕß"GBK",²»·Ö´óĞ¡Ğ´
-    QTextCodec::setCodecForLocale(codec);
     ui->setupUi(this);
     connect(&r,SIGNAL(exitRegist()),this,SLOT(show()));
     connect(&l,SIGNAL(exitLogin()),this,SLOT(show()));
@@ -21,7 +19,7 @@ welcome::~welcome()
 
 void welcome::on_pushButton_register_clicked()
 {
-     //³õÊ¼»¯Êı¾İ¿âºÍÓÃ»§ĞÅÏ¢±í
+     //åˆå§‹åŒ–æ•°æ®åº“å’Œç”¨æˆ·ä¿¡æ¯è¡¨
     QString  tableName="userInfo";
     QString columnName[2]={"name","pwd"};
     QString dataType[2]={"varchar","varchar"};

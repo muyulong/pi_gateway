@@ -1,4 +1,4 @@
-#ifndef WELCOME_H
+﻿#ifndef WELCOME_H
 #define WELCOME_H
 
 #include <QDialog>

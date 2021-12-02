@@ -1,8 +1,8 @@
-#include "task.h"
+ï»¿#include "task.h"
 
 task::task()
 {
-    //³õÊ¼»¯Êı¾İ¿âºÍÈÎÎñ±í
+    //åˆå§‹åŒ–æ•°æ®åº“å’Œä»»åŠ¡è¡¨
     QString  tableName="tasks";
     QString columnName[4]={"time","content","isActive"};
     QString dataType[4]={"varchar","varchar","bool"};
@@ -13,29 +13,29 @@ task::task()
 }
 
 
-//Ìí¼ÓÈÎÎñ
+//æ·»åŠ ä»»åŠ¡
 void task::addTask(QDateTime dateTime,QTime time,int taskContentID,bool radioSelect)
 {
     query=QSqlQuery(db);
-    QString time_sql="Ã¿Ìì"+time.toString();
+    QString time_sql="æ¯å¤©"+time.toString();
     QString dataTime_sql=dateTime.toString("yyyy-MM-dd hh:mm");
     QString content_sql;
     taskStatus = 0;
     switch (taskContentID) {
     case 0:
-        content_sql="´ò¿ªµÆÅİ";
+        content_sql="æ‰“å¼€ç¯æ³¡";
         break;
     case 1:
-        content_sql="¹Ø±ÕµÆÅİ";
+        content_sql="å…³é—­ç¯æ³¡";
         break;
     case 2:
-        content_sql="´ò¿ª·çÉÈ";
+        content_sql="æ‰“å¼€é£æ‰‡";
         break;
     case 3:
-        content_sql="¹Ø±Õ·çÉÈ";
+        content_sql="å…³é—­é£æ‰‡";
         break;
     case 4:
-        content_sql="¼à²âÎÂ¶È";
+        content_sql="ç›‘æµ‹æ¸©åº¦";
         break;
     default:
         break;
@@ -58,14 +58,14 @@ void task::addTask(QDateTime dateTime,QTime time,int taskContentID,bool radioSel
     //qDebug()<<time<<" "<<dateTime<<" "<<taskContentID<<" "<<radioSelect;
     //qDebug()<<time_sql<<" "<<dataTime_sql;
 }
-//»ñÈ¡ÈÎÎñ
+//è·å–ä»»åŠ¡
 vector<vector<QString>> task::getTask()
 {
     query=QSqlQuery(db);
     QString search_sql="select * from tasks";
     query.prepare(search_sql);
     query.exec();
-    qDebug() << "²éÕÒÈ«²¿¼Æ»®ÈÎÎñ";
+    qDebug() << "æŸ¥æ‰¾å…¨éƒ¨è®¡åˆ’ä»»åŠ¡";
     int row=0,col=3;
     vector<vector<QString> > tasks(sqlSize(query),vector<QString>(col,0));
     while(query.next()&&row<=sqlSize(query))
@@ -77,7 +77,7 @@ vector<vector<QString>> task::getTask()
     }
     return tasks;
 }
-//É¾³ıÈÎÎñ
+//åˆ é™¤ä»»åŠ¡
 bool task::delTask(int taskID)
 {
     if(isTaskActive(taskID))
@@ -90,13 +90,13 @@ bool task::delTask(int taskID)
         QString del_sql=QString("delete from tasks where rowid =  '%1'"). arg(taskID);
         query.prepare(del_sql);
         query.exec();
-        qDebug()<<"Ö´ĞĞÁËÉ¾³ıµ¥ĞĞ²Ù×÷";
+        qDebug()<<"æ‰§è¡Œäº†åˆ é™¤å•è¡Œæ“ä½œ";
         query.exec("vacuum");
-        qDebug()<<"Ö´ĞĞÁËË¢ĞÂÊı¾İ¿â²Ù×÷";
+        qDebug()<<"æ‰§è¡Œäº†åˆ·æ–°æ•°æ®åº“æ“ä½œ";
         return 1;
     }
 }
-//ÅĞ¶ÏÈÎÎñÊÇ·ñ´¦ÓÚÔËĞĞ×´Ì¬
+//åˆ¤æ–­ä»»åŠ¡æ˜¯å¦å¤„äºè¿è¡ŒçŠ¶æ€
 bool task::isTaskActive(int taskID)
 {
     query=QSqlQuery(db);

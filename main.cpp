@@ -1,11 +1,10 @@
-#include "welcome.h"
+Ôªø#include "welcome.h"
 #include <QApplication>
+#include <QTextCodec>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QTextCodec *codec = QTextCodec::codecForName("GBK");//ªÚ’ﬂ"GBK",≤ª∑÷¥Û–°–¥
-    QTextCodec::setCodecForLocale(codec);
     welcome w;
     w.show();
 

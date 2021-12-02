@@ -1,4 +1,4 @@
-//#include "tcpserver.h"
+ï»¿//#include "tcpserver.h"
 
 //TcpSocket::TcpSocket()
 //{
@@ -10,11 +10,11 @@
 //{
 //    while (this->bytesAvailable()>0)
 //    {
-//        QByteArray datagram;//¶¨ÒåÒ»¸ö×Ö½ÚÊı×éÀà¶ÔÏó
-//        datagram.resize(this->bytesAvailable());//¸ù¾İ»º³åÊı¾İÉèÖÃ×Ö½ÚÊı×é´óĞ¡
-//        this->read(datagram.data(),datagram.size());//¶ÁÈ¡»º³åÇøµÄÊı¾İ
+//        QByteArray datagram;//å®šä¹‰ä¸€ä¸ªå­—èŠ‚æ•°ç»„ç±»å¯¹è±¡
+//        datagram.resize(this->bytesAvailable());//æ ¹æ®ç¼“å†²æ•°æ®è®¾ç½®å­—èŠ‚æ•°ç»„å¤§å°
+//        this->read(datagram.data(),datagram.size());//è¯»å–ç¼“å†²åŒºçš„æ•°æ®
 //        QString msg=datagram.data();
-//        emit updateClients(msg,datagram.size());//·¢ËÍĞÅºÅ¸øserver
+//        emit updateClients(msg,datagram.size());//å‘é€ä¿¡å·ç»™server
 //    }
 //}
 

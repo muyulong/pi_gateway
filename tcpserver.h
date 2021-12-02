@@ -1,4 +1,4 @@
-//#ifndef TCPSOCKET_H
+ï»¿//#ifndef TCPSOCKET_H
 //#define TCPSOCKET_H
 
 //#include <QTcpSocket>
@@ -34,18 +34,18 @@
 //    Q_OBJECT
 //public:
 //    Server(int port=0);
-//    QList <TcpSocket*> tcpSocketList;//ÓÃÓÚ±£´æ¸÷¸ö¿Í»§¶ËµÄTCPÁ¬½Ó
+//    QList <TcpSocket*> tcpSocketList;//ç”¨äºä¿å­˜å„ä¸ªå®¢æˆ·ç«¯çš„TCPè¿æ¥
 
 //signals:
-//    void updateServer(QString,int);//ÓÃÓÚ·¢ËÍ¸ø½çÃæÀà¸üĞÂ½çÃæ
+//    void updateServer(QString,int);//ç”¨äºå‘é€ç»™ç•Œé¢ç±»æ›´æ–°ç•Œé¢
 
 //public slots:
-//    void slotUpdateClients(QString,int);//ÓÃÓÚ½«ÏûÏ¢·¢¸øÃ¿¸ö¿Í»§¶Ë
-//    void slotDisconnected(int); //ÓÃÓÚÒÆ³ı¶Ï¿ªÁ¬½ÓµÄ¿Í»§¶Ësocket
+//    void slotUpdateClients(QString,int);//ç”¨äºå°†æ¶ˆæ¯å‘ç»™æ¯ä¸ªå®¢æˆ·ç«¯
+//    void slotDisconnected(int); //ç”¨äºç§»é™¤æ–­å¼€è¿æ¥çš„å®¢æˆ·ç«¯socket
 
 //protected:
-//    void incomingConnection(int socketDescriptor);//Ğéº¯Êı£¬´¦ÀíÊÔÍ¼Á¬½ÓµÄ¿Í»§¶Ë
-//    //½«ÆäÁ¬½Ó¾ä±ú±£´æÓÃÓÚ×ª·¢ÏûÏ¢¡£
+//    void incomingConnection(int socketDescriptor);//è™šå‡½æ•°ï¼Œå¤„ç†è¯•å›¾è¿æ¥çš„å®¢æˆ·ç«¯
+//    //å°†å…¶è¿æ¥å¥æŸ„ä¿å­˜ç”¨äºè½¬å‘æ¶ˆæ¯ã€‚
 //};
 
 //#endif // SERVER_H
@@ -69,7 +69,7 @@
 
 //public slots:
 //void slotUpdateServer(QString msg, int length);
-////ÓÉµ½ÏûÏ¢ºó¸üĞÂ½çÃæ. msgÎªÊÕµ½µÄÏûÏ¢£¬lengthÎªÆä³¤¶È
+////ç”±åˆ°æ¶ˆæ¯åæ›´æ–°ç•Œé¢. msgä¸ºæ”¶åˆ°çš„æ¶ˆæ¯ï¼Œlengthä¸ºå…¶é•¿åº¦
 
 //private slots:
 //    //void on_pushButtonCreate_clicked();

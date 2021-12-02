@@ -1,4 +1,4 @@
-#include "system.h"
+ï»¿#include "system.h"
 
 system::system()
 {
@@ -8,19 +8,19 @@ system::system()
 initSystem()
 initDevices()
 checkTasks()
-Õâ¸öµÈ»á¶ùÐ´
+è¿™ä¸ªç­‰ä¼šå„¿å†™
 getDevicesInfo()
 getOperableDevices()
 commandEncode(String)
-commandDecode(Î´ÖªÀàÐÍ)
-commandSend(Î´ÖªÀàÐÍ)
+commandDecode(æœªçŸ¥ç±»åž‹)
+commandSend(æœªçŸ¥ç±»åž‹)
 commandReceive()
 */
 void system::initSystem()
 {
     initDevices();
     checkTasks();
-    L.addLog("ÏµÍ³",3);
+    L.addLog("ç³»ç»Ÿ",3);
 }
 
 void system::initDevices()

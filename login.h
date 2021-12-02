@@ -1,4 +1,4 @@
-#ifndef LOGIN_H
+﻿#ifndef LOGIN_H
 #define LOGIN_H
 
 #include <QDialog>
@@ -24,7 +24,7 @@ private slots:
 
     void on_pushButton_login_clicked();
 signals:
-    void exitLogin();//�½�һ���źŲ�
+    void exitLogin();//新建一个信号槽
     void exitWelcome();
 private:
     Ui::login *ui;

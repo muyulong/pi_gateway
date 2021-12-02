@@ -1,4 +1,4 @@
-#ifndef SYSTEM_H
+ï»¿#ifndef SYSTEM_H
 #define SYSTEM_H
 
 #include "log.h"
@@ -15,8 +15,8 @@ public:
     //void getDevicesInfo();
     //void getOperableDevices();
     void commandEncode(QString msg);
-    //void commandDecode(Î´ÖªÀàÐÍ);
-    //void commandSend(Î´ÖªÀàÐÍ);
+    //void commandDecode(æœªçŸ¥ç±»åž‹);
+    //void commandSend(æœªçŸ¥ç±»åž‹);
     //void commandReceive();
 
 

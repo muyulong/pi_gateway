@@ -1,12 +1,10 @@
-#include "regist.h"
+ï»¿#include "regist.h"
 #include "ui_regist.h"
 
 regist::regist(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::regist)
 {
-    QTextCodec *codec = QTextCodec::codecForName("GBK");//»òÕß"GBK",²»·Ö´óĞ¡Ğ´
-    QTextCodec::setCodecForLocale(codec);
     ui->setupUi(this);
 }
 
@@ -23,25 +21,25 @@ void regist::on_pushButton_register_clicked()
     pwd = ui->password->text();
     pwd2=ui->password_2->text();
     if(user == "")
-        QMessageBox::warning(this,"","ÓÃ»§Ãû²»ÄÜÎª¿Õ£¡");
+        QMessageBox::warning(this,"","ç”¨æˆ·åä¸èƒ½ä¸ºç©ºï¼");
     else if(pwd == "")
-        QMessageBox::warning(this,"","ÃÜÂë²»ÄÜÎª¿Õ£¡");
+        QMessageBox::warning(this,"","å¯†ç ä¸èƒ½ä¸ºç©ºï¼");
     else if(pwd2== "")
-        QMessageBox::warning(this,"","È·ÈÏÃÜÂë²»ÄÜÎª¿Õ£¡");
+        QMessageBox::warning(this,"","ç¡®è®¤å¯†ç ä¸èƒ½ä¸ºç©ºï¼");
     else if(!(pwd==pwd2))
-        QMessageBox::warning(this,"","Á½´ÎÊäÈëÃÜÂë±ØĞëÏàÍ¬£¡");
+        QMessageBox::warning(this,"","ä¸¤æ¬¡è¾“å…¥å¯†ç å¿…é¡»ç›¸åŒï¼");
     else
     {
         int reg = U.setUser(user,pwd);
         if(reg==1)
         {
-            QMessageBox::information(NULL, "×¢²á³É¹¦", "×¢²á³É¹¦£¡£¡£¡", QMessageBox::Yes);
+            QMessageBox::information(NULL, "æ³¨å†ŒæˆåŠŸ", "æ³¨å†ŒæˆåŠŸï¼ï¼ï¼", QMessageBox::Yes);
             this->close();
         }
         else if(reg==2)
-            QMessageBox::warning(NULL,"Error","ÓÃ»§ÃûÖØ¸´£¡£¡£¡");
+            QMessageBox::warning(NULL,"Error","ç”¨æˆ·åé‡å¤ï¼ï¼ï¼");
         else if (reg==0)
-            QMessageBox::warning(NULL,"Error","×¢²áÊ§°Ü£¬ÇëÖØÊÔ£¡£¡£¡");
+            QMessageBox::warning(NULL,"Error","æ³¨å†Œå¤±è´¥ï¼Œè¯·é‡è¯•ï¼ï¼ï¼");
     }
 }
 void regist::closeEvent(QCloseEvent *)

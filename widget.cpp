@@ -1,12 +1,10 @@
-#include "widget.h"
+ï»¿#include "widget.h"
 #include "ui_widget.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
-    QTextCodec *codec = QTextCodec::codecForName("GBK");//»òÕß"GBK",²»·Ö´óĞ¡Ğ´
-    QTextCodec::setCodecForLocale(codec);
     ui->setupUi(this);
 
     buttonNameList.append("ss");
@@ -14,7 +12,7 @@ Widget::Widget(QWidget *parent)
     buttonNameList.append("ss");
     buttonNameList.append("ss");
 
-    ui->comboBox_event->addItems(QStringList()<<"´ò¿ªµÆÅİ"<<"¹Ø±ÕµÆÅİ"<<"´ò¿ª·çÉÈ"<<"¹Ø±Õ·çÉÈ"<<"¼à²âÎÂ¶È");
+    ui->comboBox_event->addItems(QStringList()<<"æ‰“å¼€ç¯æ³¡"<<"å…³é—­ç¯æ³¡"<<"æ‰“å¼€é£æ‰‡"<<"å…³é—­é£æ‰‡"<<"ç›‘æµ‹æ¸©åº¦");
     radioSelect=0;
     ui->radioButton_time->click();
 }
@@ -27,7 +25,7 @@ Widget::~Widget()
 
 void Widget::on_pushButton_2_clicked()
 {
-    //´´½¨Ë®Æ½²¼¾Ö,ÓÃÓÚÉèÖÃ°´Å¥µÄÅÅÁĞË³Ğò
+    //åˆ›å»ºæ°´å¹³å¸ƒå±€,ç”¨äºè®¾ç½®æŒ‰é’®çš„æ’åˆ—é¡ºåº
     QHBoxLayout *hBoxLayout = new QHBoxLayout();
     hBoxLayout->setObjectName(hBoxLay);
     foreach(QString buttonName,buttonNameList)
@@ -46,19 +44,19 @@ void Widget::on_pushButton_4_clicked()
 {
     foreach(QString buttonName, buttonNameList)
     {
-        //»ñÈ¡groupBoxÖĞµÄPushbutton
+        //è·å–groupBoxä¸­çš„Pushbutton
         QPushButton *pushBt =  ui->scrollArea->findChild<QPushButton*>(buttonName);
-        //É¾³ıpushButton
+        //åˆ é™¤pushButton
         delete pushBt;
     }
-    //É¾³ıË®Æ½²¼¾Ö,Èç¹û´Ë´¦²»É¾³ı£¬»áÊ¹µÃµÚ¶ş´ÎÌí¼ÓÏàÍ¬Ãû³ÆµÄQPushbuttonÊ±Ê§°Ü
+    //åˆ é™¤æ°´å¹³å¸ƒå±€,å¦‚æœæ­¤å¤„ä¸åˆ é™¤ï¼Œä¼šä½¿å¾—ç¬¬äºŒæ¬¡æ·»åŠ ç›¸åŒåç§°çš„QPushbuttonæ—¶å¤±è´¥
     QHBoxLayout *HBoxlay = ui->scrollArea->findChild<QHBoxLayout*>(hBoxLay);
     delete HBoxlay;
 }
 
 void Widget::closeEvent(QCloseEvent *event)
 {
-    switch( QMessageBox::information(this,tr("ÌáÊ¾"),tr("È·¶¨ÍË³öÏµÍ³?"),tr("È·¶¨"), tr("È¡Ïû"),0,1))
+    switch( QMessageBox::information(this,tr("æç¤º"),tr("ç¡®å®šé€€å‡ºç³»ç»Ÿ?"),tr("ç¡®å®š"), tr("å–æ¶ˆ"),0,1))
     {
     case 0:
         this->L.addLog(usr,2);
@@ -116,19 +114,19 @@ void Widget::taskViewer()
 {
     viewTask=T.getTask();
     size_row = viewTask.size();
-    qDebug() << "½ÓÊÕµ½ÈÎÎñÊıÁ¿£º"<<viewTask.size();
+    qDebug() << "æ¥æ”¶åˆ°ä»»åŠ¡æ•°é‡ï¼š"<<viewTask.size();
     taskTable(size_row);
 }
 
 void Widget::taskTable(int size_row)
 {
-    //¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£
+    //ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
     QStandardItemModel* standItemModel = new QStandardItemModel(this);
     standItemModel->setColumnCount(3);
-    standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("Ê±¼ä"));   //ÉèÖÃ±íÍ·ÄÚÈİ
-    standItemModel->setHeaderData(1,Qt::Horizontal,QStringLiteral("ÈÎÎñ"));
-    standItemModel->setHeaderData(2,Qt::Horizontal,QStringLiteral("×´Ì¬"));
-    //Ïò±í¸ñÌí¼ÓÄÚÈİ
+    standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("æ—¶é—´"));   //è®¾ç½®è¡¨å¤´å†…å®¹
+    standItemModel->setHeaderData(1,Qt::Horizontal,QStringLiteral("ä»»åŠ¡"));
+    standItemModel->setHeaderData(2,Qt::Horizontal,QStringLiteral("çŠ¶æ€"));
+    //å‘è¡¨æ ¼æ·»åŠ å†…å®¹
     for(int i=0;i<size_row;++i)
     {
         QString time=viewTask[i][0];
@@ -136,38 +134,38 @@ void Widget::taskTable(int size_row)
         QString status=viewTask[i][2];
         if(status=="0")
         {
-            status="Î´ÔËĞĞ";
+            status="æœªè¿è¡Œ";
         }
         if(status=="1")
         {
-            status="ÔËĞĞÖĞ";
+            status="è¿è¡Œä¸­";
         }
         standItemModel->setItem(i, 0, new QStandardItem(time));
         standItemModel->setItem(i, 1, new QStandardItem(task));
         standItemModel->setItem(i, 2, new QStandardItem(status));
-        standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);           //ÉèÖÃ±í¸ñÄÚÈİ¾ÓÖĞ
-        standItemModel->item(i,1)->setTextAlignment(Qt::AlignCenter);           //ÉèÖÃ±í¸ñÄÚÈİ¾ÓÖĞ
-        standItemModel->item(i,2)->setTextAlignment(Qt::AlignCenter);           //ÉèÖÃ±í¸ñÄÚÈİ¾ÓÖĞ
+        standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);           //è®¾ç½®è¡¨æ ¼å†…å®¹å±…ä¸­
+        standItemModel->item(i,1)->setTextAlignment(Qt::AlignCenter);           //è®¾ç½®è¡¨æ ¼å†…å®¹å±…ä¸­
+        standItemModel->item(i,2)->setTextAlignment(Qt::AlignCenter);           //è®¾ç½®è¡¨æ ¼å†…å®¹å±…ä¸­
     }
-    ui->tableView_task->setModel(standItemModel);    //¹ÒÔØ±í¸ñÄ£ĞÍ
-    //ÉèÖÃ±í¸ñÊôĞÔ
-    //tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);        //±íÍ·ĞÅÏ¢ÏÔÊ¾¾ÓÖĞ
-    ui->tableView_task->setColumnWidth(0,150);       //Éè¶¨±í¸ñ¿í¶È
+    ui->tableView_task->setModel(standItemModel);    //æŒ‚è½½è¡¨æ ¼æ¨¡å‹
+    //è®¾ç½®è¡¨æ ¼å±æ€§
+    //tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);        //è¡¨å¤´ä¿¡æ¯æ˜¾ç¤ºå±…ä¸­
+    ui->tableView_task->setColumnWidth(0,150);       //è®¾å®šè¡¨æ ¼å®½åº¦
     ui->tableView_task->setColumnWidth(1,80);
     ui->tableView_task->setColumnWidth(2,75);
-    //tableView->verticalHeader()->hide();    //Òş²ØÄ¬ÈÏÏÔÊ¾µÄĞĞÍ·
-    ui->tableView_task->setSelectionBehavior(QAbstractItemView::SelectRows); //ÉèÖÃÑ¡ÖĞÊ±ÕûĞĞÑ¡ÖĞ
-    ui->tableView_task->setEditTriggers(QAbstractItemView::NoEditTriggers);  //ÉèÖÃ±í¸ñÊôĞÔÖ»¶Á£¬²»ÄÜ±à¼­
-    /* ÉèÖÃÁĞ¿íÔÚ¿ÉÊÓ½çÃæ×ÔÊÊÓ¦¿í¶È */
+    //tableView->verticalHeader()->hide();    //éšè—é»˜è®¤æ˜¾ç¤ºçš„è¡Œå¤´
+    ui->tableView_task->setSelectionBehavior(QAbstractItemView::SelectRows); //è®¾ç½®é€‰ä¸­æ—¶æ•´è¡Œé€‰ä¸­
+    ui->tableView_task->setEditTriggers(QAbstractItemView::NoEditTriggers);  //è®¾ç½®è¡¨æ ¼å±æ€§åªè¯»ï¼Œä¸èƒ½ç¼–è¾‘
+    /* è®¾ç½®åˆ—å®½åœ¨å¯è§†ç•Œé¢è‡ªé€‚åº”å®½åº¦ */
     //ui->tableView_task->horizontalHeader()->setSectionResizeMode (QHeaderView::Stretch);
     //qDebug() <<tableView->horizontalHeader();
-    /* ĞĞÑÕÉ«½»ÌæÏÔÊ¾ */
+    /* è¡Œé¢œè‰²äº¤æ›¿æ˜¾ç¤º */
     ui->tableView_task->setAlternatingRowColors(true);
-    /* ²»ÔÊĞíÔÚÍ¼ĞÎ½çÃæĞŞ¸ÄÄÚÈİ */
-    //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //ĞèÒªÔÚ±í¸ñÊ¹ÓÃÓÒ¼ü²Ëµ¥£¬ĞèÒªÆô¶¯¸ÃÊôĞÔ
-    //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //±í¸ñµÚ0ÁĞ£¬°´½µĞòÅÅÁĞ
+    /* ä¸å…è®¸åœ¨å›¾å½¢ç•Œé¢ä¿®æ”¹å†…å®¹ */
+    //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //éœ€è¦åœ¨è¡¨æ ¼ä½¿ç”¨å³é”®èœå•ï¼Œéœ€è¦å¯åŠ¨è¯¥å±æ€§
+    //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //è¡¨æ ¼ç¬¬0åˆ—ï¼ŒæŒ‰é™åºæ’åˆ—
     ui->tableView_task->setSelectionMode(QAbstractItemView::SingleSelection);
-    //¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£
+    //ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚ã€‚
 }
 
 void Widget::on_pushButton_startTask_clicked()
@@ -190,25 +188,25 @@ void Widget::on_pushButton_stopTask_clicked()
 
 void Widget::on_pushButton_delTask_clicked()
 {
-    QString dlgTitle=QString("É¾³ı");
+    QString dlgTitle=QString("åˆ é™¤");
     QString strInfo;
     int i=0;
     i= ui->tableView_task->currentIndex().row()+1;
     qDebug()<<i;
     if(i==0)
     {
-        strInfo="Î´Ñ¡ÖĞÈÎºÎĞĞ£¡";
+        strInfo="æœªé€‰ä¸­ä»»ä½•è¡Œï¼";
     }
     else
     {
         bool dT=T.delTask(i);
         if(!dT)
         {
-            strInfo=QString("ÎŞ·¨É¾³ıÕıÔÚÔËĞĞÖĞµÄÈÎÎñ£¡");
+            strInfo=QString("æ— æ³•åˆ é™¤æ­£åœ¨è¿è¡Œä¸­çš„ä»»åŠ¡ï¼");
         }
         if(dT)
         {
-            strInfo=QString("ÒÑÉ¾³ıµÚ%1Ìõ¼ÇÂ¼£¡"). arg(i);
+            strInfo=QString("å·²åˆ é™¤ç¬¬%1æ¡è®°å½•ï¼"). arg(i);
         }
     }
     QMessageBox::information(this, dlgTitle, strInfo,QMessageBox::Ok,QMessageBox::NoButton);

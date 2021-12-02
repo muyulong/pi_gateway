@@ -1,4 +1,4 @@
-#ifndef REGIST_H
+﻿#ifndef REGIST_H
 #define REGIST_H
 
 #include <QDialog>
@@ -22,7 +22,7 @@ public:
 private slots:
     void on_pushButton_register_clicked();
 signals:
-    void exitRegist();//�½�һ���źŲ�
+    void exitRegist();//新建一个信号槽
 private:
     Ui::regist *ui;
 };
