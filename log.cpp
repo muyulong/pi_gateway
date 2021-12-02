@@ -1,10 +1,12 @@
-﻿#include "log.h"
+#include "log.h"
 #include "ui_log.h"
 
 log::log(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::log)
 {
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     //初始化数据库和日志表
     QString  tableName="logs";
     QString columnName[4]={"time","user","event","type"};
@@ -61,9 +63,9 @@ void log::tableCreator(int size_row)
     tableView = new QTableView;
     //添加表头
     standItemModel->setColumnCount(3);
-    standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("时间"));   //设置表头内容
-    standItemModel->setHeaderData(1,Qt::Horizontal,QStringLiteral("事件"));
-    standItemModel->setHeaderData(2,Qt::Horizontal,QStringLiteral("用户"));
+    standItemModel->setHeaderData(0,Qt::Horizontal,("时间"));   //设置表头内容
+    standItemModel->setHeaderData(1,Qt::Horizontal,("事件"));
+    standItemModel->setHeaderData(2,Qt::Horizontal,("用户"));
     //向表格添加内容
     for(int i=0;i<size_row;++i)
     {

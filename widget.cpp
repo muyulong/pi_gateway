@@ -1,10 +1,12 @@
-﻿#include "widget.h"
+#include "widget.h"
 #include "ui_widget.h"
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
+//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+//    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     ui->setupUi(this);
 
     buttonNameList.append("ss");
@@ -123,9 +125,10 @@ void Widget::taskTable(int size_row)
     //。。。。。。。。。。。。。
     QStandardItemModel* standItemModel = new QStandardItemModel(this);
     standItemModel->setColumnCount(3);
-    standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("时间"));   //设置表头内容
-    standItemModel->setHeaderData(1,Qt::Horizontal,QStringLiteral("任务"));
-    standItemModel->setHeaderData(2,Qt::Horizontal,QStringLiteral("状态"));
+    //standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("时间"));   //设置表头内容
+    standItemModel->setHeaderData(0,Qt::Horizontal,("时间"));   //设置表头内容
+    standItemModel->setHeaderData(1,Qt::Horizontal,("任务"));
+    standItemModel->setHeaderData(2,Qt::Horizontal,("状态"));
     //向表格添加内容
     for(int i=0;i<size_row;++i)
     {

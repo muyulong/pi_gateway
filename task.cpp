@@ -1,4 +1,4 @@
-﻿#include "task.h"
+#include "task.h"
 
 task::task()
 {
@@ -19,7 +19,7 @@ void task::addTask(QDateTime dateTime,QTime time,int taskContentID,bool radioSel
     query=QSqlQuery(db);
     QString time_sql="每天"+time.toString();
     QString dataTime_sql=dateTime.toString("yyyy-MM-dd hh:mm");
-    QString content_sql;
+    QString content_sql=QString::fromLocal8Bit("");
     taskStatus = 0;
     switch (taskContentID) {
     case 0:

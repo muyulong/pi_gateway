@@ -1,4 +1,4 @@
-﻿#include "welcome.h"
+#include "welcome.h"
 #include "ui_welcome.h"
 
 
