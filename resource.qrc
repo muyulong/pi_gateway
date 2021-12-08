@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Aqua.qss</file>
+        <file>flatWhite.qss</file>
+    </qresource>
+</RCC>

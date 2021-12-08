@@ -5,8 +5,8 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
-//    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-//    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    //    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    //    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     ui->setupUi(this);
 
     buttonNameList.append("ss");
@@ -17,6 +17,34 @@ Widget::Widget(QWidget *parent)
     ui->comboBox_event->addItems(QStringList()<<"打开灯泡"<<"关闭灯泡"<<"打开风扇"<<"关闭风扇"<<"监测温度");
     radioSelect=0;
     ui->radioButton_time->click();
+
+    //--------------------------------------------
+    //本地主机名
+    QString hostName = QHostInfo::localHostName();
+
+    //本机IP地址
+    QHostInfo hostInfo = QHostInfo::fromName(hostName);
+
+    //IP地址列表
+    QList<QHostAddress> addrList = hostInfo.addresses();
+    for(int i=0;i<addrList.count();i++)
+    {
+        QHostAddress host = addrList.at(i);
+
+        if(QAbstractSocket::IPv4Protocol == host.protocol())
+        {
+            QString ip = host.toString();
+            ui->comboBox->addItem(ip);
+        }
+    }
+
+    m_tcpServer = new QTcpServer(this);
+    connect(m_tcpServer,&QTcpServer::newConnection,this,&Widget::on_newConnection);
+    ui->lineEditPort->setText("8080");
+
+    //初始化界面
+    this->setFixedSize(880,630);
+    w_size=1;
 }
 
 Widget::~Widget()
@@ -217,3 +245,128 @@ void Widget::on_pushButton_delTask_clicked()
     taskViewer();
 }
 
+//--------------------------
+//网络调试
+
+void Widget::on_btnStart_clicked()
+{
+    //当前选择的ip
+    QString ip = ui->comboBox->currentText();
+
+    //端口
+    int port = ui->lineEditPort->text().toInt();
+
+    QHostAddress addr(ip);
+
+    //监听
+    m_tcpServer->listen(addr,port);
+
+    ui->plainTextEdit->appendPlainText("**开始监听...");
+
+    ui->plainTextEdit->appendPlainText("**服务器地址: "+m_tcpServer->serverAddress().toString());
+
+    ui->plainTextEdit->appendPlainText("**服务器端口: "+QString::number(m_tcpServer->serverPort()));
+
+    ui->btnStart->setEnabled(false);
+
+    ui->btnStop->setEnabled(true);
+
+    ui->lbListen->setText("正在监听");
+}
+
+void Widget::on_btnStop_clicked()
+{
+    if(m_tcpServer->isListening())
+    {
+        m_tcpServer->close();
+        ui->btnStart->setEnabled(true);
+        ui->btnStop->setEnabled(false);
+        ui->lbListen->setText("停止监听");
+        ui->plainTextEdit->appendPlainText("**停止监听**");
+    }
+}
+
+void Widget::on_btnClear_clicked()
+{
+    ui->plainTextEdit->clear();
+}
+
+void Widget::on_newConnection()
+{
+    m_tcpSocket = m_tcpServer->nextPendingConnection();
+    connect(m_tcpSocket,&QTcpSocket::connected,this,&Widget::onConnected);
+    connect(m_tcpSocket,&QTcpSocket::disconnected,this,&Widget::onDisConnected);
+    connect(m_tcpSocket,&QTcpSocket::stateChanged,this,&Widget::onStateChanged);
+    connect(m_tcpSocket,&QTcpSocket::readyRead,this,&Widget::onReadyRead);
+
+    ui->plainTextEdit->appendPlainText("** client socket connected");
+    ui->plainTextEdit->appendPlainText("** peer address: "+m_tcpSocket->peerAddress().toString());
+    ui->plainTextEdit->appendPlainText("** peer port: "+QString::number(m_tcpSocket->peerPort()));
+}
+
+void Widget::onConnected()
+{
+    ui->plainTextEdit->appendPlainText("** client socket connected");
+    ui->plainTextEdit->appendPlainText("** peer address: "+m_tcpSocket->peerAddress().toString());
+    ui->plainTextEdit->appendPlainText("** peer port: "+QString::number(m_tcpSocket->peerPort()));
+}
+
+void Widget::onDisConnected()
+{
+    ui->plainTextEdit->appendPlainText("** client socket disconnected");
+    m_tcpSocket->deleteLater();
+}
+
+void Widget::onStateChanged(QAbstractSocket::SocketState socketState)
+{
+    switch (socketState)
+    {
+    case QAbstractSocket::UnconnectedState:
+        ui->lbListen->setText("UnconnectedState");break;
+    case QAbstractSocket::HostLookupState:
+        ui->lbListen->setText("HostLookupState");break;
+    case QAbstractSocket::ConnectedState:
+        ui->lbListen->setText("ConnectedState");break;
+    case QAbstractSocket::ConnectingState:
+        ui->lbListen->setText("ConnectingState");break;
+    case QAbstractSocket::BoundState:
+        ui->lbListen->setText("BoundState");break;
+    case QAbstractSocket::ClosingState:
+        ui->lbListen->setText("ClosingState");break;
+    case QAbstractSocket::ListeningState:
+        ui->lbListen->setText("ListeningState");break;
+    }
+
+}
+
+void Widget::onReadyRead()
+{
+    while(m_tcpSocket->canReadLine())
+    {
+        ui->plainTextEdit->appendPlainText("[in] "+m_tcpSocket->readLine());
+    }
+}
+
+void Widget::on_btnSend_clicked()
+{
+    QString msg =ui->lineEdit->text();
+    ui->plainTextEdit->appendPlainText("[out]"+msg);
+    QByteArray str = msg.toUtf8();
+    str.append('\n');
+    m_tcpSocket->write(str);
+}
+
+
+void Widget::on_pushButton_switch2Network_clicked()
+{
+    if(w_size)
+    {
+        this->setFixedSize(1170,630);
+        w_size=0;
+    }
+    else
+    {
+        this->setFixedSize(880,630);
+        w_size=1;
+    }
+}

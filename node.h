@@ -1,11 +1,22 @@
-﻿#ifndef NODE_H
+#ifndef NODE_H
 #define NODE_H
 
+#include <QDialog>
 
-class node
+namespace Ui {
+class node;
+}
+
+class node : public QDialog
 {
+    Q_OBJECT
+
 public:
-    node();
+    explicit node(QWidget *parent = nullptr);
+    ~node();
+
+private:
+    Ui::node *ui;
 };
 
 #endif // NODE_H

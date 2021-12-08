@@ -1,8 +1,8 @@
-﻿#ifndef REGIST_H
+#ifndef REGIST_H
 #define REGIST_H
 
 #include <QDialog>
-#include<user.h>
+#include<user/user.h>
 
 namespace Ui {
 class regist;

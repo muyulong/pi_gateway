@@ -1,9 +1,10 @@
-﻿#ifndef LOGIN_H
+#ifndef LOGIN_H
 #define LOGIN_H
 
 #include <QDialog>
-#include<widget.h>
-#include<user.h>
+#include<frame/widget.h>
+#include<user/user.h>
+#include<mainfrm.h>
 
 namespace Ui {
 class login;
@@ -17,12 +18,15 @@ public:
     explicit login(QWidget *parent = nullptr);
     void closeEvent(QCloseEvent *);
     Widget w;
+    mainFrm m;
     user U;
     ~login();
 
 private slots:
 
     void on_pushButton_login_clicked();
+    void on_pushButton_login_new_clicked();
+
 signals:
     void exitLogin();//新建一个信号槽
     void exitWelcome();

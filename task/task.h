@@ -1,7 +1,7 @@
-﻿#ifndef TASK_H
+#ifndef TASK_H
 #define TASK_H
 
-#include<dataBase.h>
+#include<database/dataBase.h>
 
 class task :public dataBase,public QWidget
 {

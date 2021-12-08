@@ -9,36 +9,40 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dataBase.cpp \
-    log.cpp \
-    login.cpp \
+    database\dataBase.cpp \
+    frame\log.cpp \
+    frame\login.cpp \
     main.cpp \
-    regist.cpp \
+    mainfrm.cpp \
+    frame\regist.cpp \
+    node.cpp \
     system.cpp \
-    task.cpp \
-    tcpserver.cpp \
-    user.cpp \
-    welcome.cpp \
-    widget.cpp
+    task\task.cpp \
+    user\user.cpp \
+    frame\welcome.cpp \
+    frame\widget.cpp
 
 HEADERS += \
-    dataBase.h \
-    log.h \
-    login.h \
-    regist.h \
+    database\dataBase.h \
+    frame\log.h \
+    frame\login.h \
+    mainfrm.h \
+    frame\regist.h \
+    node.h \
     system.h \
-    task.h \
-    tcpserver.h \
-    user.h \
-    welcome.h \
-    widget.h
+    task\task.h \
+    user\user.h \
+    frame\welcome.h \
+    frame\widget.h
 
 FORMS += \
-    log.ui \
-    login.ui \
-    regist.ui \
-    welcome.ui \
-    widget.ui
+    frame\log.ui \
+    frame\login.ui \
+    frame\regist.ui \
+    frame\welcome.ui \
+    frame\widget.ui \
+    mainfrm.ui \
+    node.ui
 
 CONFIG += lrelease
 CONFIG += embed_translations
@@ -52,3 +56,8 @@ win32-msvc*: {
     QMAKE_CFLAGS *= /utf-8
     QMAKE_CXXFLAGS *= /utf-8
 }
+
+RESOURCES += \
+    resource.qrc
+
+DISTFILES +=
