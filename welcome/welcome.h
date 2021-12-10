@@ -1,9 +1,9 @@
-﻿#ifndef WELCOME_H
+#ifndef WELCOME_H
 #define WELCOME_H
 
 #include <QDialog>
-#include"regist.h"
-#include"login.h"
+#include"user/regist.h"
+#include"user/login.h"
 
 namespace Ui {
 class welcome;

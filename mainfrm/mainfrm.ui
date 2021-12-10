@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1117</width>
-    <height>627</height>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -446,7 +446,7 @@
          <item>
           <widget class="QStackedWidget" name="stackedWidget">
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="page1">
             <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -574,7 +574,7 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QGroupBox" name="groupBox_5">
+                 <widget class="QGroupBox" name="groupBox_s2net">
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
@@ -582,113 +582,23 @@
                    </size>
                   </property>
                   <property name="title">
-                   <string>GroupBox</string>
+                   <string>网络调试</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_5">
-                   <item row="0" column="7">
-                    <widget class="QLineEdit" name="lineEdit"/>
-                   </item>
-                   <item row="1" column="3" colspan="2">
-                    <widget class="QLabel" name="label_15">
-                     <property name="text">
-                      <string>监听状态</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="3" column="0">
-                    <widget class="QLabel" name="label_14">
-                     <property name="text">
-                      <string>监听端口</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="3" column="6" colspan="2">
-                    <widget class="QPushButton" name="btnClear">
-                     <property name="text">
-                      <string>清空</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="5" colspan="3">
-                    <widget class="QLabel" name="lbListen">
-                     <property name="text">
-                      <string>TextLabel</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="0" colspan="2">
-                    <widget class="QPushButton" name="btnStart">
-                     <property name="text">
-                      <string>开始监听</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="6" colspan="2">
-                    <widget class="QLabel" name="label_13">
-                     <property name="text">
-                      <string>TextLabel</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QLabel" name="label_9">
-                     <property name="text">
-                      <string>监听地址</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="3" column="1" colspan="5">
-                    <widget class="QLineEdit" name="lineEditPort"/>
-                   </item>
-                   <item row="0" column="4" colspan="3">
-                    <widget class="QPushButton" name="btnSend">
-                     <property name="text">
-                      <string>发送消息</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="3" colspan="3">
-                    <widget class="QLabel" name="label_12">
-                     <property name="text">
-                      <string>socket状态</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="2" colspan="2">
-                    <widget class="QPushButton" name="btnStop">
-                     <property name="text">
-                      <string>停止监听</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1" colspan="2">
-                    <widget class="QComboBox" name="comboBox"/>
-                   </item>
-                   <item row="4" column="0" colspan="8">
-                    <widget class="QPlainTextEdit" name="plainTextEdit"/>
+                   <item row="0" column="0">
+                    <widget class="QWidget" name="widget_2net" native="true"/>
                    </item>
                   </layout>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QGroupBox" name="groupBox_4">
+                 <widget class="QGroupBox" name="groupBox_s2serial">
                   <property name="title">
-                   <string>GroupBox</string>
+                   <string>串口调试</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_8">
                    <item>
-                    <widget class="QLabel" name="label_6">
-                     <property name="text">
-                      <string>TextLabel</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_7">
-                     <property name="text">
-                      <string>TextLabel</string>
-                     </property>
-                    </widget>
+                    <widget class="QWidget" name="widget_2serial" native="true"/>
                    </item>
                   </layout>
                  </widget>
@@ -709,77 +619,13 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QGroupBox" name="groupBox_3">
+                 <widget class="QGroupBox" name="groupBox_task">
                   <property name="title">
                    <string>功能设定</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_4">
-                   <item row="0" column="1" colspan="2">
-                    <widget class="QTimeEdit" name="timeEdit"/>
-                   </item>
-                   <item row="3" column="4">
-                    <widget class="QPushButton" name="pushButton_delTask">
-                     <property name="text">
-                      <string>删除</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="3" colspan="2">
-                    <widget class="QPushButton" name="pushButton_setTask">
-                     <property name="text">
-                      <string>设定</string>
-                     </property>
-                    </widget>
-                   </item>
                    <item row="0" column="0">
-                    <widget class="QRadioButton" name="radioButton_time">
-                     <property name="layoutDirection">
-                      <enum>Qt::RightToLeft</enum>
-                     </property>
-                     <property name="text">
-                      <string>设置定时</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="0" column="3" colspan="2">
-                    <widget class="QComboBox" name="comboBox_event"/>
-                   </item>
-                   <item row="3" column="2">
-                    <widget class="QPushButton" name="pushButton_startTask">
-                     <property name="text">
-                      <string>启用</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="0">
-                    <widget class="QRadioButton" name="radioButton_dateTime">
-                     <property name="layoutDirection">
-                      <enum>Qt::RightToLeft</enum>
-                     </property>
-                     <property name="text">
-                      <string>计划任务</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="1" column="1" colspan="2">
-                    <widget class="QDateTimeEdit" name="dateTimeEdit"/>
-                   </item>
-                   <item row="3" column="0" colspan="2">
-                    <widget class="QLabel" name="label_currentSelect">
-                     <property name="text">
-                      <string>已选中第1个</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item row="2" column="0" colspan="5">
-                    <widget class="QTableView" name="tableView_task"/>
-                   </item>
-                   <item row="3" column="3">
-                    <widget class="QPushButton" name="pushButton_stopTask">
-                     <property name="text">
-                      <string>停止</string>
-                     </property>
-                    </widget>
+                    <widget class="QWidget" name="widget_task" native="true"/>
                    </item>
                   </layout>
                  </widget>

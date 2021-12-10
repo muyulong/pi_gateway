@@ -1,4 +1,4 @@
-QT       += core gui sql network
+QT       += core gui sql network serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,36 +10,43 @@ CONFIG += c++11
 
 SOURCES += \
     database\dataBase.cpp \
-    frame\log.cpp \
-    frame\login.cpp \
+    log\log.cpp \
+    user\login.cpp \
     main.cpp \
-    frame\regist.cpp \
-    node.cpp \
-    system.cpp \
+    user\regist.cpp \
+    com\net\netcom.cpp \
+    node\node.cpp \
+    com\serial\serialcom.cpp \
+    system\system.cpp \
     task\task.cpp \
     user\user.cpp \
-    frame\welcome.cpp \
-    frame\mainfrm.cpp
+    welcome\welcome.cpp \
+    mainfrm\mainfrm.cpp
 
 HEADERS += \
     database\dataBase.h \
-    frame\log.h \
-    frame\login.h \
-    frame\regist.h \
-    node.h \
-    system.h \
+    log\log.h \
+    user\login.h \
+    user\regist.h \
+    com\net\netcom.h \
+    node\node.h \
+    com\serial\serialcom.h \
+    system\system.h \
     task\task.h \
     user\user.h \
-    frame\welcome.h \
-    frame\mainfrm.h
+    welcome\welcome.h \
+    mainfrm\mainfrm.h
 
 FORMS += \
-    frame\log.ui \
-    frame\login.ui \
-    frame\regist.ui \
-    frame\welcome.ui \
-    frame\mainfrm.ui \
-    node.ui
+    log\log.ui \
+    user\login.ui \
+    user\regist.ui \
+    welcome\welcome.ui \
+    mainfrm\mainfrm.ui \
+    com\net\netcom.ui \
+    node\node.ui \
+    com\serial\serialcom.ui \
+    task\task.ui
 
 CONFIG += lrelease
 CONFIG += embed_translations

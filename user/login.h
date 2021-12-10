@@ -2,7 +2,7 @@
 #define LOGIN_H
 
 #include <QDialog>
-#include<frame/mainfrm.h>
+#include<mainfrm/mainfrm.h>
 #include<user/user.h>
 
 namespace Ui {

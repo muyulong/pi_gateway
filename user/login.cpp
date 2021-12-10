@@ -32,7 +32,7 @@ void login::on_pushButton_login_clicked()
             m.L.addLog(user,1);
             m.getLoginUser(user);
             m.show();
-            m.taskViewer();
+            //m.taskViewer();
             this->close();
             emit exitWelcome();
         }

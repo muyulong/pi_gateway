@@ -1,4 +1,4 @@
-#include "frame/welcome.h"
+#include "welcome/welcome.h"
 #include <QApplication>
 #include <QTextCodec>
 

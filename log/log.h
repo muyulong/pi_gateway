@@ -1,7 +1,7 @@
 #ifndef LOG_H
 #define LOG_H
 
-#include <QDialog>
+#include <QWidget>
 #include<database/dataBase.h>
 #include <vector>
 #include <QStandardItemModel>
@@ -13,7 +13,7 @@ namespace Ui {
 class log;
 }
 
-class log : public QDialog,public dataBase
+class log : public QWidget,public dataBase
 {
     Q_OBJECT
 

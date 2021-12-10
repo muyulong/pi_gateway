@@ -2,7 +2,7 @@
 #include "ui_log.h"
 
 log::log(QWidget *parent) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::log)
 {
     QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));

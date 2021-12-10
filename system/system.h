@@ -1,7 +1,7 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include "frame/log.h"
+#include "log/log.h"
 
 class system
 {

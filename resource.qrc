@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>Aqua.qss</file>
-        <file>flatWhite.qss</file>
+        <file>qss/Aqua.qss</file>
+        <file>qss/flatWhite.qss</file>
     </qresource>
 </RCC>
