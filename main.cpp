@@ -9,7 +9,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     //QFile qss(":Aqua.qss");
-     QFile qss(":flatWhite.qss");
+    //QFile qss(":flatWhite.qss");
+    QFile qss("");
     if( qss.open(QFile::ReadOnly))
     {
         qDebug("open success");

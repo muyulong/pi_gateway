@@ -13,35 +13,32 @@ SOURCES += \
     frame\log.cpp \
     frame\login.cpp \
     main.cpp \
-    mainfrm.cpp \
     frame\regist.cpp \
     node.cpp \
     system.cpp \
     task\task.cpp \
     user\user.cpp \
     frame\welcome.cpp \
-    frame\widget.cpp
+    frame\mainfrm.cpp
 
 HEADERS += \
     database\dataBase.h \
     frame\log.h \
     frame\login.h \
-    mainfrm.h \
     frame\regist.h \
     node.h \
     system.h \
     task\task.h \
     user\user.h \
     frame\welcome.h \
-    frame\widget.h
+    frame\mainfrm.h
 
 FORMS += \
     frame\log.ui \
     frame\login.ui \
     frame\regist.ui \
     frame\welcome.ui \
-    frame\widget.ui \
-    mainfrm.ui \
+    frame\mainfrm.ui \
     node.ui
 
 CONFIG += lrelease

@@ -73,13 +73,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="pushButton_login_new">
-       <property name="text">
-        <string>新版登录</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
   </layout>

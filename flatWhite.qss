@@ -1,14 +1,4 @@
-QPalette{background:#FFFFFF;}*{outline:0px;color:#57595B;}
 
-QWidget[form="true"],QLabel[frameShape="1"]{
-border:1px solid #B6B6B6;
-border-radius:0px;
-}
-
-.QFrame{
-border:1px solid #B6B6B6;
-border-radius:3px;
-}
 
 QWidget#widget_title,QWidget#widget_left{
 background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #E4E4E4,stop:1 #E4E4E4);
@@ -93,7 +83,7 @@ border-style:none;
 border:1px solid #B6B6B6;
 color:#57595B;
 padding:5px;
-min-height:15px;
+min-height:50px;
 border-radius:5px;
 background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #E4E4E4,stop:1 #E4E4E4);
 }
