@@ -20,7 +20,7 @@ class task :public QWidget,public dataBase
 public:
     explicit task(QWidget *parent = nullptr);
 
-    void task::initTask();
+    void initTask();
     void addTask(QDateTime dateTime,QTime time,int taskContentID,bool radioSelect);
     vector<vector<QString>> getTask();
     bool delTask(int taskID);
