@@ -64,10 +64,6 @@ private:
 
     bool maxOrNormal;//true表示当前窗口状态为normal，图标应显示为max
 
-    QSize norSize;
-    QSize maxSize;
-
-
 private slots:
 
     void ShowDateTime();

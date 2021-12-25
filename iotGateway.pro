@@ -24,6 +24,7 @@ SOURCES += \
     mainfrm\mainfrm.cpp
 
 HEADERS += \
+    com\net\heartbeat.h \
     database\dataBase.h \
     log\log.h \
     user\login.h \

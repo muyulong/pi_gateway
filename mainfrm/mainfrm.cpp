@@ -26,11 +26,6 @@ void mainFrm::initFrm()
     //this->resize(QGuiApplication::primaryScreen()->availableGeometry().width(),QGuiApplication::primaryScreen()->availableGeometry().height());
     //qDebug()<<this;
 
-    maxSize.setWidth(QGuiApplication::primaryScreen()->availableGeometry().width()-30);
-    maxSize.setHeight(QGuiApplication::primaryScreen()->availableGeometry().height());
-    norSize.setWidth(this->width()-30);
-    norSize.setHeight(this->height()-30);
-
     ui->label_tile->setText("网络节点智能管理系统");
     ui->label_tile->setFont(QFont("Microsoft Yahei", 20));
     this->setWindowTitle(ui->label_tile->text());
@@ -210,6 +205,7 @@ void mainFrm::buttonClick()
         ui->stackedWidget->setCurrentIndex(0);
     } else if (tname == "系统设置") {
         ui->stackedWidget->setCurrentIndex(1);
+        NN->initNet();
         SS->initMycom();
     } else if (tname == "使用说明") {
         ui->stackedWidget->setCurrentIndex(2);
@@ -263,12 +259,10 @@ void mainFrm::onMaxOrNormal(bool)
         icon = style()->standardPixmap(QStyle::SP_TitleBarNormalButton);
         ui->pushButton_max->setIcon(icon);
         setWindowState( Qt::WindowMaximized );
-        //this->RoundedRect(maxSize.width(),maxSize.width());
     }else {
         icon = style()->standardPixmap(QStyle::SP_TitleBarMaxButton);
         ui->pushButton_max->setIcon(icon);
         setWindowState( Qt::WindowNoState );
-        //this->RoundedRect(norSize.width(),norSize.height());
     }
     maxOrNormal = !maxOrNormal;
 }

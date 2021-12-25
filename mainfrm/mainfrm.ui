@@ -446,7 +446,7 @@
          <item>
           <widget class="QStackedWidget" name="stackedWidget">
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page1">
             <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -464,6 +464,12 @@
              </property>
              <item>
               <widget class="QGroupBox" name="groupBox">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>200</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
@@ -524,19 +530,62 @@
                <property name="title">
                 <string>设备信息</string>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_7">
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <property name="leftMargin">
+                 <number>10</number>
+                </property>
+                <property name="topMargin">
+                 <number>10</number>
+                </property>
+                <property name="rightMargin">
+                 <number>10</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>10</number>
+                </property>
                 <item>
-                 <widget class="QLabel" name="label">
-                  <property name="text">
-                   <string>TextLabel</string>
+                 <widget class="QWidget" name="widget_node_tree" native="true">
+                  <property name="maximumSize">
+                   <size>
+                    <width>500</width>
+                    <height>16777215</height>
+                   </size>
                   </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_8">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QTreeView" name="treeView"/>
+                   </item>
+                  </layout>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_5">
-                  <property name="text">
-                   <string>TextLabel</string>
-                  </property>
+                 <widget class="QWidget" name="widget_node_panel" native="true">
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                  </layout>
                  </widget>
                 </item>
                </layout>
@@ -585,6 +634,18 @@
                    <string>网络调试</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_5">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>10</number>
+                   </property>
                    <item row="0" column="0">
                     <widget class="QWidget" name="widget_2net" native="true"/>
                    </item>
@@ -597,6 +658,18 @@
                    <string>串口调试</string>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_8">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>10</number>
+                   </property>
                    <item>
                     <widget class="QWidget" name="widget_2serial" native="true"/>
                    </item>
@@ -609,6 +682,9 @@
              <item>
               <widget class="QWidget" name="widget_3" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
                 <property name="topMargin">
                  <number>0</number>
                 </property>
@@ -624,6 +700,18 @@
                    <string>功能设定</string>
                   </property>
                   <layout class="QGridLayout" name="gridLayout_4">
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>10</number>
+                   </property>
                    <item row="0" column="0">
                     <widget class="QWidget" name="widget_task" native="true"/>
                    </item>

@@ -44,11 +44,8 @@ void serialCom::initMycom()
 
 //另读串口函数
 void serialCom::readMyCom()
-{//读串口函数
-    QByteArray temp=myCom.readAll();
-    //读取串口缓冲区的所有数据给临时变量temp
-    ui->textBrowser->insertPlainText("[in]:"+temp+"\n");
-    //将串口的数据显示在窗口的文本浏览器中
+{
+    this->getLinkData();
 }
 
 void serialCom::on_openMyComBtn_clicked()
@@ -139,7 +136,7 @@ void serialCom::on_openMyComBtn_clicked()
     ui->parityComboBox->setEnabled(false);
     ui->stopBitsComboBox->setEnabled(false);
     ui->portNameComboBox->setEnabled(false);
-     ui->flowComboBox->setEnabled(false);
+    ui->flowComboBox->setEnabled(false);
 }
 void serialCom::on_closeMyComBtn_clicked()
 {
@@ -157,11 +154,41 @@ void serialCom::on_closeMyComBtn_clicked()
 
 void serialCom::on_sendMsgBtn_clicked()
 {
-    myCom.write(ui->sendMsgLineEdit->text().toLatin1());
-    ui->textBrowser->insertPlainText("[out]:"+ui->sendMsgLineEdit->text()+"\n");
+    this->sendLinkData(ui->sendMsgLineEdit->text());
 }
 
 void serialCom::on_pushButton_clear_clicked()
 {
     ui->textBrowser->clear();
+}
+
+//供其他函数调用的方法
+//建立连接
+void serialCom::linkStart()
+{
+    this->on_openMyComBtn_clicked();
+}
+
+//断开连接
+void serialCom::linkStop()
+{
+    this->on_closeMyComBtn_clicked();
+}
+
+//获取传输数据
+QString serialCom::getLinkData()
+{
+    //读串口函数
+    QByteArray temp=myCom.readAll();
+    //读取串口缓冲区的所有数据给临时变量temp
+    ui->textBrowser->insertPlainText("[in]:"+temp+"\n");
+    //将串口的数据显示在窗口的文本浏览器中
+    return QString(temp);
+}
+
+//发送数据
+void serialCom::sendLinkData(QString data)
+{
+    myCom.write(data.toLatin1());
+    ui->textBrowser->insertPlainText("[out]:"+data+"\n");
 }

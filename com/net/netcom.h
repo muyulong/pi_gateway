@@ -5,6 +5,9 @@
 #include <QHostInfo>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include<QMessageBox>
+#include<QThread>
+#include<com/net/heartbeat.h>
 
 namespace Ui {
 class netCom;
@@ -30,6 +33,10 @@ private slots:
 
     void on_btnClear_clicked();
 
+    void onReadyRead();
+
+    void on_btnSend_clicked();
+
     void on_newConnection();
 
     void onConnected();
@@ -38,9 +45,21 @@ private slots:
 
     void onStateChanged(QAbstractSocket::SocketState socketState);
 
-    void onReadyRead();
+    //供其他函数调用的方法
+    void linkStart();
+    //建立连接
+    void linkStop();
+    //断开连接
+    QString getLinkData();
+    //获取传输数据
+    void sendLinkData(QString data);
+    //发送数据
+    void onDead();
+    //心跳停止
 
-    void on_btnSend_clicked();
+signals:
+    void hasReadData();
+    void stopListen();
 
 private:
     Ui::netCom *ui;
@@ -48,6 +67,9 @@ private:
     //------------------------
     QTcpServer *m_tcpServer = nullptr;
     QTcpSocket *m_tcpSocket = nullptr;
+    QList<QTcpSocket*> tcpSocketList;
+    int tcpSocket_Max;
+    HeartBeat *heart;
 };
 
 #endif // NETCOM_H

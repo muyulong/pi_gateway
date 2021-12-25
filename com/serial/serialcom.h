@@ -32,6 +32,16 @@ private slots:
 
     void on_pushButton_clear_clicked();
 
+    //供其他函数调用的方法
+    void linkStart();
+    //建立连接
+    void linkStop();
+    //断开连接
+    QString getLinkData();
+    //获取传输数据
+    void sendLinkData(QString data);
+    //发送数据
+
 private:
 
     Ui::serialCom *ui;

@@ -214,14 +214,14 @@ void task::taskTable(int size_row)
     ui->tableView_task->setModel(standItemModel);    //挂载表格模型
     //设置表格属性
     //tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);        //表头信息显示居中
-    ui->tableView_task->setColumnWidth(0,150);       //设定表格宽度
-    ui->tableView_task->setColumnWidth(1,80);
-    ui->tableView_task->setColumnWidth(2,75);
+    //ui->tableView_task->setColumnWidth(0,150);       //设定表格宽度
+    //ui->tableView_task->setColumnWidth(1,80);
+    //ui->tableView_task->setColumnWidth(2,75);
     //tableView->verticalHeader()->hide();    //隐藏默认显示的行头
     ui->tableView_task->setSelectionBehavior(QAbstractItemView::SelectRows); //设置选中时整行选中
     ui->tableView_task->setEditTriggers(QAbstractItemView::NoEditTriggers);  //设置表格属性只读，不能编辑
     /* 设置列宽在可视界面自适应宽度 */
-    //ui->tableView_task->horizontalHeader()->setSectionResizeMode (QHeaderView::Stretch);
+    ui->tableView_task->horizontalHeader()->setSectionResizeMode (QHeaderView::Stretch);
     //qDebug() <<tableView->horizontalHeader();
     /* 行颜色交替显示 */
     ui->tableView_task->setAlternatingRowColors(true);
