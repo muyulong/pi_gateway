@@ -65,6 +65,12 @@ void mainFrm::initFrm()
     //关联信号和槽
     timer->start(1000);
 
+    //初始化节点界面
+    QGridLayout *gridNode = new QGridLayout;
+    gridNode->addWidget(NNode,0,0);
+    ui->widget_node->setLayout(gridNode);
+    //
+
 
     //圆角矩形
     //绘制背景图

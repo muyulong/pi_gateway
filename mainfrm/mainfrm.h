@@ -6,6 +6,7 @@
 #include<task/task.h>
 #include<com/net/netcom.h>
 #include<com/serial/serialcom.h>
+#include<node/node.h>
 #include<QScreen>
 #include<QPainter>
 #include <QBitmap>
@@ -39,6 +40,8 @@ public:
     netCom N;
     serialCom *SS = new serialCom;
     serialCom S;
+    node *NNode = new node;
+    node Node;
 
     ~mainFrm();
 

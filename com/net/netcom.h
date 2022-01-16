@@ -45,6 +45,7 @@ private slots:
 
     void onStateChanged(QAbstractSocket::SocketState socketState);
 
+public slots:
     //供其他函数调用的方法
     void linkStart();
     //建立连接

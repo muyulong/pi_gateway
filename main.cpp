@@ -23,6 +23,24 @@ int main(int argc, char *argv[])
         qDebug("Open failed");
     }
 
+    //
+//    QString strMsg="h";
+//    char* chMsg;
+//    QByteArray baMsg = strMsg.toLatin1();
+//    chMsg=baMsg.data();
+//    QByteArray byte_nMsg = nMsg.toLatin1();
+//    for(int i = 0; i < nMsg.size(); i++)
+//    {
+//        qDebug() << int(byte_nMsg.at(i));//输出
+//    }
+//    char bitMask = 1 << 7;
+//         for (int i = 0; i < 8; i++)
+//         {
+//             qDebug()  << (bitMask & chMsg[i] ? 1 : 0);
+//             chMsg[i] = chMsg[i] << 1;
+//         }
+    //
+
     welcome w;
     w.show();
 

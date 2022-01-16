@@ -2,6 +2,7 @@
 #define SYSTEM_H
 
 #include "log/log.h"
+#include "com/net/netcom.h"
 
 class system
 {
@@ -17,17 +18,18 @@ public:
     //检查待执行计划任务
     void getDevicesInfo();
     //根据收到的信息，设置节点数据
-    //void getOperableDevices();
-    void commandEncode(QString msg);
-    //void commandDecode(未知类型);
-    //void commandSend(未知类型);
-    //void commandReceive();
+
+    void commandSend(QString,int,int);
+
+    void commandReceive(QString);
 
 
 
 
     private:
     class log L;
+    netCom N;
+    vector<vector<QString>> dvInfo;
 
 };
 
