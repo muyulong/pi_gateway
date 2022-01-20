@@ -17,7 +17,6 @@ SOURCES += \
     com\net\netcom.cpp \
     node\node.cpp \
     com\serial\serialcom.cpp \
-    system\system.cpp \
     task\task.cpp \
     user\user.cpp \
     welcome\welcome.cpp \
@@ -32,7 +31,6 @@ HEADERS += \
     com\net\netcom.h \
     node\node.h \
     com\serial\serialcom.h \
-    system\system.h \
     task\task.h \
     user\user.h \
     welcome\welcome.h \

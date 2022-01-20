@@ -29,6 +29,14 @@ public:
     explicit mainFrm(QWidget *parent = nullptr);
     void getLoginUser(QString user);
 
+    void initSystem();
+    //初始化非主页面的系统基本功能
+    void initDevices();
+    //初始化节点数据
+    void checkTasks();
+    //检查待执行计划任务
+
+
     QString usr;
 
 

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QStandardItemModel>
+#include "log/log.h"
+#include "com/net/netcom.h"
 
 namespace Ui {
 class node;
@@ -32,10 +34,27 @@ public:
     void setTree();
 
 
+    //--------------------
+
+    void getDevicesInfo();
+    //根据收到的信息，设置节点数据
+
+    void commandSend(QString,int,int);
+
+    void commandReceive(QString);
+
+    //--------------------
+
+
 private:
     Ui::node *ui;
     bool lightStatus;
     bool fanStatus;
+
+    //-------------
+    class log L;
+    netCom N;
+    vector<vector<QString>> dvInfo;
 };
 
 #endif // NODE_H

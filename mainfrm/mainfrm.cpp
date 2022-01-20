@@ -304,3 +304,25 @@ void mainFrm::ShowDateTime()
     QString dtm =QDateTime::currentDateTime() .toString("yyyy年MM月dd日 hh:mm:ss ddd");
     ui->label_bottom_time->setText(dtm);
 }
+
+
+void mainFrm::initSystem()
+{
+    initDevices();
+    checkTasks();
+    L.addLog("系统",3);
+    N.linkStart();
+}
+
+void mainFrm::initDevices()
+{
+    //dvInfo[0][0]=".ffff";
+    //dvInfo[0][1]="0";
+    //-----------
+
+}
+
+void mainFrm::checkTasks()
+{
+
+}
