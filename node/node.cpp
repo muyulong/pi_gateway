@@ -275,7 +275,7 @@ void node::commandSend(QString msg,int idvl,int nodeID)
 
 //需要一个初始化节点的函数
 //例如 initNode
-//先完成节点类吧
+//先完成节点类
 //
 //ffff节点标识 -A
 //子节点标识 -S
@@ -301,3 +301,8 @@ void node::commandReceive(QString rcvMsg)
     }
 
 }
+
+
+
+
+

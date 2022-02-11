@@ -8,10 +8,10 @@ int main(int argc, char *argv[])
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     QApplication a(argc, argv);
 
-    //QFile qss(":qss/Aqua.qss");
-    QFile qss(":qss/lightgray.qss");
+    //QFile qss(":qss/myTheme.qss");
+    //QFile qss(":qss/lightgray.qss");
     //QFile qss(":qss/flatWhite.qss");
-    //QFile qss("");
+    QFile qss("");
     if( qss.open(QFile::ReadOnly))
     {
         qDebug("open success");

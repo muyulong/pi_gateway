@@ -3,7 +3,7 @@
 
 
 welcome::welcome(QWidget *parent) :
-    QDialog(parent),
+    QWidget(parent),
     ui(new Ui::welcome)
 {
     ui->setupUi(this);

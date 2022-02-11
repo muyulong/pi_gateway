@@ -79,22 +79,22 @@ void mainFrm::initFrm()
     //---------------
 
     //设置窗体透明
-    this->setAttribute(Qt::WA_TranslucentBackground, true);
+    //this->setAttribute(Qt::WA_TranslucentBackground, true);
     //设置无边框
     //this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     //实例阴影shadow
-    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
+    //QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
     //设置阴影距离
-    shadow->setOffset(0,0);
+    //shadow->setOffset(0,0);
     //设置阴影颜色
-    shadow->setColor(QColor("#444444"));
+    //shadow->setColor(QColor("#444444"));
     //设置阴影圆角
-    shadow->setBlurRadius(15);
+    //shadow->setBlurRadius(15);
     //给嵌套QWidget设置阴影
-    ui->widget_bg->setGraphicsEffect(shadow);
+    //ui->widget_bg->setGraphicsEffect(shadow);
     //给垂直布局器设置边距(此步很重要, 设置宽度为阴影的宽度)
-    ui->lay_bg->setMargin(1);
-    ui->widget_bg->setStyleSheet("background-color:white");
+    //ui->lay_bg->setMargin(1);
+    //ui->widget_bg->setStyleSheet("background-color:white");
 
 
     /* custom system btn */
@@ -147,6 +147,7 @@ void mainFrm::initFrm()
     connect( ui->pushButton_min, SIGNAL(clicked(bool)), this, SLOT( onMin(bool)) );
     connect( ui->pushButton_max, SIGNAL(clicked(bool)), this, SLOT( onMaxOrNormal(bool)) );
     connect( ui->pushButton_close, SIGNAL(clicked(bool)), this, SLOT( onClose(bool)) );
+
 
     //设置顶部和侧边导航按钮
     QList<QToolButton *> tbtns = ui->widget_fucBtns->findChildren<QToolButton *>();

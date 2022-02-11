@@ -3,5 +3,6 @@
         <file>qss/Aqua.qss</file>
         <file>qss/flatWhite.qss</file>
         <file>qss/lightgray.qss</file>
+        <file>qss/myTheme.qss</file>
     </qresource>
 </RCC>

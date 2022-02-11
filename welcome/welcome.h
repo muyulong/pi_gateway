@@ -1,7 +1,7 @@
 #ifndef WELCOME_H
 #define WELCOME_H
 
-#include <QDialog>
+#include <QWidget>
 #include"user/regist.h"
 #include"user/login.h"
 
@@ -10,7 +10,7 @@ class welcome;
 }
 
 
-class welcome : public QDialog
+class welcome : public QWidget
 {
     Q_OBJECT
 
