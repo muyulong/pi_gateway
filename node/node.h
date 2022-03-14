@@ -6,8 +6,9 @@
 #include "log/log.h"
 #include "com/net/netcom.h"
 
-namespace Ui {
-class node;
+namespace Ui
+{
+    class node;
 }
 
 class node : public QWidget
@@ -25,26 +26,24 @@ public:
     void initTree();
 
     //设置节点
-    void setName(QString,QString);
-    void setSwitch(bool,bool);
-    void setFuncAvable(bool,bool,bool);
+    void setName(QString, QString);
+    void setSwitch(bool, bool);
+    void setFuncAvable(bool, bool, bool);
     void setTemp(float);
 
     //设置树
     void setTree();
-
 
     //--------------------
 
     void getDevicesInfo();
     //根据收到的信息，设置节点数据
 
-    void commandSend(QString,int,int);
+    void commandSend(QString, int, int);
 
     void commandReceive(QString);
 
     //--------------------
-
 
 private:
     Ui::node *ui;

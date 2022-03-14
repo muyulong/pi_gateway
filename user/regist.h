@@ -2,10 +2,11 @@
 #define REGIST_H
 
 #include <QDialog>
-#include<user/user.h>
+#include <user/user.h>
 
-namespace Ui {
-class regist;
+namespace Ui
+{
+    class regist;
 }
 
 class regist : public QDialog
@@ -22,7 +23,7 @@ public:
 private slots:
     void on_pushButton_register_clicked();
 signals:
-    void exitRegist();//新建一个信号槽
+    void exitRegist(); //新建一个信号槽
 private:
     Ui::regist *ui;
 };

@@ -2,18 +2,19 @@
 #define LOG_H
 
 #include <QWidget>
-#include<database/dataBase.h>
+#include <database/dataBase.h>
 #include <vector>
 #include <QStandardItemModel>
 #include "QHBoxLayout"
-#include<QTableView>
+#include <QTableView>
 #include <QHeaderView>
 
-namespace Ui {
-class log;
+namespace Ui
+{
+    class log;
 }
 
-class log : public QWidget,public dataBase
+class log : public QWidget, public dataBase
 {
     Q_OBJECT
 
@@ -23,9 +24,9 @@ public:
     void logViewer(int typeId);
     void tableCreator(int size_row);
 
-    void addLog(QString user,int eventId);
+    void addLog(QString user, int eventId);
     vector<vector<QString>> getLog(QString type);
-    void delLogs(vector<int> row,int delType,int count);
+    void delLogs(vector<int> row, int delType, int count);
 
     ~log();
 
@@ -41,7 +42,7 @@ private slots:
 private:
     Ui::log *ui;
     QTableView *tableView;
-    vector<vector<QString> > viewLog;
+    vector<vector<QString>> viewLog;
     int currentTab;
     bool checkState;
     int size_row;

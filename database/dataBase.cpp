@@ -2,7 +2,6 @@
 
 dataBase::dataBase()
 {
-
 }
 
 void dataBase::initDatebase()
@@ -13,10 +12,10 @@ void dataBase::initDatebase()
     }
     else
     {
-        db = QSqlDatabase::addDatabase("QSQLITE","first");
+        db = QSqlDatabase::addDatabase("QSQLITE", "first");
         db.setDatabaseName("test.db");
     }
-    if( db.open())
+    if (db.open())
     {
         qDebug() << "connect database success!";
     }
@@ -26,33 +25,34 @@ void dataBase::initDatebase()
     }
 }
 
-void dataBase::createTable(QString  tableName,QString columnName[],QString dataType[],int columnNum){
-    query=QSqlQuery(db);
-    if(isTableExist(query,tableName))
+void dataBase::createTable(QString tableName, QString columnName[], QString dataType[], int columnNum)
+{
+    query = QSqlQuery(db);
+    if (isTableExist(query, tableName))
     {
         qDebug() << "Table has created!";
     }
     else
     {
-        QString create_table = "create table "+tableName+"("+columnName[0]+" "+dataType[0]+")";
+        QString create_table = "create table " + tableName + "(" + columnName[0] + " " + dataType[0] + ")";
         query.exec(create_table);
-        qDebug() <<create_table;
-        //qDebug() << query.lastError();
-        for(int i=1;i<columnNum;i++)
+        qDebug() << create_table;
+        // qDebug() << query.lastError();
+        for (int i = 1; i < columnNum; i++)
         {
-            QString insert_column = "alter table "+tableName+" add column "+columnName[i]+" "+dataType[i];
+            QString insert_column = "alter table " + tableName + " add column " + columnName[i] + " " + dataType[i];
             query.exec(insert_column);
-            qDebug() <<insert_column;
-            //qDebug() << query.lastError();
+            qDebug() << insert_column;
+            // qDebug() << query.lastError();
         }
-        //QString insert_column = "(name varchar, pwd varchar)";
+        // QString insert_column = "(name varchar, pwd varchar)";
         qDebug() << "Table created!";
     }
 }
 
-bool dataBase::isTableExist(QSqlQuery & query, QString table)
+bool dataBase::isTableExist(QSqlQuery &query, QString table)
 {
-    QString sql=QString("select * from '%1'"). arg(table);
+    QString sql = QString("select * from '%1'").arg(table);
     query.exec(sql);
     return query.next();
 }
@@ -70,9 +70,10 @@ int dataBase::sqlSize(QSqlQuery query)
     query.seek(initialPos);
     return pos;
 }
-//sqlite不支持直接读取结果大小
-//https://stackoverflow.com/questions/26495049/qsqlquery-size-always-returns-1
+// sqlite不支持直接读取结果大小
+// https://stackoverflow.com/questions/26495049/qsqlquery-size-always-returns-1
 
-dataBase::~dataBase(){
+dataBase::~dataBase()
+{
     db.close();
 }

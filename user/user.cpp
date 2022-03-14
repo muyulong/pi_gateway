@@ -2,17 +2,16 @@
 
 user::user()
 {
-
 }
-bool user::compareUser(QString s1,QString s2)
+bool user::compareUser(QString s1, QString s2)
 {
     //在数据库中检索s1对应的结果串，然后与s2进行比对
     QSqlQuery query(db);
-    QString search_sql="select pwd from userInfo where name=(?)";
+    QString search_sql = "select pwd from userInfo where name=(?)";
     query.prepare(search_sql);
     query.addBindValue(s1);
 
-    if(!query.exec())
+    if (!query.exec())
     {
         qDebug() << "Error: Fail to Search." << query.lastError();
     }
@@ -24,10 +23,11 @@ bool user::compareUser(QString s1,QString s2)
     //报错： QSqlQuery::value: not positioned on a valid record
     QString pass;
 
-    if(query.next()){
+    if (query.next())
+    {
         pass = query.value(0).toString();
     }
-    if(s2==pass)
+    if (s2 == pass)
     {
         return true;
     }
@@ -37,32 +37,32 @@ bool user::compareUser(QString s1,QString s2)
     }
 }
 
-//Driver not load原因： 是因为QSQLQuery对象没有和db关联
+// Driver not load原因： 是因为QSQLQuery对象没有和db关联
 
-int user::setUser(QString name,QString pwd){
+int user::setUser(QString name, QString pwd)
+{
 
-    query=QSqlQuery(db);
-    //QString insert_sql = "insert into userInfo values (?, ?)";
-    QString same =QString("select * from userInfo where name='%1' ").arg(name);
-    //query.prepare(insert_sql);
+    query = QSqlQuery(db);
+    // QString insert_sql = "insert into userInfo values (?, ?)";
+    QString same = QString("select * from userInfo where name='%1' ").arg(name);
+    // query.prepare(insert_sql);
     query.prepare("INSERT INTO userInfo (name, pwd) "
-                          "VALUES (?, ?)");
+                  "VALUES (?, ?)");
     query.addBindValue(name);
     query.addBindValue(pwd);
-    if(query.exec())
+    if (query.exec())
     {
         qDebug() << "inserted success!";
         return 1;
-
     }
-    else if(query.exec(same)&&query.first())
+    else if (query.exec(same) && query.first())
     {
         return 2;
     }
     else
     {
         qDebug() << query.lastError();
-        //return 0;
+        // return 0;
     }
     return 0;
 }

@@ -5,12 +5,13 @@
 #include <QHostInfo>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include<QMessageBox>
-#include<QThread>
-#include<com/net/heartbeat.h>
+#include <QMessageBox>
+#include <QThread>
+#include <com/net/heartbeat.h>
 
-namespace Ui {
-class netCom;
+namespace Ui
+{
+    class netCom;
 }
 
 class netCom : public QWidget
@@ -68,7 +69,7 @@ private:
     //------------------------
     QTcpServer *m_tcpServer = nullptr;
     QTcpSocket *m_tcpSocket = nullptr;
-    QList<QTcpSocket*> tcpSocketList;
+    QList<QTcpSocket *> tcpSocketList;
     int tcpSocket_Max;
     HeartBeat *heart;
 };

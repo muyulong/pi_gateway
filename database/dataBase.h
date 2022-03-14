@@ -3,9 +3,8 @@
 
 #include <QtSql>
 #include <QSqlQuery>
-#include<QMessageBox>
-#include <QCloseEvent>
-
+#include <QMessageBox>
+//#include <QCloseEvent>
 
 using namespace std;
 
@@ -14,8 +13,8 @@ class dataBase
 public:
     dataBase();
     void initDatebase();
-    void createTable(QString  tableName,QString columnName[],QString dataType[],int columnNum);
-    bool isTableExist(QSqlQuery & query, QString table);
+    void createTable(QString tableName, QString columnName[], QString dataType[], int columnNum);
+    bool isTableExist(QSqlQuery &query, QString table);
     int sqlSize(QSqlQuery query);
 
     QSqlDatabase db;
@@ -24,8 +23,6 @@ public:
     ~dataBase();
 
 private:
-
-
 };
 
 #endif // DATABASE_H

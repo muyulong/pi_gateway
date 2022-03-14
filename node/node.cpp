@@ -1,9 +1,8 @@
 #include "node.h"
 #include "ui_node.h"
 
-node::node(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::node)
+node::node(QWidget *parent) : QWidget(parent),
+                              ui(new Ui::node)
 {
     ui->setupUi(this);
 
@@ -22,7 +21,7 @@ node::~node()
  * 获取节点地址，设置对应控件的值
  * 获取节点类型，根据类型设置启用或禁用风扇或者灯泡
  * 获取节点温度，设置温度控件的值
-*/
+ */
 
 //初始化节点
 void node::initNode()
@@ -45,69 +44,70 @@ void node::initNode()
 //初始化节点树
 void node::initTree()
 {
-    //1，构造Model
-    QStandardItemModel* model = new QStandardItemModel(ui->treeView);
-    model->setHorizontalHeaderLabels(QStringList()<<"节点编号"<< "节点类型");     //设置列头
-    //2，给QTreeView应用model
+    // 1，构造Model
+    QStandardItemModel *model = new QStandardItemModel(ui->treeView);
+    model->setHorizontalHeaderLabels(QStringList() << "节点编号"
+                                                   << "节点类型"); //设置列头
+    // 2，给QTreeView应用model
     ui->treeView->setModel(model);
 }
 
 //设置节点
-void node::setName(QString nodeName,QString parNodeName)
+void node::setName(QString nodeName, QString parNodeName)
 {
     ui->lb_nodeName->setText(nodeName);
     ui->lb_parNodeName->setText(parNodeName);
 }
 
-void node::setSwitch(bool lightStatus,bool fanStatus)
+void node::setSwitch(bool lightStatus, bool fanStatus)
 {
-    if(lightStatus)
+    if (lightStatus)
     {
         ui->lb_lightStatus->setText("已开启");
     }
-    if(!lightStatus)
+    if (!lightStatus)
     {
         ui->lb_lightStatus->setText("未开启");
     }
-    if(fanStatus)
+    if (fanStatus)
     {
         ui->lb_fanStatus->setText("已开启");
     }
-    if(!fanStatus)
+    if (!fanStatus)
     {
         ui->lb_fanStatus->setText("未开启");
     }
 }
 
-void node::setFuncAvable(bool tp,bool lt,bool fn)
+void node::setFuncAvable(bool tp, bool lt, bool fn)
 {
-    if(tp)
+    if (tp)
     {
         ui->checkBox_temp->setChecked(1);
     }
-    if(!tp)
+    if (!tp)
     {
         ui->checkBox_temp->setChecked(0);
     }
-    if(lt)
+    if (lt)
     {
         ui->checkBox_light->setChecked(1);
         ui->pushButton_opLight->setDisabled(0);
         ui->pushButton_clLight->setDisabled(0);
     }
-    if(!lt)
+    if (!lt)
     {
         ui->checkBox_light->setChecked(0);
         ui->pushButton_opLight->setDisabled(1);
         ui->pushButton_clLight->setDisabled(1);
     }
-    if(fn)
+    if (fn)
     {
         ui->checkBox_fan->setChecked(1);
         ui->pushButton_opFan->setDisabled(0);
         ui->pushButton_clFan->setDisabled(0);
     }
-    if(!fn)
+    if (!fn)
     {
         ui->checkBox_fan->setChecked(0);
         ui->pushButton_opFan->setDisabled(1);
@@ -124,9 +124,7 @@ void node::setTemp(float temp)
 //设置树
 void node::setTree()
 {
-
 }
-
 
 //------------------------------
 
@@ -144,14 +142,13 @@ commandReceive()
 编码解码功能放在接收和发送完成之后写
 */
 
-
 void node::getDevicesInfo()
 {
-    QString rcvMsg="#RE-A.ffff////54321@";
+    QString rcvMsg = "#RE-A.ffff////54321@";
     QString nodeMsg[3];
-    nodeMsg[0]="#RE-S.0bcaINFA00001@";
-    nodeMsg[1]="#RE-S.0bcbINLT00011@";
-    nodeMsg[2]="#RE-S.0bccINQT//201@";
+    nodeMsg[0] = "#RE-S.0bcaINFA00001@";
+    nodeMsg[1] = "#RE-S.0bcbINLT00011@";
+    nodeMsg[2] = "#RE-S.0bccINQT//201@";
     //定义一个二维容器数组
     //[0][0]为广播地址
     //[0][1]为数组行数
@@ -165,53 +162,53 @@ void node::getDevicesInfo()
     //#RE-S.0bcbINLT00011@ 表示0bcb节点初始化灯泡，当前灯泡状态为开启
     //#RE-S.0bccINQT00201@ 表示0bcc节点初始化温度传感器，当前温度20度
 
-    int nodeNum=rcvMsg.mid(14,4).toInt()+1;
-    int row=3;
-    vector<vector<QString>> rcvInfo(nodeNum,vector<QString>(row,0));
-    rcvInfo[0][0]=".ffff";
-    rcvInfo[0][1]=rcvMsg.mid(14,4);
-    for(int i=0;i<nodeNum;i++)
+    int nodeNum = rcvMsg.mid(14, 4).toInt() + 1;
+    int row = 3;
+    vector<vector<QString>> rcvInfo(nodeNum, vector<QString>(row, 0));
+    rcvInfo[0][0] = ".ffff";
+    rcvInfo[0][1] = rcvMsg.mid(14, 4);
+    for (int i = 0; i < nodeNum; i++)
     {
-        rcvInfo[i+1][0]=nodeMsg[i].mid(6,4);
-        rcvInfo[i+1][1]=nodeMsg[i].mid(10,4);
-        rcvInfo[i+1][2]=nodeMsg[i].mid(14,4);
+        rcvInfo[i + 1][0] = nodeMsg[i].mid(6, 4);
+        rcvInfo[i + 1][1] = nodeMsg[i].mid(10, 4);
+        rcvInfo[i + 1][2] = nodeMsg[i].mid(14, 4);
     }
-    dvInfo=rcvInfo;
+    dvInfo = rcvInfo;
 }
 
 QString commandConvert(QString cmd)
 {
     QString C_cmd;
-    if(cmd=="开灯")
+    if (cmd == "开灯")
     {
-        C_cmd="OL";
+        C_cmd = "OL";
     }
-    if(cmd=="关灯")
+    if (cmd == "关灯")
     {
-        C_cmd="CL";
+        C_cmd = "CL";
     }
-    if(cmd=="开风")
+    if (cmd == "开风")
     {
-        C_cmd="KF";
+        C_cmd = "KF";
     }
-    if(cmd=="关风")
+    if (cmd == "关风")
     {
-        C_cmd="GF";
+        C_cmd = "GF";
     }
-    if(cmd=="查温")
+    if (cmd == "查温")
     {
-        C_cmd="QT";
+        C_cmd = "QT";
     }
-    if(cmd=="初始化")
+    if (cmd == "初始化")
     {
-        C_cmd="//";
+        C_cmd = "//";
     }
     return C_cmd;
 }
 
 int parityCheck(QString nMsg)
 {
-    //QString nMsg="112233";
+    // QString nMsg="112233";
 
     //    QString strMsg="h";
     //    char* chMsg;
@@ -230,13 +227,13 @@ int parityCheck(QString nMsg)
     //         }
 
     QByteArray byte_nMsg = nMsg.toLatin1();
-    qDebug()<<byte_nMsg;
-    return  1;
+    qDebug() << byte_nMsg;
+    return 1;
 }
 
-//commandSend("开灯",0,2);
+// commandSend("开灯",0,2);
 //把编码解码和发送接收做一块儿了
-void node::commandSend(QString msg,int idvl,int nodeID)
+void node::commandSend(QString msg, int idvl, int nodeID)
 {
     //#SE-S.0bcaOL1@
     QString idvl_type;
@@ -246,24 +243,24 @@ void node::commandSend(QString msg,int idvl,int nodeID)
     switch (idvl)
     {
     case 0:
-        idvl_type="-S";
+        idvl_type = "-S";
         break;
 
     case 1:
-        idvl_type="-A";
+        idvl_type = "-A";
         break;
 
     default:
         break;
     }
     //#SE-S.0bcaOL1@
-    node_add=dvInfo[nodeID+1][0];
-    cmd_str="#SE"+idvl_type+"."+node_add+commandConvert(msg);
-    parity_type=QString(parityCheck(cmd_str));
-    cmd_str=cmd_str+parity_type+"@";
-    //return cmd_str;
+    node_add = dvInfo[nodeID + 1][0];
+    cmd_str = "#SE" + idvl_type + "." + node_add + commandConvert(msg);
+    parity_type = QString(parityCheck(cmd_str));
+    cmd_str = cmd_str + parity_type + "@";
+    // return cmd_str;
 
-    //N.sendLinkData();
+    // N.sendLinkData();
 }
 
 //#RE-S.0bcaQTOK//201@
@@ -277,32 +274,102 @@ void node::commandSend(QString msg,int idvl,int nodeID)
 //例如 initNode
 //先完成节点类
 //
-//ffff节点标识 -A
+// ffff节点标识 -A
 //子节点标识 -S
-void node::commandReceive(QString rcvMsg)
+
+void node::dataConvertor(QString data)
 {
-    QString idvl_type;
-    QString node_add;
-    QString parity_type;
-    QString cmd_str;
-    QString data_str;
-    idvl_type = rcvMsg.mid(4,2);
-    node_add = rcvMsg.mid(6,4);
-    cmd_str = rcvMsg.mid(10,4);
-    data_str = rcvMsg.mid(14,4);
-    parity_type = rcvMsg.mid(18,1);
-    if(idvl_type=="-A")
-    {
-
-    }
-    if(idvl_type=="-S")
-    {
-
-    }
-
 }
 
+void node::cmdConvertor(QString cmd)
+{
+    if (cmd.mid(0, 2) = "//")
+    {
+    }
+    if (cmd.mid(0, 2) = "IN")
+    {
+        if (cmd.mid(2, 2) = "FA")
+        {
+        }
+        if (cmd.mid(2, 2) = "LT")
+        {
+        }
+        if (cmd.mid(2, 2) = "QT")
+        {
+        }
+    }
+    else if (cmd.mid(0, 1) = "O")
+    {
+        if (cmd.mid(1, 1) = "L")
+        {
+            if (cmd.mid(2, 2) = "OK")
+            {
+            }
+            if (cmd.mid(2, 2) = "FL")
+            {
+            }
+        }
+        if (cmd.mid(1, 1) = "F")
+        {
+            if (cmd.mid(2, 2) = "OK")
+            {
+            }
+            if (cmd.mid(2, 2) = "FL")
+            {
+            }
+        }
+    }
+    else if (cmd.mid(0, 1) = "C")
+    {
+        if (cmd.mid(1, 1) = "L")
+        {
+            if (cmd.mid(2, 2) = "OK")
+            {
+            }
+            if (cmd.mid(2, 2) = "FL")
+            {
+            }
+        }
+        if (cmd.mid(1, 1) = "F")
+        {
+            if (cmd.mid(2, 2) = "OK")
+            {
+            }
+            if (cmd.mid(2, 2) = "FL")
+            {
+            }
+        }
+    }
+    else if (cmd.mid(0, 2) = "QT")
+    {
+        if (cmd.mid(2, 2) = "OK")
+        {
+        }
+        if (cmd.mid(2, 2) = "FL")
+        {
+        }
+    }
+    else
+    {
+    }
+}
 
-
-
-
+void node::commandReceive(QString rcvMsg)
+{
+    QString idvl_type;   //单播或者多播
+    QString node_add;    //节点地址
+    QString parity_type; //校验位
+    QString cmd_str;     //命令位
+    QString data_str;    //数据位
+    idvl_type = rcvMsg.mid(4, 2);
+    node_add = rcvMsg.mid(6, 4);
+    cmd_str = rcvMsg.mid(10, 4);
+    data_str = rcvMsg.mid(14, 4);
+    parity_type = rcvMsg.mid(18, 1);
+    if (idvl_type == "-A")
+    {
+    }
+    if (idvl_type == "-S")
+    {
+    }
+}

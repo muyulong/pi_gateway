@@ -5,9 +5,9 @@
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 
-
-namespace Ui {
-class serialCom;
+namespace Ui
+{
+    class serialCom;
 }
 
 class serialCom : public QWidget
@@ -43,11 +43,9 @@ private slots:
     //发送数据
 
 private:
-
     Ui::serialCom *ui;
 
     QSerialPort myCom;
-
 };
 
 #endif // SERIALCOM_H

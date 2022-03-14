@@ -2,13 +2,13 @@
 #define WELCOME_H
 
 #include <QWidget>
-#include"user/regist.h"
-#include"user/login.h"
+#include "user/regist.h"
+#include "user/login.h"
 
-namespace Ui {
-class welcome;
+namespace Ui
+{
+    class welcome;
 }
-
 
 class welcome : public QWidget
 {

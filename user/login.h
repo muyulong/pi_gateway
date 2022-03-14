@@ -2,11 +2,12 @@
 #define LOGIN_H
 
 #include <QDialog>
-#include<mainfrm/mainfrm.h>
-#include<user/user.h>
+#include <mainfrm/mainfrm.h>
+#include <user/user.h>
 
-namespace Ui {
-class login;
+namespace Ui
+{
+    class login;
 }
 
 class login : public QDialog
@@ -25,8 +26,9 @@ private slots:
     void on_pushButton_login_clicked();
 
 signals:
-    void exitLogin();//新建一个信号槽
+    void exitLogin(); //新建一个信号槽
     void exitWelcome();
+
 private:
     Ui::login *ui;
 };

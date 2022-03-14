@@ -2,8 +2,8 @@
 #define HEARTBEAT_H
 
 #include <QObject>
-#include<QTimer>
-#include<QDateTime>
+#include <QTimer>
+#include <QDateTime>
 
 //--
 class HeartBeat : public QObject
@@ -17,7 +17,7 @@ public:
         checkTimer = new QTimer(this);
         checkTimer->setInterval(interval);
         last = QDateTime::currentDateTime();
-        connect(checkTimer, SIGNAL(timeout()),this, SLOT(check()));
+        connect(checkTimer, SIGNAL(timeout()), this, SLOT(check()));
     }
     ~HeartBeat()
     {
@@ -46,9 +46,10 @@ private slots:
             emit dead();
         }
     }
+
 private:
-    QDateTime  last;
-    QTimer*    checkTimer;
+    QDateTime last;
+    QTimer *checkTimer;
 };
 //--
 

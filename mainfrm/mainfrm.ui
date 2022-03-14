@@ -140,6 +140,10 @@
            <property name="text">
             <string>设备信息</string>
            </property>
+           <property name="icon">
+            <iconset resource="../resource.qrc">
+             <normaloff>:/qss/myTheme.qss</normaloff>:/qss/myTheme.qss</iconset>
+           </property>
           </widget>
          </item>
          <item>
@@ -721,6 +725,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
