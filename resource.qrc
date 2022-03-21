@@ -4,5 +4,17 @@
         <file>qss/flatWhite.qss</file>
         <file>qss/lightgray.qss</file>
         <file>qss/myTheme.qss</file>
+        <file>pic/btn_bg.png</file>
+        <file>pic/btn_bg_cover.png</file>
+        <file>pic/top_bg.png</file>
+        <file>pic/top_bg_main.png</file>
+        <file>pic/btn_exit.png</file>
+        <file>pic/btn_help.png</file>
+        <file>pic/btn_home.png</file>
+        <file>pic/btn_setting.png</file>
+        <file>pic/light.png</file>
+        <file>pic/fan.png</file>
+        <file>pic/humidity.png</file>
+        <file>pic/temperature.png</file>
     </qresource>
 </RCC>

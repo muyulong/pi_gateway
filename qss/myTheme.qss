@@ -3,48 +3,54 @@ author:muyulong
 lastedited:2022.1
 * ================================================ */
 
-/*所有的按钮*/
-.QPushButton,.QToolButton{
-color:#232323;
-background:#dddddd;
-}
-.QPushButton:hover,QToolButton:hover{
-background:#BEBEBE;
-}
-
-.QPushButton:pressed,QToolButton:pressed{
-color:#F4F4F4;
-background:#686868;
-}
-
 /*欢迎界面*/
 QWidget#welcome{
 width:700px;
 height:433px;
-background:#dddddd;
+background:#FDF6EC;
 }
 /*欢迎界面的按钮*/
 QWidget#welcome>QPushButton{
+background:#61A4BC;
+color:#F5F5F5;
 border:1px;
+font-size:20px;
 border-radius:5px;
 padding:5px;
 min-height:30px;
 }
+QWidget#welcome>QPushButton:hover{
+background:#56BBF1;
+}
+QWidget#welcome>QPushButton:pressed{
+background:#6FB2D2;
+}
 /*欢迎界面的文字*/
 QWidget#welcome>QLabel{
+font-family:"Microsoft Yahei";
 color:#232323;
 }
 /*登录和注册界面*/
 QDialog#login,QDialog#regist{
 width:500px;
 height:300px;
-background:#dddddd;
+background:#FDF6EC;
 }
 /*登录和注册界面的按钮*/
 QDialog#login>QPushButton,QDialog#regist>QPushButton{
 border:1px;
 border-radius:5px;
-min-height:15px;
+min-height:20px;
+width:40px;
+color:#232323;
+background:#dddddd;
+}
+QDialog#login>QPushButton:hover,QDialog#regist>QPushButton:hover{
+background:#BEBEBE;
+}
+QDialog#login>QPushButton:pressed,QDialog#regist>QPushButton:pressed{
+color:#F4F4F4;
+background:#686868;
 }
 /*登录和注册界面的文字*/
 QDialog#login>QLabel,QDialog#regist>QLabel{
@@ -52,29 +58,95 @@ color:#232323;
 }
 /*登录和注册界面的输入框*/
 QDialog#login>QLineEdit,QDialog#regist>QLineEdit{
-background: #dddddd;
-selection-background-color: #BEBEBE;
-border: 1px solid #30475E;
+background: #90E0EF;
+selection-background-color: #03045E;
+border: 1px solid #CAF0F8;
 border-radius: 2px;
 padding: 0 1px;
 }
 /*主界面*/
-QWidget#mainFrm{
-background: #dddddd;
-
+/*主界面的PushButton和toolButton*/
+QWidget#widget_left>QPushButton,QWidget#widget_fucBtns>QToolButton{
+border-image: url(:/pic/btn_bg.png);
+min-height:50px;
+min-width:100px;
+border-radius:5px;
+font-size:20px;
+color:#FFFFFF;
+font-family:"Microsoft Yahei";
+}
+/*主界面的toolButton*/
+QWidget#widget_fucBtns>QToolButton{
+border-radius:10px;
+min-height:100px;
+border-style:none;
+margin-left:5px;
+}
+/*PushButton和ToolButton hover*/
+QWidget#widget_left>QPushButton:hover,QWidget#widget_fucBtns>QToolButton:hover{
+border-image: url(:/pic/btn_bg_cover.png);
+}
+/*PushButton和ToolButton pressed*/
+QWidget#widget_left>QPushButton:pressed,QWidget#widget_fucBtns>QToolButton:pressed{
+padding-left:3px;
+padding-top:3px;
+}
+QWidget#widget_left>QPushButton#pushButton_about{
+min-height:40px;
+min-width:60px;
+}
+QWidget#widget_left,QWidget#widget_top,QWidget#widget_main{
+border-image: url(:/pic/top_bg.png);
+}
+QWidget#node{
+border-radius:15px;
+border-image: url(:/pic/top_bg_main.png);
+color:#FFFFFF;
+font-size:16px;
+font-family:"Microsoft Yahei";
+}
+QWidget#widget_node_panel>QLabel{
+color:#FFFFFF;
+font-size:20px;
+font-family:"Microsoft Yahei";
+border-radius:15px;
+background-color:#22577E;
+max-height:40px;
+max-width:100px;
+}
+QWidget#widget_node_panel>QCheckBox{
+color:#FFFFFF;
+font-size:20px;
+font-family:"Microsoft Yahei";
+max-height:40px;
+max-width:100px;
+}
+QWidget#widget_node_panel>QPushButton{
+height:40px;
+width:40px;
+border-radius:20px;
+font-size:20px;
+color:#FFFFFF;
+font-family:"Microsoft Yahei";
+}
+QWidget#widget_node_panel>QPushButton#pushButton_opLight,QWidget#widget_node_panel>QPushButton#pushButton_opFan{
+background:green;
+}
+QWidget#widget_node_panel>QPushButton#pushButton_clLight,QWidget#widget_node_panel>QPushButton#pushButton_clFan{
+background:red;
+}
+QWidget#widget_node_tree>QTreeView{
+}
+QWidget#widget_bottom{
+background:#051455;
 }
 /*主界面的文字*/
-QWidget#mainFrm>QLabel{
-color:#232323;
+QWidget#mainFrm>QLabel,QWidget#widget_bottom>QLabel,QWidget#widget_left>QLabel{
+color:#FFFFFF;
+font-size:16px;
+font-family:"Microsoft Yahei";
 }
-/*左侧的文字*/
-QWidget#widget_left>QLabel{
-color:#232323;
-}
-/*底部的文字*/
-QWidget#widget_bottom>QLabel{
-color:#232323;
-}
+
 /*主界面信息页*/
 QWidget#page1{
 
@@ -89,25 +161,7 @@ QWidget#widget_node_panel{
 }
 /*主界面logo*/
 QWidget#widget_top>QLabel{
-color:#232323;
-}
-/*主界面的PushButton*/
-QWidget#widget_left>QPushButton{
-min-height:50px;
-min-width:165px;
-}
-/*主界面的toolButton*/
-QWidget#widget_fucBtns>QToolButton{
-min-height:100px;
-min-width:100px;
-}
-/*PushButton和ToolButton hover*/
-QWidget#widget_left>QPushButton:hover,QWidget#widget_fucBtns>QToolButton:hover{
-background:#BEBEBE;
-}
-/*PushButton和ToolButton pressed*/
-QWidget#widget_left>QPushButton:pressed,QWidget#widget_fucBtns>QToolButton:pressed{
-background:#686868;
+color:#FFFFFF;
 }
 /*主界面的设置页*/
 QWidget#page2{

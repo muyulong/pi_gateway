@@ -63,6 +63,19 @@
           <number>10</number>
          </property>
          <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QLabel" name="label_tips">
            <property name="text">
             <string>TextLabel</string>
@@ -137,12 +150,21 @@
              <height>50</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
             <string>设备信息</string>
            </property>
            <property name="icon">
             <iconset resource="../resource.qrc">
              <normaloff>:/qss/myTheme.qss</normaloff>:/qss/myTheme.qss</iconset>
+           </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -168,7 +190,7 @@
             </size>
            </property>
            <property name="text">
-            <string>温度表</string>
+            <string>温度湿度表</string>
            </property>
           </widget>
          </item>
@@ -189,8 +211,14 @@
           <layout class="QHBoxLayout" name="horizontalLayout_online">
            <item>
             <widget class="QLabel" name="label_10">
+             <property name="maximumSize">
+              <size>
+               <width>80</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
-              <string>当前在线：</string>
+              <string>在线：</string>
              </property>
             </widget>
            </item>
@@ -207,8 +235,14 @@
           <layout class="QHBoxLayout" name="horizontalLayout_tasks">
            <item>
             <widget class="QLabel" name="label_11">
+             <property name="maximumSize">
+              <size>
+               <width>80</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
-              <string>计划任务：</string>
+              <string>任务：</string>
              </property>
             </widget>
            </item>
@@ -311,6 +345,16 @@
               <property name="text">
                <string>主界面</string>
               </property>
+              <property name="icon">
+               <iconset resource="../resource.qrc">
+                <normaloff>:/pic/btn_home.png</normaloff>:/pic/btn_home.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item>
@@ -323,6 +367,16 @@
               </property>
               <property name="text">
                <string>系统设置</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resource.qrc">
+                <normaloff>:/pic/btn_setting.png</normaloff>:/pic/btn_setting.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -337,6 +391,16 @@
               <property name="text">
                <string>使用说明</string>
               </property>
+              <property name="icon">
+               <iconset resource="../resource.qrc">
+                <normaloff>:/pic/btn_help.png</normaloff>:/pic/btn_help.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item>
@@ -349,6 +413,16 @@
               </property>
               <property name="text">
                <string>退出系统</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../resource.qrc">
+                <normaloff>:/pic/btn_exit.png</normaloff>:/pic/btn_exit.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>48</width>
+                <height>48</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -397,6 +471,12 @@
               <property name="text">
                <string/>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item row="0" column="2">
@@ -410,6 +490,12 @@
               <property name="text">
                <string/>
               </property>
+              <property name="iconSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
+              </property>
              </widget>
             </item>
             <item row="0" column="1">
@@ -422,6 +508,12 @@
               </property>
               <property name="text">
                <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>30</width>
+                <height>30</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -467,80 +559,17 @@
            <widget class="QWidget" name="page1">
             <layout class="QVBoxLayout" name="verticalLayout_4">
              <property name="leftMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
-             <item>
-              <widget class="QGroupBox" name="info">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>200</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>200</height>
-                </size>
-               </property>
-               <property name="title">
-                <string>信息概览</string>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_3">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item row="0" column="0">
-                 <widget class="QLabel" name="label_2">
-                  <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;当前平均温度：&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="1">
-                 <widget class="QLabel" name="label_3">
-                  <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;当前风扇开启个数：&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;预计通风量：（Q=60VA）&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="0" column="2">
-                 <widget class="QLabel" name="label_4">
-                  <property name="text">
-                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;当前照明灯开启个数：&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;预计照明度：（用公式估算）&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLCDNumber" name="lcdNumber"/>
-                </item>
-                <item row="1" column="1">
-                 <widget class="QLCDNumber" name="lcdNumber_2"/>
-                </item>
-                <item row="1" column="2">
-                 <widget class="QLCDNumber" name="lcdNumber_3"/>
-                </item>
-               </layout>
-              </widget>
-             </item>
              <item>
               <widget class="QGroupBox" name="node">
                <property name="title">
@@ -548,16 +577,16 @@
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <property name="leftMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="topMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="rightMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>10</number>
                 </property>
                 <item>
                  <widget class="QWidget" name="widget_node" native="true"/>
@@ -570,16 +599,16 @@
            <widget class="QWidget" name="page2">
             <layout class="QHBoxLayout" name="horizontalLayout_5">
              <property name="leftMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
              <item>
               <widget class="QWidget" name="widget_2" native="true">

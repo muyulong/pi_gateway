@@ -1,4 +1,6 @@
-QT       += core gui sql network serialport
+QT       += core gui sql network serialport charts
+
+QMAKE_CXXFLAGS += /MP
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,6 +13,7 @@ CONFIG += c++11
 SOURCES += \
     database\dataBase.cpp \
     log\log.cpp \
+    thchart\thchart.cpp \
     user\login.cpp \
     main.cpp \
     user\regist.cpp \
@@ -26,6 +29,7 @@ HEADERS += \
     com\net\heartbeat.h \
     database\dataBase.h \
     log\log.h \
+    thchart\thchart.h \
     user\login.h \
     user\regist.h \
     com\net\netcom.h \
@@ -38,6 +42,7 @@ HEADERS += \
 
 FORMS += \
     log\log.ui \
+    thchart\thchart.ui \
     user\login.ui \
     user\regist.ui \
     welcome\welcome.ui \

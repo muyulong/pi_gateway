@@ -19,7 +19,7 @@ void mainFrm::initFrm()
     // setPalette(QPalette(QColor(132,223,255)));//设置窗口背景
     // setAutoFillBackground(true);
     // this->resize(1920,1030);
-    this->resize(1200, 742);
+    this->resize(1200, 540);
 
     // this->resize(QGuiApplication::primaryScreen()->availableGeometry().width(),QGuiApplication::primaryScreen()->availableGeometry().height());
     // qDebug()<<this;
@@ -31,6 +31,9 @@ void mainFrm::initFrm()
     //初始化日志表
     ui->stackedWidget->addWidget(LL);
     LL->logViewer(1);
+
+    //初始化图表
+    ui->stackedWidget->addWidget(TH);
 
     //初始化任务表
     QGridLayout *gridTask = new QGridLayout;
@@ -134,9 +137,9 @@ void mainFrm::initFrm()
     ui->pushButton_max->setToolTip(tr("最大化"));
 
     //设置最小化、关闭按钮的样式
-    ui->pushButton_max->setStyleSheet("background-color:transparent;border:none;");
-    ui->pushButton_close->setStyleSheet("background-color:transparent;border:none;");
-    ui->pushButton_min->setStyleSheet("background-color:transparent;border:none;");
+    ui->pushButton_max->setStyleSheet("background-color:#5584AC;border:none;");
+    ui->pushButton_close->setStyleSheet("background-color:#5584AC;border:none;");
+    ui->pushButton_min->setStyleSheet("background-color:#5584AC;border:none;");
 
     connect(ui->pushButton_min, SIGNAL(clicked(bool)), this, SLOT(onMin(bool)));
     connect(ui->pushButton_max, SIGNAL(clicked(bool)), this, SLOT(onMaxOrNormal(bool)));
@@ -150,7 +153,7 @@ void mainFrm::initFrm()
         // btn->setIconSize(icoSize);
         // btn->setMinimumWidth(icoWidth);
         tbtn->setCheckable(true);
-        tbtn->setStyleSheet("background-color:transparent;border:none;");
+        //tbtn->setStyleSheet("background-color:transparent;border:none;");
         connect(tbtn, SIGNAL(clicked()), this, SLOT(buttonClick()));
     }
     foreach (QPushButton *lbtn, lbtns)
@@ -158,7 +161,7 @@ void mainFrm::initFrm()
         // btn->setIconSize(icoSize);
         // btn->setMinimumWidth(icoWidth);
         lbtn->setCheckable(true);
-        lbtn->setStyleSheet("background-color:transparent;border:none;");
+        //lbtn->setStyleSheet("background-color:transparent;border:none;");
         connect(lbtn, SIGNAL(clicked()), this, SLOT(buttonClick()));
     }
     ui->toolButton_main->click();
@@ -229,9 +232,9 @@ void mainFrm::buttonClick()
     {
         ui->stackedWidget->setCurrentWidget(LL);
     }
-    else if (lname == "温度表")
+    else if (lname == "温度湿度表")
     {
-        ui->stackedWidget->setCurrentIndex(4);
+        ui->stackedWidget->setCurrentWidget(TH);
     }
     else if (tname == "退出系统")
     {
@@ -329,7 +332,7 @@ void mainFrm::initSystem()
     initDevices();
     checkTasks();
     L.addLog("系统", 3);
-    N.linkStart();
+    N.Start();
 }
 
 void mainFrm::initDevices()

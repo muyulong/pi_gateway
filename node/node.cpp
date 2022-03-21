@@ -27,14 +27,14 @@ node::~node()
 void node::initNode()
 {
     ui->lb_nodeName->setText("0000");
-    ui->lb_parNodeName->setText("ffff");
-    ui->lb_temp->setText("0");
+    ui->lb_nodeType->setText("协调器");
+    ui->lb_temperature->setText("0");
     ui->checkBox_fan->setChecked(0);
     ui->checkBox_light->setChecked(0);
-    ui->checkBox_temp->setChecked(0);
+    ui->checkBox_temperature->setChecked(0);
     ui->checkBox_fan->setCheckable(0);
     ui->checkBox_light->setCheckable(0);
-    ui->checkBox_temp->setCheckable(0);
+    ui->checkBox_temperature->setCheckable(0);
     ui->pushButton_opLight->setDisabled(1);
     ui->pushButton_clLight->setDisabled(1);
     ui->pushButton_opFan->setDisabled(1);
@@ -97,11 +97,11 @@ void node::setFuncAvable()
 {
     if (m_nodeStatus.hasTH)
     {
-        ui->checkBox_temp->setChecked(1);
+        ui->checkBox_temperature->setChecked(1);
     }
     else
     {
-        ui->checkBox_temp->setChecked(0);
+        ui->checkBox_temperature->setChecked(0);
     }
     if (m_nodeStatus.hasLight)
     {
@@ -250,9 +250,9 @@ void node::commandSend(int nodeID, QString msg)
     N.sendData(cmd_str);
 }
 
-void node::nodeSetting(nodeMsg m_Node)
+/*void node::nodeSetting(nodeMsg m_Node)
 {
-    m_nodeStatus.addr = m_Node.nodeAddr.;
+    //m_nodeStatus.addr = m_Node.nodeAddr.;
     if(m_Node.nodeAddr =="0000")
     {
         m_nodeStatus.nodeType = "协调器节点";
@@ -320,7 +320,7 @@ void node::nodeSetting(nodeMsg m_Node)
     default:
         break;
     }
-}
+}*/
 
 // 0bca#IN11-11 表示0bca节点风扇打开，灯泡打开
 // 0bcb#IN11-11 表示0bcb节点风扇打开，灯泡打开
@@ -334,13 +334,13 @@ void node::nodeSetting(nodeMsg m_Node)
 // 0bcc#TH22221 0bcc节点查询到温度，温度为22度
 // 0bca#--11-11 0bca节点有灯泡，风扇，温湿度传感器
 
-void node::getNodeMsg()
+/*void node::getNodeMsg()
 {
     rcvMsg.enqueue(N.getData());
     while (rcvMsg.count()>0) {
         this->commandReceive();
     }
-}
+}*/
 
 void node::commandReceive()
 {
@@ -350,5 +350,5 @@ void node::commandReceive()
     m_nodeMsg.cmd = msg.mid(5, 2);     //命令位
     m_nodeMsg.data = msg.mid(8, 4);    //数据位
     QString parity_type = msg.mid(11, 1); //校验位
-    setNode(m_nodeMsg);
+    //setNode(m_nodeMsg);
 }

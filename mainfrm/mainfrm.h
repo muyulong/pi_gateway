@@ -12,6 +12,7 @@
 #include <QBitmap>
 #include <QGraphicsEffect>
 #include <QPaintEvent>
+#include "thchart/thchart.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -47,6 +48,9 @@ public:
     serialCom S;
     node *NNode = new node;
     node Node;
+
+    THchart *TH = new THchart;
+
 
     ~mainFrm();
 
