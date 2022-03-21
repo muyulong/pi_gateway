@@ -30,6 +30,7 @@ void netCom::initNet()
     tcpSocket_Max = 1;
     //--------------------------------------------
     //本地主机名
+
     QString hostName = QHostInfo::localHostName();
 
     //本机IP地址
@@ -55,7 +56,7 @@ void netCom::initNet()
 
 //供其他函数调用的方法
 //建立连接
-void netCom::linkStart()
+void netCom::Start()
 {
     //当前选择的ip
     QString ip = ui->comboBox->currentText();
@@ -80,7 +81,7 @@ void netCom::onDead()
 }
 
 //断开连接
-void netCom::linkStop()
+void netCom::Stop()
 {
     if (m_tcpServer->isListening())
     {
@@ -95,7 +96,7 @@ void netCom::linkStop()
 }
 
 //获取传输数据
-QString netCom::getLinkData()
+QString netCom::getData()
 {
     QString result;
     for (int i = 0; i < tcpSocketList.count(); i++)
@@ -115,7 +116,7 @@ QString netCom::getLinkData()
 //已解决
 
 //发送数据
-void netCom::sendLinkData(QString data)
+void netCom::sendData(QString data)
 {
     for (int i = 0; i < tcpSocketList.length(); i++) //遍历客户端
     {
@@ -129,12 +130,12 @@ void netCom::sendLinkData(QString data)
 
 void netCom::on_btnStart_clicked()
 {
-    this->linkStart();
+    this->Start();
 }
 
 void netCom::on_btnStop_clicked()
 {
-    this->linkStop();
+    this->Stop();
 }
 
 void netCom::on_btnClear_clicked()
@@ -145,13 +146,13 @@ void netCom::on_btnClear_clicked()
 void netCom::onReadyRead()
 {
     emit hasReadData();
-    ui->plainTextEdit->appendPlainText("[in] " + this->getLinkData());
+    ui->plainTextEdit->appendPlainText("[in] " + this->getData());
 }
 
 void netCom::on_btnSend_clicked()
 {
     QString msg = ui->lineEdit->text();
-    this->sendLinkData(msg);
+    this->sendData(msg);
     // ui->plainTextEdit->appendPlainText("[out]"+msg);
 }
 

@@ -5,10 +5,12 @@
 #include <QStandardItemModel>
 #include "log/log.h"
 #include "com/net/netcom.h"
+#include <QQueue>
+#include<QVector>
 
 namespace Ui
 {
-    class node;
+class node;
 }
 
 class node : public QWidget
@@ -18,7 +20,26 @@ class node : public QWidget
 public:
     explicit node(QWidget *parent = nullptr);
     ~node();
-
+    struct nodeMsg
+    {
+        QVector<QString> nodeAddr;
+        QString cmd;
+        QString data;
+    };
+    struct nodeStatus
+    {
+        QString addr;
+        QString nodeType;
+        bool hasLight;
+        bool hasFan;
+        bool hasTH;
+        bool hasBeep;
+        bool lightStatus;
+        bool fanStatus;
+        bool beepStatus;
+        int temperature;
+        int humidity;
+    };
     //初始化节点
     void initNode();
 
@@ -26,34 +47,36 @@ public:
     void initTree();
 
     //设置节点
-    void setName(QString, QString);
-    void setSwitch(bool, bool);
-    void setFuncAvable(bool, bool, bool);
-    void setTemp(float);
+    void setName();
+    void setSwitch();
+    void setFuncAvable();
+    void setTH();
 
     //设置树
     void setTree();
 
     //--------------------
 
-    void getDevicesInfo();
+    void getNodeAddr();
     //根据收到的信息，设置节点数据
 
-    void commandSend(QString, int, int);
+    void nodeSetting(nodeMsg);
 
-    void commandReceive(QString);
+    void commandSend(int,QString);
+public slots:
+    void commandReceive();
 
     //--------------------
 
 private:
     Ui::node *ui;
-    bool lightStatus;
-    bool fanStatus;
 
     //-------------
     class log L;
     netCom N;
-    vector<vector<QString>> dvInfo;
+    QQueue<QString> rcvMsg;
+    nodeMsg m_nodeMsg;
+    nodeStatus m_nodeStatus;
 };
 
 #endif // NODE_H

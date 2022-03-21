@@ -2,7 +2,7 @@
 #include "ui_node.h"
 
 node::node(QWidget *parent) : QWidget(parent),
-                              ui(new Ui::node)
+    ui(new Ui::node)
 {
     ui->setupUi(this);
 
@@ -39,6 +39,13 @@ void node::initNode()
     ui->pushButton_clLight->setDisabled(1);
     ui->pushButton_opFan->setDisabled(1);
     ui->pushButton_clFan->setDisabled(1);
+
+    //connect(N,hasReadData(),this,commandReceive());
+
+    this->setName();
+    this->setSwitch();
+    this->setFuncAvable();
+    this->setTH();
 }
 
 //初始化节点树
@@ -47,78 +54,93 @@ void node::initTree()
     // 1，构造Model
     QStandardItemModel *model = new QStandardItemModel(ui->treeView);
     model->setHorizontalHeaderLabels(QStringList() << "节点编号"
-                                                   << "节点类型"); //设置列头
+                                     << "节点类型"); //设置列头
     // 2，给QTreeView应用model
     ui->treeView->setModel(model);
 }
 
 //设置节点
-void node::setName(QString nodeName, QString parNodeName)
+void node::setName()
 {
-    ui->lb_nodeName->setText(nodeName);
-    ui->lb_parNodeName->setText(parNodeName);
+    ui->lb_nodeName->setText(m_nodeStatus.addr);
 }
 
-void node::setSwitch(bool lightStatus, bool fanStatus)
+void node::setSwitch()
 {
-    if (lightStatus)
+    if (m_nodeStatus.lightStatus)
     {
         ui->lb_lightStatus->setText("已开启");
     }
-    if (!lightStatus)
+    else
     {
         ui->lb_lightStatus->setText("未开启");
     }
-    if (fanStatus)
+    if (m_nodeStatus.fanStatus)
     {
         ui->lb_fanStatus->setText("已开启");
     }
-    if (!fanStatus)
+    else
     {
         ui->lb_fanStatus->setText("未开启");
     }
+    if(m_nodeStatus.beepStatus)
+    {
+
+    }
+    else
+    {
+
+    }
 }
 
-void node::setFuncAvable(bool tp, bool lt, bool fn)
+void node::setFuncAvable()
 {
-    if (tp)
+    if (m_nodeStatus.hasTH)
     {
         ui->checkBox_temp->setChecked(1);
     }
-    if (!tp)
+    else
     {
         ui->checkBox_temp->setChecked(0);
     }
-    if (lt)
+    if (m_nodeStatus.hasLight)
     {
         ui->checkBox_light->setChecked(1);
         ui->pushButton_opLight->setDisabled(0);
         ui->pushButton_clLight->setDisabled(0);
     }
-    if (!lt)
+    else
     {
         ui->checkBox_light->setChecked(0);
         ui->pushButton_opLight->setDisabled(1);
         ui->pushButton_clLight->setDisabled(1);
     }
-    if (fn)
+    if (m_nodeStatus.hasFan)
     {
         ui->checkBox_fan->setChecked(1);
         ui->pushButton_opFan->setDisabled(0);
         ui->pushButton_clFan->setDisabled(0);
     }
-    if (!fn)
+    else
     {
         ui->checkBox_fan->setChecked(0);
         ui->pushButton_opFan->setDisabled(1);
         ui->pushButton_clFan->setDisabled(1);
     }
+    if(m_nodeStatus.hasBeep)
+    {
+
+    }
+    else
+    {
+
+    }
 }
 
-void node::setTemp(float temp)
+void node::setTH()
 {
-    QString temp_str = QString("%1").arg(temp);
-    ui->lb_temp->setText(temp_str);
+    //QString temp_str = QString("%1").arg(t);
+    //ui->lb_temp->setText(temp_str);
 }
 
 //设置树
@@ -142,68 +164,44 @@ commandReceive()
 编码解码功能放在接收和发送完成之后写
 */
 
-void node::getDevicesInfo()
+void node::getNodeAddr()
 {
-    QString rcvMsg = "#RE-A.ffff////54321@";
-    QString nodeMsg[3];
-    nodeMsg[0] = "#RE-S.0bcaINFA00001@";
-    nodeMsg[1] = "#RE-S.0bcbINLT00011@";
-    nodeMsg[2] = "#RE-S.0bccINQT//201@";
-    //定义一个二维容器数组
-    //[0][0]为广播地址
-    //[0][1]为数组行数
-    //存放 节点编号 节点类型 节点数据(开闭情况)
-    /*
-    [0][0] [0][1] [0][2]
-    [1][0] [1][1] [1][2]
-    */
-    //#RE-A.ffff////00021@ 表示0000根节点共有2个子节点
-    //#RE-S.0bcaINFA00001@ 表示0bca节点初始化风扇，当前风扇状态为关闭
-    //#RE-S.0bcbINLT00011@ 表示0bcb节点初始化灯泡，当前灯泡状态为开启
-    //#RE-S.0bccINQT00201@ 表示0bcc节点初始化温度传感器，当前温度20度
+    commandSend(0,"状态");
 
-    int nodeNum = rcvMsg.mid(14, 4).toInt() + 1;
-    int row = 3;
-    vector<vector<QString>> rcvInfo(nodeNum, vector<QString>(row, 0));
-    rcvInfo[0][0] = ".ffff";
-    rcvInfo[0][1] = rcvMsg.mid(14, 4);
-    for (int i = 0; i < nodeNum; i++)
-    {
-        rcvInfo[i + 1][0] = nodeMsg[i].mid(6, 4);
-        rcvInfo[i + 1][1] = nodeMsg[i].mid(10, 4);
-        rcvInfo[i + 1][2] = nodeMsg[i].mid(14, 4);
-    }
-    dvInfo = rcvInfo;
 }
 
-QString commandConvert(QString cmd)
+QString str2cmd(QString str)
 {
-    QString C_cmd;
-    if (cmd == "开灯")
+    QString cmd;
+    if (str == "开灯")
     {
-        C_cmd = "OL";
+        cmd = "OL";
     }
-    if (cmd == "关灯")
+    if (str == "关灯")
     {
-        C_cmd = "CL";
+        cmd = "CL";
     }
-    if (cmd == "开风")
+    if (str == "开风")
     {
-        C_cmd = "KF";
+        cmd = "OF";
     }
-    if (cmd == "关风")
+    if (str == "关风")
     {
-        C_cmd = "GF";
+        cmd = "CF";
     }
-    if (cmd == "查温")
+    if (str == "查温湿度")
     {
-        C_cmd = "QT";
+        cmd = "TH";
     }
-    if (cmd == "初始化")
+    if (str == "初始化")
     {
-        C_cmd = "//";
+        cmd = "--";
     }
-    return C_cmd;
+    if (str == "状态")
+    {
+        cmd = "S-";
+    }
+    return cmd;
 }
 
 int parityCheck(QString nMsg)
@@ -233,143 +231,124 @@ int parityCheck(QString nMsg)
 
 // commandSend("开灯",0,2);
 //把编码解码和发送接收做一块儿了
-void node::commandSend(QString msg, int idvl, int nodeID)
+
+// FFFF#//1 初始化所有设备
+// 0bca#//1 初始化0bca设备
+// FFFF#OL1 向所有节点发送开灯指令
+// 0bca#OF1 向0bca节点发送开风扇指令
+// FFFF#HT1 查询所有节点温度和湿度
+// 0bca#HT1
+// 0bca#S/1
+// FFFF#S/1
+
+void node::commandSend(int nodeID, QString msg)
 {
-    //#SE-S.0bcaOL1@
-    QString idvl_type;
-    QString node_add;
-    QString parity_type;
-    QString cmd_str;
-    switch (idvl)
-    {
-    case 0:
-        idvl_type = "-S";
-        break;
-
-    case 1:
-        idvl_type = "-A";
-        break;
-
-    default:
-        break;
-    }
-    //#SE-S.0bcaOL1@
-    node_add = dvInfo[nodeID + 1][0];
-    cmd_str = "#SE" + idvl_type + "." + node_add + commandConvert(msg);
-    parity_type = QString(parityCheck(cmd_str));
-    cmd_str = cmd_str + parity_type + "@";
-    // return cmd_str;
-
-    // N.sendLinkData();
+    QString node_add = m_nodeMsg.nodeAddr[nodeID];
+    QString cmd_str = node_add + "#" + str2cmd(msg);
+    QString parity_type = QString(parityCheck(cmd_str));
+    cmd_str = cmd_str + parity_type;
+    N.sendData(cmd_str);
 }
 
-//#RE-S.0bcaQTOK//201@
-//#RE-A.ffffCFOK////1@
-//#RE-A.ffff////00021@ 表示0000根节点共有2个子节点
-//#RE-S.0bcaINFA00001@ 表示0bca节点初始化风扇，当前风扇状态为关闭
-//#RE-S.0bcbINLT00011@ 表示0bcb节点初始化灯泡，当前灯泡状态为开启
-//#RE-S.0bccINQT00201@ 表示0bcc节点初始化温度传感器，当前温度20度
-
-//需要一个初始化节点的函数
-//例如 initNode
-//先完成节点类
-//
-// ffff节点标识 -A
-//子节点标识 -S
-
-void node::dataConvertor(QString data)
+void node::nodeSetting(nodeMsg m_Node)
 {
-}
-
-void node::cmdConvertor(QString cmd)
-{
-    if (cmd.mid(0, 2) = "//")
+    m_nodeStatus.addr = m_Node.nodeAddr.;
+    if(m_Node.nodeAddr =="0000")
     {
-    }
-    if (cmd.mid(0, 2) = "IN")
-    {
-        if (cmd.mid(2, 2) = "FA")
-        {
-        }
-        if (cmd.mid(2, 2) = "LT")
-        {
-        }
-        if (cmd.mid(2, 2) = "QT")
-        {
-        }
-    }
-    else if (cmd.mid(0, 1) = "O")
-    {
-        if (cmd.mid(1, 1) = "L")
-        {
-            if (cmd.mid(2, 2) = "OK")
-            {
-            }
-            if (cmd.mid(2, 2) = "FL")
-            {
-            }
-        }
-        if (cmd.mid(1, 1) = "F")
-        {
-            if (cmd.mid(2, 2) = "OK")
-            {
-            }
-            if (cmd.mid(2, 2) = "FL")
-            {
-            }
-        }
-    }
-    else if (cmd.mid(0, 1) = "C")
-    {
-        if (cmd.mid(1, 1) = "L")
-        {
-            if (cmd.mid(2, 2) = "OK")
-            {
-            }
-            if (cmd.mid(2, 2) = "FL")
-            {
-            }
-        }
-        if (cmd.mid(1, 1) = "F")
-        {
-            if (cmd.mid(2, 2) = "OK")
-            {
-            }
-            if (cmd.mid(2, 2) = "FL")
-            {
-            }
-        }
-    }
-    else if (cmd.mid(0, 2) = "QT")
-    {
-        if (cmd.mid(2, 2) = "OK")
-        {
-        }
-        if (cmd.mid(2, 2) = "FL")
-        {
-        }
+        m_nodeStatus.nodeType = "协调器节点";
+        m_nodeStatus.hasBeep = true;
     }
     else
     {
+        m_nodeStatus.nodeType = "终端节点";
+        m_nodeStatus.hasBeep = false;
+    }
+    switch (m_Node.cmd) {
+    case "OL":
+        if(m_Node.data = "0001")
+        {
+            m_nodeStatus.lightStatus = true;
+        }
+        else
+        {
+            m_nodeStatus.lightStatus = false;
+        }
+        break;
+    case "CL":
+        if(m_Node.data = "0001")
+        {
+            m_nodeStatus.lightStatus = false;
+        }
+        else
+        {
+            m_nodeStatus.lightStatus = true;
+        }
+        break;
+    case "OF":
+        if(m_Node.data = "0001")
+        {
+            m_nodeStatus.fanStatus = true;
+        }
+        else
+        {
+            m_nodeStatus.fanStatus = false;
+        }
+        break;
+    case "CF":
+        if(m_Node.data = "0001")
+        {
+            m_nodeStatus.fanStatus = false;
+        }
+        else
+        {
+            m_nodeStatus.fanStatus = true;
+        }
+        break;
+    case "IN":
+        m_nodeStatus.lightStatus = bool(m_Node.data.at(0));
+        m_nodeStatus.fanStatus = bool(m_Node.data.at(1));
+        break;
+    case "TH":
+        m_nodeStatus.temperature = m_Node.data.mid(0,2).toInt();
+        m_nodeStatus.humidity = m_Node.data.mid(2,2).toInt();
+        break;
+    case "--":
+        m_nodeStatus.hasLight = bool(m_Node.data.at(0));
+        m_nodeStatus.hasFan = bool(m_Node.data.at(1));
+        m_nodeStatus.hasTH = bool(m_Node.data.at(3));
+        break;
+    default:
+        break;
     }
 }
 
-void node::commandReceive(QString rcvMsg)
+// 0bca#IN11-11 表示0bca节点风扇打开，灯泡打开
+// 0bcb#IN11-11 表示0bcb节点风扇打开，灯泡打开
+// 0bcc#IN11-11 表示0bcc节点风扇打开，灯泡打开
+// 0000#OL00011 所有节点成功打开灯泡
+// 0000#OL00001 所有节点打开灯泡失败
+// 0bca#OF00011 0bca节点成功打开风扇
+// 0bca#OF00001 0bca节点打开风扇失败
+// 0bca#TH20201 0bca节点查询到温度，温度为20度
+// 0bcb#TH20211 0bcb节点查询到温度为20度，温度为21度
+// 0bcc#TH22221 0bcc节点查询到温度，温度为22度
+// 0bca#--11-11 0bca节点有灯泡，风扇，温湿度传感器
+
+void node::getNodeMsg()
 {
-    QString idvl_type;   //单播或者多播
-    QString node_add;    //节点地址
-    QString parity_type; //校验位
-    QString cmd_str;     //命令位
-    QString data_str;    //数据位
-    idvl_type = rcvMsg.mid(4, 2);
-    node_add = rcvMsg.mid(6, 4);
-    cmd_str = rcvMsg.mid(10, 4);
-    data_str = rcvMsg.mid(14, 4);
-    parity_type = rcvMsg.mid(18, 1);
-    if (idvl_type == "-A")
-    {
+    rcvMsg.enqueue(N.getData());
+    while (rcvMsg.count()>0) {
+        this->commandReceive();
     }
-    if (idvl_type == "-S")
-    {
-    }
+}
+
+void node::commandReceive()
+{
+    nodeMsg m_nodeMsg;
+    QString msg = rcvMsg.dequeue();
+    m_nodeMsg.nodeAddr.append(msg.mid(0, 4));    //节点地址
+    m_nodeMsg.cmd = msg.mid(5, 2);     //命令位
+    m_nodeMsg.data = msg.mid(8, 4);    //数据位
+    QString parity_type = msg.mid(11, 1); //校验位
+    setNode(m_nodeMsg);
 }

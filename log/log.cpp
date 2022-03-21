@@ -4,8 +4,8 @@
 log::log(QWidget *parent) : QWidget(parent),
                             ui(new Ui::log)
 {
-    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
-    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+    //QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     //初始化数据库和日志表
     QString tableName = "logs";
     QString columnName[4] = {"time", "user", "event", "type"};
@@ -57,7 +57,7 @@ void log::tableCreator(int size_row)
     QStandardItemModel *standItemModel = new QStandardItemModel(this);
     QVBoxLayout *mainLayout = new QVBoxLayout; //垂直布局
     mainLayout->setSpacing(50);                //设置控件间距
-    mainLayout->setMargin(70);                 //设置边缘间距
+    //mainLayout->setMargin(70);                 //设置边缘间距
     // mainLayout.
     //添加QTableView代码
     tableView = new QTableView;

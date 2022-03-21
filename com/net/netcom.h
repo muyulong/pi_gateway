@@ -48,13 +48,13 @@ private slots:
 
 public slots:
     //供其他函数调用的方法
-    void linkStart();
+    void Start();
     //建立连接
-    void linkStop();
+    void Stop();
     //断开连接
-    QString getLinkData();
+    QString getData();
     //获取传输数据
-    void sendLinkData(QString data);
+    void sendData(QString data);
     //发送数据
     void onDead();
     //心跳停止
