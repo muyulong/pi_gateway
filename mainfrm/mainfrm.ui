@@ -355,6 +355,12 @@
                 <height>48</height>
                </size>
               </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
+              <property name="arrowType">
+               <enum>Qt::NoArrow</enum>
+              </property>
              </widget>
             </item>
             <item>
@@ -377,6 +383,9 @@
                 <width>48</width>
                 <height>48</height>
                </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>
@@ -401,6 +410,9 @@
                 <height>48</height>
                </size>
               </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
+              </property>
              </widget>
             </item>
             <item>
@@ -423,6 +435,9 @@
                 <width>48</width>
                 <height>48</height>
                </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextUnderIcon</enum>
               </property>
              </widget>
             </item>

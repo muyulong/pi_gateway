@@ -186,7 +186,7 @@
           <item>
            <widget class="QCheckBox" name="checkBox_light">
             <property name="text">
-             <string>灯泡</string>
+             <string>照明</string>
             </property>
             <property name="icon">
              <iconset resource="../resource.qrc">

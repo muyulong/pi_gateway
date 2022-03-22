@@ -1,7 +1,5 @@
 QT       += core gui sql network serialport charts
 
-QMAKE_CXXFLAGS += /MP
-
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
