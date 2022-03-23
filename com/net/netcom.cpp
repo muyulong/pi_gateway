@@ -52,6 +52,8 @@ void netCom::initNet()
     m_tcpServer = new QTcpServer(this);
     connect(m_tcpServer, &QTcpServer::newConnection, this, &netCom::on_newConnection);
     ui->lineEditPort->setText("8080");
+
+    ui->btnStop->setEnabled(false);
 }
 
 //供其他函数调用的方法
@@ -73,11 +75,20 @@ void netCom::Start()
     ui->lbListen->setText("正在监听");
 }
 
+QString netCom::getNetAdd()
+{
+    QString netAdd = "ip: "+ui->comboBox->currentText()+" "+"port: "+ui->lineEditPort->text();
+    return netAdd;
+}
+
 void netCom::onDead()
 {
     ui->plainTextEdit->appendPlainText("**停止心跳");
     heart->stop();
-    m_tcpSocket->close();
+    if(m_tcpSocket)
+    {
+        m_tcpSocket->close();
+    }
 }
 
 //断开连接

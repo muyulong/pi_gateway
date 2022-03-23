@@ -6,7 +6,8 @@
 #include "log/log.h"
 #include "com/net/netcom.h"
 #include <QQueue>
-#include<QVector>
+#include <QVector>
+#include <QDebug>
 
 namespace Ui
 {
@@ -56,6 +57,7 @@ public:
     void setTree();
 
     //--------------------
+    void setNode();
 
     void getNodeAddr();
     //根据收到的信息，设置节点数据
@@ -63,6 +65,8 @@ public:
     void nodeSetting(nodeMsg);
 
     void commandSend(int,QString);
+
+    void getNodeMsg();
 public slots:
     void commandReceive();
 
@@ -73,7 +77,7 @@ private:
 
     //-------------
     class log L;
-    netCom N;
+    netCom *N = new netCom;
     QQueue<QString> rcvMsg;
     nodeMsg m_nodeMsg;
     nodeStatus m_nodeStatus;

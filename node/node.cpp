@@ -32,16 +32,22 @@ void node::initNode()
     ui->checkBox_fan->setChecked(0);
     ui->checkBox_light->setChecked(0);
     ui->checkBox_temperature->setChecked(0);
-    ui->checkBox_fan->setCheckable(0);
-    ui->checkBox_light->setCheckable(0);
-    ui->checkBox_temperature->setCheckable(0);
+    ui->checkBox_humidity->setChecked(0);
     ui->pushButton_opLight->setDisabled(1);
     ui->pushButton_clLight->setDisabled(1);
     ui->pushButton_opFan->setDisabled(1);
     ui->pushButton_clFan->setDisabled(1);
 
-    //connect(N,hasReadData(),this,commandReceive());
+    N->Start();
+    qDebug()<<N->getNetAdd();
 
+    connect(N, SIGNAL(hasReadData()), this, SLOT(commandReceive()));
+
+
+}
+
+void node::setNode()
+{
     this->setName();
     this->setSwitch();
     this->setFuncAvable();
@@ -53,8 +59,7 @@ void node::initTree()
 {
     // 1，构造Model
     QStandardItemModel *model = new QStandardItemModel(ui->treeView);
-    model->setHorizontalHeaderLabels(QStringList() << "节点编号"
-                                     << "节点类型"); //设置列头
+    model->setHorizontalHeaderLabels(QStringList() << "节点编号"<< "节点类型"); //设置列头
     // 2，给QTreeView应用model
     ui->treeView->setModel(model);
 }
@@ -98,10 +103,12 @@ void node::setFuncAvable()
     if (m_nodeStatus.hasTH)
     {
         ui->checkBox_temperature->setChecked(1);
+        ui->checkBox_humidity->setChecked(1);
     }
     else
     {
         ui->checkBox_temperature->setChecked(0);
+        ui->checkBox_humidity->setChecked(0);
     }
     if (m_nodeStatus.hasLight)
     {
@@ -141,6 +148,8 @@ void node::setTH()
 {
     //QString temp_str = QString("%1").arg(t);
     //ui->lb_temp->setText(temp_str);
+    ui->lb_temperature->setText(QString(m_nodeStatus.temperature));
+    ui->lb_humidity->setText(QString(m_nodeStatus.humidity));
 }
 
 //设置树
@@ -167,7 +176,6 @@ commandReceive()
 void node::getNodeAddr()
 {
     commandSend(0,"状态");
-
 }
 
 QString str2cmd(QString str)
@@ -247,13 +255,15 @@ void node::commandSend(int nodeID, QString msg)
     QString cmd_str = node_add + "#" + str2cmd(msg);
     QString parity_type = QString(parityCheck(cmd_str));
     cmd_str = cmd_str + parity_type;
-    N.sendData(cmd_str);
+    N->sendData(cmd_str);
 }
 
-/*void node::nodeSetting(nodeMsg m_Node)
+void node::nodeSetting(nodeMsg m_Node)
 {
-    //m_nodeStatus.addr = m_Node.nodeAddr.;
-    if(m_Node.nodeAddr =="0000")
+    QString addr = m_Node.nodeAddr.back();
+    QString cmd = m_Node.cmd;
+    m_nodeStatus.addr = addr;
+    if(addr=="0000")
     {
         m_nodeStatus.nodeType = "协调器节点";
         m_nodeStatus.hasBeep = true;
@@ -263,9 +273,9 @@ void node::commandSend(int nodeID, QString msg)
         m_nodeStatus.nodeType = "终端节点";
         m_nodeStatus.hasBeep = false;
     }
-    switch (m_Node.cmd) {
-    case "OL":
-        if(m_Node.data = "0001")
+    if(cmd=="OL")
+    {
+        if(m_Node.data == "0001")
         {
             m_nodeStatus.lightStatus = true;
         }
@@ -273,9 +283,11 @@ void node::commandSend(int nodeID, QString msg)
         {
             m_nodeStatus.lightStatus = false;
         }
-        break;
-    case "CL":
-        if(m_Node.data = "0001")
+        setSwitch();
+    }
+    if(cmd=="CL")
+    {
+        if(m_Node.data == "0001")
         {
             m_nodeStatus.lightStatus = false;
         }
@@ -283,9 +295,11 @@ void node::commandSend(int nodeID, QString msg)
         {
             m_nodeStatus.lightStatus = true;
         }
-        break;
-    case "OF":
-        if(m_Node.data = "0001")
+        setSwitch();
+    }
+    if(cmd=="OF")
+    {
+        if(m_Node.data == "0001")
         {
             m_nodeStatus.fanStatus = true;
         }
@@ -293,9 +307,11 @@ void node::commandSend(int nodeID, QString msg)
         {
             m_nodeStatus.fanStatus = false;
         }
-        break;
-    case "CF":
-        if(m_Node.data = "0001")
+        setSwitch();
+    }
+    if(cmd=="CF")
+    {
+        if(m_Node.data == "0001")
         {
             m_nodeStatus.fanStatus = false;
         }
@@ -303,24 +319,63 @@ void node::commandSend(int nodeID, QString msg)
         {
             m_nodeStatus.fanStatus = true;
         }
-        break;
-    case "IN":
-        m_nodeStatus.lightStatus = bool(m_Node.data.at(0));
-        m_nodeStatus.fanStatus = bool(m_Node.data.at(1));
-        break;
-    case "TH":
+        setSwitch();
+    }
+    if(cmd=="IN")
+    {
+        if(m_Node.data.at(0) =="0")
+        {
+            m_nodeStatus.lightStatus = false;
+        }
+        else
+        {
+            m_nodeStatus.lightStatus = true;
+        }
+        if(m_Node.data.at(1) =="0")
+        {
+            m_nodeStatus.fanStatus = false;
+        }
+        else
+        {
+            m_nodeStatus.fanStatus = true;
+        }
+       setSwitch();
+    }
+    if(cmd=="TH")
+    {
         m_nodeStatus.temperature = m_Node.data.mid(0,2).toInt();
         m_nodeStatus.humidity = m_Node.data.mid(2,2).toInt();
-        break;
-    case "--":
-        m_nodeStatus.hasLight = bool(m_Node.data.at(0));
-        m_nodeStatus.hasFan = bool(m_Node.data.at(1));
-        m_nodeStatus.hasTH = bool(m_Node.data.at(3));
-        break;
-    default:
-        break;
+        setTH();
     }
-}*/
+    if(cmd=="--")
+    {
+        if(m_Node.data.at(0) =="0")
+        {
+            m_nodeStatus.hasLight =false;
+        }
+        else
+        {
+            m_nodeStatus.hasLight =true;
+        }
+        if(m_Node.data.at(1) =="0")
+        {
+            m_nodeStatus.hasFan =false;
+        }
+        else
+        {
+            m_nodeStatus.hasFan=true;
+        }
+        if(m_Node.data.at(3) =="0")
+        {
+            m_nodeStatus.hasTH=false;
+        }
+        else
+        {
+            m_nodeStatus.hasTH=true;
+        }
+        setFuncAvable();
+    }
+}
 
 // 0bca#IN11-11 表示0bca节点风扇打开，灯泡打开
 // 0bcb#IN11-11 表示0bcb节点风扇打开，灯泡打开
@@ -336,7 +391,7 @@ void node::commandSend(int nodeID, QString msg)
 
 /*void node::getNodeMsg()
 {
-    rcvMsg.enqueue(N.getData());
+    rcvMsg.enqueue(N->getData());
     while (rcvMsg.count()>0) {
         this->commandReceive();
     }
@@ -345,10 +400,14 @@ void node::commandSend(int nodeID, QString msg)
 void node::commandReceive()
 {
     nodeMsg m_nodeMsg;
-    QString msg = rcvMsg.dequeue();
+    //QString msg = rcvMsg.dequeue();
+    QString msg =  N->getData();
+    qDebug()<<msg;
     m_nodeMsg.nodeAddr.append(msg.mid(0, 4));    //节点地址
     m_nodeMsg.cmd = msg.mid(5, 2);     //命令位
     m_nodeMsg.data = msg.mid(8, 4);    //数据位
     QString parity_type = msg.mid(11, 1); //校验位
-    //setNode(m_nodeMsg);
+    nodeSetting(m_nodeMsg);
+    this->setNode();
+    qDebug()<<m_nodeMsg.nodeAddr<<m_nodeMsg.cmd<<m_nodeMsg.data;
 }

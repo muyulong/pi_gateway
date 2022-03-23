@@ -40,7 +40,7 @@ signals:
 private slots:
     void check()
     {
-        if (last.secsTo(QDateTime::currentDateTime()) >= 5)
+        if (last.secsTo(QDateTime::currentDateTime()) >= 500)
         {
             checkTimer->stop();
             emit dead();

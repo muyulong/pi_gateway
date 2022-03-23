@@ -58,6 +58,7 @@ public slots:
     //发送数据
     void onDead();
     //心跳停止
+    QString getNetAdd();
 
 signals:
     void hasReadData();

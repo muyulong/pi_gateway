@@ -18,6 +18,7 @@ font-size:20px;
 border-radius:5px;
 padding:5px;
 min-height:30px;
+font-family:"Microsoft Yahei";
 }
 QWidget#welcome>QPushButton:hover{
 background:#56BBF1;
@@ -40,10 +41,12 @@ background:#FDF6EC;
 QDialog#login>QPushButton,QDialog#regist>QPushButton{
 border:1px;
 border-radius:5px;
-min-height:20px;
-width:40px;
+min-height:40px;
+width:50px;
 color:#232323;
 background:#dddddd;
+font-size:14px;
+font-family:"Microsoft Yahei";
 }
 QDialog#login>QPushButton:hover,QDialog#regist>QPushButton:hover{
 background:#BEBEBE;
@@ -54,7 +57,9 @@ background:#686868;
 }
 /*登录和注册界面的文字*/
 QDialog#login>QLabel,QDialog#regist>QLabel{
+font-size:20px;
 color:#232323;
+font-family:"Microsoft Yahei";
 }
 /*登录和注册界面的输入框*/
 QDialog#login>QLineEdit,QDialog#regist>QLineEdit{
@@ -63,6 +68,8 @@ selection-background-color: #03045E;
 border: 1px solid #CAF0F8;
 border-radius: 2px;
 padding: 0 1px;
+height:20px;
+font-size:20px;
 }
 /*主界面*/
 /*主界面的PushButton和toolButton*/
@@ -147,6 +154,69 @@ font-size:16px;
 font-family:"Microsoft Yahei";
 }
 
+QWidget#tableView{
+margin 0 auto;
+}
+
+/*
+QtreeView
+*/
+QTabWidget{
+font-size:16px;
+font-family:"Microsoft Yahei";
+}
+
+QTreeView,QTableView,QTabWidget::pane{
+border:1px solid #132743;
+selection-background-color:#033967;
+selection-color:#adc8e3;
+alternate-background-color:#033967;
+gridline-color:#132743;
+}
+
+QTreeView::branch:closed:has-children{
+margin:4px;
+}
+
+QTreeView::branch:open:has-children{
+margin:4px;
+}
+
+QTreeView,QTableView,QSplitter::handle,QTreeView::branch{
+background:#0E1A32;
+}
+
+QTableView::item:selected,QTreeView::item:selected{
+color:#adc8e3;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #133050,stop:1 #133050);
+}
+
+QTableView::item:hover,QTreeView::item:hover{
+color:#adc8e3;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #033967,stop:1 #033967);
+}
+
+QTableView::item,QTreeView::item{
+padding:1px;
+margin:0px;
+color:#8fb9e3;
+}
+
+QHeaderView::section,QTableCornerButton:section{
+padding:3px;
+margin:0px;
+color:#FFFFFF;
+border:1px solid #132743;
+border-left-width:0px;
+border-right-width:1px;
+border-top-width:0px;
+border-bottom-width:1px;
+background:qlineargradient(spread:pad,x1:0,y1:0,x2:0,y2:1,stop:0 #033967,stop:1 #033967);
+}
+/*
+QtreeView
+*/
+
 /*主界面信息页*/
 QWidget#page1{
 
@@ -164,12 +234,18 @@ QWidget#widget_top>QLabel{
 color:#FFFFFF;
 }
 /*主界面的设置页*/
-QWidget#page2{
-
+#groupBox_s2net,#groupBox_s2serial,#groupBox_task{
+border-radius:15px;
+border-image: url(:/pic/top_bg_main.png);
+color:#FFFFFF;
+font-size:16px;
+font-family:"Microsoft Yahei";
 }
-/*主界面的日志页*/
-QWidget#log{
 
+#netCom>QLabel,#serialCom>QLabel,#task>QLabel,#radioButton_MutiSelect{
+color:#FFFFFF;
+font-size:16px;
+font-family:"Microsoft Yahei";
 }
 /*主界面的温度页*/
 QWidget#page2{

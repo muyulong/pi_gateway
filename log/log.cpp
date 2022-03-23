@@ -56,8 +56,8 @@ void log::tableCreator(int size_row)
     //。。。。。。。。。。。。。
     QStandardItemModel *standItemModel = new QStandardItemModel(this);
     QVBoxLayout *mainLayout = new QVBoxLayout; //垂直布局
-    mainLayout->setSpacing(50);                //设置控件间距
-    mainLayout->setMargin(70);                 //设置边缘间距
+    mainLayout->setSpacing(10);                //设置控件间距
+    mainLayout->setMargin(30);                 //设置边缘间距
     // mainLayout.
     //添加QTableView代码
     tableView = new QTableView;
