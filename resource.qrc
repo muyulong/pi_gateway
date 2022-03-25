@@ -16,5 +16,9 @@
         <file>pic/fan.png</file>
         <file>pic/humidity.png</file>
         <file>pic/temperature.png</file>
+        <file>pic/start.png</file>
+        <file>pic/stop.png</file>
+        <file>pic/refresh.png</file>
+        <file>pic/init.png</file>
     </qresource>
 </RCC>

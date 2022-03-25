@@ -1,4 +1,5 @@
 #include "thchart.h"
+QT_CHARTS_USE_NAMESPACE
 #include "ui_thchart.h"
 
 THchart::THchart(QWidget *parent) :

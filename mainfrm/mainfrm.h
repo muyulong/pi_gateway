@@ -75,6 +75,8 @@ private:
     //绘制圆角矩形
 
     bool maxOrNormal; // true表示当前窗口状态为normal，图标应显示为max
+public slots:
+        void setTip(QString);
 
 private slots:
 

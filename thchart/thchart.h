@@ -1,8 +1,6 @@
 #ifndef THCHART_H
 #define THCHART_H
 #include <QtCharts>
-QT_CHARTS_USE_NAMESPACE
-
 #include <QWidget>
 
 namespace Ui {

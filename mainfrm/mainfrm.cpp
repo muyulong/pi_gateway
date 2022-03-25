@@ -164,7 +164,15 @@ void mainFrm::initFrm()
         //lbtn->setStyleSheet("background-color:transparent;border:none;");
         connect(lbtn, SIGNAL(clicked()), this, SLOT(buttonClick()));
     }
+
+    connect(NNode,SIGNAL(sendTip(QString)),this,SLOT(setTip(QString)));
+
     ui->toolButton_main->click();
+}
+
+void mainFrm::setTip(QString tip)
+{
+    ui->label_tips->setText(tip);
 }
 
 void mainFrm::RoundedRect(int w, int h)
