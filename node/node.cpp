@@ -261,7 +261,8 @@ void node::commandSend(int nodeID, QString msg)
 {
     QString node_add = m_nodeAddr.at(nodeID);
     QString cmd_str = node_add + "#" + str2cmd(msg);
-    QString parityNum = QString::number(parityCheck(cmd_str));
+    //QString parityNum = QString::number(parityCheck(cmd_str));
+    QString parityNum = "1";
     cmd_str = cmd_str + parityNum;
     N->sendData(cmd_str);
 }
@@ -339,23 +340,27 @@ void node::commandReceive()
     nodeMsg m_nodeMsg;
     //QString msg = rcvMsg.dequeue();
     QString msg =  N->getData();
+    if(msg.at(4)=="#"&&msg.size()<100)
+    {
+        qDebug()<<msg;
+        if(msg.mid(0, 4)=="0000")
+        {
+            m_nodeMsg.nodeAddr.append("FFFF");
+        }
+        else
+        {
+            m_nodeMsg.nodeAddr.append(msg.mid(0, 4));    //节点地址
+        }
+        m_nodeMsg.cmd[0] = msg.at(5);     //命令位
+        m_nodeMsg.cmd[1] = msg.at(6);     //命令位
+        m_nodeMsg.data[0] = msg.at(7);    //数据位
+        m_nodeMsg.data[1] = msg.at(8);    //数据位
+        m_nodeMsg.data[2] = msg.at(9);    //数据位
+        m_nodeMsg.data[3] = msg.at(10);    //数据位
+        QString parity_data = msg.at(11); //校验位
+        nodeSetting(m_nodeMsg);
+        this->setNode();
+        this->setTree();
+    }
     qDebug()<<msg;
-    if(msg.mid(0, 4)=="0000")
-    {
-        m_nodeMsg.nodeAddr.append("FFFF");
-    }
-    else
-    {
-        m_nodeMsg.nodeAddr.append(msg.mid(0, 4));    //节点地址
-    }
-    m_nodeMsg.cmd[0] = msg.at(5);     //命令位
-    m_nodeMsg.cmd[1] = msg.at(6);     //命令位
-    m_nodeMsg.data[0] = msg.at(7);    //数据位
-    m_nodeMsg.data[1] = msg.at(8);    //数据位
-    m_nodeMsg.data[2] = msg.at(9);    //数据位
-    m_nodeMsg.data[3] = msg.at(10);    //数据位
-    QString parity_data = msg.at(11); //校验位
-    nodeSetting(m_nodeMsg);
-    this->setNode();
-    this->setTree();
 }

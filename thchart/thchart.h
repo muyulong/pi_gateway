@@ -1,6 +1,5 @@
 #ifndef THCHART_H
 #define THCHART_H
-#include <QtCharts>
 #include <QWidget>
 
 namespace Ui {

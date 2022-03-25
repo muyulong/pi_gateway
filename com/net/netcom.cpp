@@ -27,7 +27,7 @@ void netCom::initNet()
     //重置ComboBox内容
     ui->comboBox->clear();
     //定义最大连接数
-    tcpSocket_Max = 1;
+    tcpSocket_Max = 2;
     //--------------------------------------------
     //本地主机名
 

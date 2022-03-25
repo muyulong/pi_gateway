@@ -1,4 +1,7 @@
 #include "thchart.h"
+#include <QSplineSeries>
+#include <QChartView>
+#include <QChart>
 QT_CHARTS_USE_NAMESPACE
 #include "ui_thchart.h"
 
@@ -8,24 +11,34 @@ THchart::THchart(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // 构建图表对象
-    QChart* chart = new QChart();
+    QSplineSeries *series = new QSplineSeries();
+    series->setName("spline");//设置该曲线名称
 
-    // 构建折线系列对象
-    QLineSeries *series = new QLineSeries();
-    for (quint32 i = 0; i < 100; i++)
-    {
-        // 参数 x 为循环自增变量 i，参数 y 为正弦函数Y值
-        series->append(i, sin(static_cast<double>(0.6f*i)));
-    }
+    series->append(0, 6);//加数据
+    series->append(2, 4);
+    series->append(3, 8);
+    series->append(7, 4);
+    series->append(10, 5);
+    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
 
-    // 将系列添加到图表
+//    series->setPointLabelsFormat("(@xPoint, @yPoint)");//两个坐标值都显示
+    series->setPointLabelsFormat("@yPoint");//只显示Y值
+    series->setPointLabelsVisible();//显示出来
+
+    QChart *chart = new QChart();
+
     chart->addSeries(series);
-    // 基于已添加到图表的 series 来创建默认的坐标轴
+    chart->setTitle("Simple spline chart example");//整个绘图窗体标题
     chart->createDefaultAxes();
+    chart->axisY()->setRange(0, 10);//设置Y轴区间，不设置则为自动
+//    chart->axisX()->setRange(0, 20);
 
-    // 将图表绑定到视图
+//    chart->legend()->hide();//设置图例（上面的setname("spline")）不可见
+//    chart->legend()->setVisible(true);//设置图例可见
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
     ui->widget->setChart(chart);
+    ui->widget->setRenderHint(QPainter::Antialiasing);//使用可消除曲线锯齿（反走样），但是降低运行效率
 }
 
 THchart::~THchart()
