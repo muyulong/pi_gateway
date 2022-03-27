@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QHostInfo>
+#include <QNetworkInterface>
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QMessageBox>

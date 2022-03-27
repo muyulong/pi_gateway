@@ -2,7 +2,7 @@
 #include "ui_netcom.h"
 
 netCom::netCom(QWidget *parent) : QWidget(parent),
-                                  ui(new Ui::netCom)
+    ui(new Ui::netCom)
 {
     ui->setupUi(this);
     this->initNet();
@@ -27,27 +27,47 @@ void netCom::initNet()
     //重置ComboBox内容
     ui->comboBox->clear();
     //定义最大连接数
-    tcpSocket_Max = 2;
+    tcpSocket_Max = 1;
     //--------------------------------------------
     //本地主机名
 
-    QString hostName = QHostInfo::localHostName();
+    //QString hostName = QHostInfo::localHostName();
 
     //本机IP地址
-    QHostInfo hostInfo = QHostInfo::fromName(hostName);
+    //QHostInfo hostInfo = QHostInfo::fromName(hostName);
 
     // IP地址列表
-    QList<QHostAddress> addrList = hostInfo.addresses();
-    for (int i = 0; i < addrList.count(); i++)
-    {
-        QHostAddress host = addrList.at(i);
+    //QList<QHostAddress> addrList = hostInfo.addresses();
+    //for (int i = 0; i < addrList.count(); i++)
+    //{
+    //    QHostAddress host = addrList.at(i);
 
-        if (QAbstractSocket::IPv4Protocol == host.protocol())
+    //    if (QAbstractSocket::IPv4Protocol == host.protocol())
+    //    {
+    //        QString ip = host.toString();
+    //        ui->comboBox->addItem(ip);
+    //    }
+    //}
+
+    //---
+    QList<QHostAddress> addrList = QNetworkInterface::allAddresses();
+    foreach (QHostAddress address, addrList)
+    {
+        //使用IPv4地址
+        if(address.protocol() == QAbstractSocket::IPv4Protocol)
         {
-            QString ip = host.toString();
-            ui->comboBox->addItem(ip);
+            if (address.toString().contains("127.0."))
+            {
+                continue;
+            }
+            else
+            {
+                QString ip = address.toString();
+                ui->comboBox->addItem(ip);
+            }
         }
     }
+    //---
 
     m_tcpServer = new QTcpServer(this);
     connect(m_tcpServer, &QTcpServer::newConnection, this, &netCom::on_newConnection);

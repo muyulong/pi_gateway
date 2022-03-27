@@ -14,7 +14,50 @@ namespace Ui
 class node;
 }
 
-class node : public QWidget
+class nodeState
+{
+public:
+    nodeState();
+    nodeState(QString);
+    ~nodeState();
+
+    QString getAddr();
+    QString getNodeType();
+    bool getLightStatus();
+    bool getFanStatus();
+    bool getBeepStatus();
+    QString getTemperature();
+    QString getHumidity();
+
+    bool hasLight();
+    bool hasFan();
+    bool hasTH();
+    bool hasBeep();
+
+    void setAddr(QString);
+    void setNodeType(QString);
+    void setLightStatus(bool);
+    void setFanStatus(bool);
+    void setBeepStatus(bool);
+    void setTemperature(QString);
+    void setHumidity(QString);
+
+    void setExUnit(bool,bool,bool,bool);
+private:
+    QString addr;
+    QString nodeType;
+    bool hasLightUnit;
+    bool hasFanUnit;
+    bool hasTHUnit;
+    bool hasBeepUnit;
+    bool lightStatus;
+    bool fanStatus;
+    bool beepStatus;
+    QString temperature;
+    QString humidity;
+};
+
+class node : public QWidget , nodeState
 {
     Q_OBJECT
 
@@ -25,27 +68,10 @@ public:
 #pragma pack(push,1)
     typedef struct
     {
-        QString nodeAddr;
+        QString addr;
         QChar cmd[4];
         QChar data[4];
     }nodeMsg;
-#pragma pack(pop)
-
-#pragma pack(push,1)
-    typedef struct
-    {
-        QString addr;
-        QString nodeType;
-        bool hasLight;
-        bool hasFan;
-        bool hasTH;
-        bool hasBeep;
-        bool lightStatus;
-        bool fanStatus;
-        bool beepStatus;
-        QString temperature;
-        QString humidity;
-    }nodeStatus;
 #pragma pack(pop)
 
     //初始化节点
@@ -96,16 +122,16 @@ private:
     //-------------
     class log L;
     netCom *N = new netCom;
-    QStringList m_nodeAddr;
+    QStringList m_nodeAddrList;
     //用于存储节点地址
     QStandardItemModel *model;
     QStandardItem* rootNode;
     QStandardItem* endNode;
     //生成树
-    QQueue<QString> rcvMsg;
+    //QQueue<QString> rcvMsg;
     //用于存储接收到的消息队列
-    nodeStatus m_nodeStatus;
-    //根据节点信息记录状态
+    QVector<nodeState> m_nodeStateVector;
+    //储存每个节点
 };
 
 #endif // NODE_H

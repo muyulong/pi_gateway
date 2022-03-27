@@ -41,21 +41,9 @@ void node::initNode()
 
     connect(N, SIGNAL(hasReadData()), this, SLOT(commandReceive()));
 
-    m_nodeStatus.addr="";
-    m_nodeStatus.hasLight=false;
-    m_nodeStatus.hasFan=false;
-    m_nodeStatus.hasTH=false;
-    m_nodeStatus.hasBeep=false;
-    m_nodeStatus.lightStatus=false;
-    m_nodeStatus.fanStatus=false;
-    m_nodeStatus.beepStatus=false;
-    m_nodeStatus.temperature="无";
-    m_nodeStatus.humidity="无";
-    m_nodeStatus.nodeType="";
+    //m_nodeAddrList.append("FFFF");
 
-    m_nodeAddr.append("FFFF");
-
-    this->setNode();
+    //this->setNode();
 }
 
 void node::on_toolButton_start_clicked()
@@ -95,9 +83,13 @@ void node::initTree()
     model = new QStandardItemModel(ui->treeView);
     model->setHorizontalHeaderLabels(QStringList() << "节点编号"<< "节点类型"); //设置列头
     // 2，给QTreeView应用model
-    rootNode = new QStandardItem(m_nodeAddr.last());
+
+    nodeState rootNodeState("协调器");
+    m_nodeStateVector.append(rootNodeState);
+    m_nodeAddrList.append(m_nodeStateVector.first().getAddr());
+    rootNode = new QStandardItem(m_nodeAddrList.last());
     model->appendRow(rootNode);
-    model->setItem(model->indexFromItem(rootNode).row(),1,new QStandardItem(QStringLiteral("协调器")));
+    model->setItem(model->indexFromItem(rootNode).row(),1,new QStandardItem(m_nodeStateVector.first().getNodeType()));
 
     ui->treeView->setModel(model);
     ui->treeView->setAlternatingRowColors(true);
@@ -110,13 +102,13 @@ void node::initTree()
 //设置节点
 void node::setName()
 {
-    ui->lb_nodeName->setText(m_nodeStatus.addr);
-    ui->lb_nodeType->setText(m_nodeStatus.nodeType);
+    ui->lb_nodeName->setText(m_nodeStateVector.first().getAddr());
+    ui->lb_nodeType->setText(m_nodeStateVector.first().getNodeType());
 }
 
 void node::setSwitch()
 {
-    if (m_nodeStatus.lightStatus)
+    if (m_nodeStateVector.first().getLightStatus())
     {
         ui->lb_lightStatus->setText("已开启");
     }
@@ -124,7 +116,7 @@ void node::setSwitch()
     {
         ui->lb_lightStatus->setText("未开启");
     }
-    if (m_nodeStatus.fanStatus)
+    if (m_nodeStateVector.first().getFanStatus())
     {
         ui->lb_fanStatus->setText("已开启");
     }
@@ -132,7 +124,7 @@ void node::setSwitch()
     {
         ui->lb_fanStatus->setText("未开启");
     }
-    if(m_nodeStatus.beepStatus)
+    if(m_nodeStateVector.first().getBeepStatus())
     {
 
     }
@@ -144,7 +136,7 @@ void node::setSwitch()
 
 void node::setFuncAvable()
 {
-    if (m_nodeStatus.hasTH)
+    if (m_nodeStateVector.first().hasTH())
     {
         ui->checkBox_temperature->setChecked(1);
         ui->checkBox_humidity->setChecked(1);
@@ -154,7 +146,7 @@ void node::setFuncAvable()
         ui->checkBox_temperature->setChecked(0);
         ui->checkBox_humidity->setChecked(0);
     }
-    if (m_nodeStatus.hasLight)
+    if (m_nodeStateVector.first().hasLight())
     {
         ui->checkBox_light->setChecked(1);
         ui->pushButton_opLight->setDisabled(0);
@@ -166,7 +158,7 @@ void node::setFuncAvable()
         ui->pushButton_opLight->setDisabled(1);
         ui->pushButton_clLight->setDisabled(1);
     }
-    if (m_nodeStatus.hasFan)
+    if (m_nodeStateVector.first().hasFan())
     {
         ui->checkBox_fan->setChecked(1);
         ui->pushButton_opFan->setDisabled(0);
@@ -178,7 +170,7 @@ void node::setFuncAvable()
         ui->pushButton_opFan->setDisabled(1);
         ui->pushButton_clFan->setDisabled(1);
     }
-    if(m_nodeStatus.hasBeep)
+    if(m_nodeStateVector.first().hasBeep())
     {
 
     }
@@ -190,18 +182,21 @@ void node::setFuncAvable()
 
 void node::setTH()
 {
-    ui->lb_temperature->setText(m_nodeStatus.temperature);
-    ui->lb_humidity->setText(m_nodeStatus.humidity);
+    ui->lb_temperature->setText(m_nodeStateVector.first().getTemperature());
+    ui->lb_humidity->setText(m_nodeStateVector.first().getHumidity());
 }
 
 //设置树
 void node::setTree()
 {
-    endNode = new QStandardItem(m_nodeAddr.last());
-    qDebug()<<m_nodeAddr.last();
-    rootNode->appendRow(endNode);
-    rootNode->setChild(endNode->index().row(),1,new QStandardItem(m_nodeStatus.nodeType));
-    ui->treeView->update();
+    if(!m_nodeStateVector.isEmpty())
+    {
+        endNode = new QStandardItem(m_nodeStateVector.last().getAddr());
+        rootNode->appendRow(endNode);
+        rootNode->setChild(endNode->index().row(),1,new QStandardItem(m_nodeStateVector.last().getNodeType()));
+        ui->treeView->update();
+    }
+    //qDebug()<<m_nodeState->addr;
 }
 
 void node::getNodeAddr()
@@ -254,12 +249,15 @@ int parityCheck(QString nMsg)
     //chMsg[i] = chMsg[i] << 1;
     //    qDebug()  << (chMsg[i]^chMsg[i+1]);
     //}
-    return 1;
+    if(!nMsg.isEmpty())
+    {
+        return 1;
+    }
 }
 
 void node::commandSend(int nodeID, QString msg)
 {
-    QString node_add = m_nodeAddr.at(nodeID);
+    QString node_add = m_nodeAddrList.at(nodeID);
     QString cmd_str = node_add + "#" + str2cmd(msg);
     //QString parityNum = QString::number(parityCheck(cmd_str));
     QString parityNum = "1";
@@ -269,70 +267,69 @@ void node::commandSend(int nodeID, QString msg)
 
 void node::nodeSetting(nodeMsg m_Node)
 {
-    QString addr = m_Node.nodeAddr;
-    m_nodeStatus.addr = addr;
-    if(addr=="FFFF")
+    nodeState m_nodeState;
+    m_nodeState.setAddr(m_Node.addr);
+    if(m_Node.addr=="FFFF")
     {
-        m_nodeStatus.nodeType = "协调器";
-        m_nodeStatus.hasBeep = true;
-        m_nodeStatus.addr="FFFF";
-        m_nodeStatus.hasLight=false;
-        m_nodeStatus.hasFan=false;
-        m_nodeStatus.hasTH=false;
-        m_nodeStatus.lightStatus=false;
-        m_nodeStatus.fanStatus=false;
-        m_nodeStatus.beepStatus=false;
-        m_nodeStatus.temperature="无";
-        m_nodeStatus.humidity="无";
+        m_nodeState.setNodeType("协调器");
+        m_nodeState.setLightStatus(false);
+        m_nodeState.setFanStatus(false);
+        m_nodeState.setBeepStatus(false);
+        m_nodeState.setTemperature("无");
+        m_nodeState.setHumidity("无");
+        m_nodeState.setExUnit(false,false,true,false);
     }
     else
     {
-        m_nodeStatus.nodeType = "终端";
-        m_nodeStatus.hasBeep = false;
+        m_nodeState.setNodeType("终端");
+        m_nodeState.setExUnit(true,true,false,true);
         if(m_Node.cmd[0]=='O')
         {
             if(m_Node.cmd[1]=='L')
             {
-                m_Node.data[3]=='1' ? m_nodeStatus.lightStatus = true : m_nodeStatus.lightStatus = false;
+                m_Node.data[3]=='1' ? m_nodeState.setLightStatus(true) : m_nodeState.setLightStatus(false);
             }
             if(m_Node.cmd[1]=='F')
             {
-                m_Node.data[3]=='1' ? m_nodeStatus.fanStatus = true : m_nodeStatus.fanStatus = false;
+                m_Node.data[3]=='1' ? m_nodeState.setFanStatus(true) : m_nodeState.setFanStatus(false);
             }
         }
         if(m_Node.cmd[0]=='C')
         {
             if(m_Node.cmd[1]=='L')
             {
-                m_Node.data[3]=='1' ? m_nodeStatus.lightStatus = false : m_nodeStatus.lightStatus = true;
+                m_Node.data[3]=='1' ? m_nodeState.setLightStatus(false) : m_nodeState.setLightStatus(true);
             }
             if(m_Node.cmd[1]=='F')
             {
-                m_Node.data[3]=='1' ? m_nodeStatus.fanStatus = false : m_nodeStatus.fanStatus = true;
+                m_Node.data[3]=='1' ? m_nodeState.setFanStatus(false) : m_nodeState.setFanStatus(true);
             }
         }
         if(m_Node.cmd[0]=='I'&&m_Node.cmd[1]=='N')
         {
-            m_Node.data[0]=='1' ? m_nodeStatus.lightStatus = true : m_nodeStatus.lightStatus = false;
-            m_Node.data[1]=='1' ? m_nodeStatus.fanStatus = true : m_nodeStatus.fanStatus = false;
+            m_Node.data[0]=='1' ? m_nodeState.setLightStatus(true) : m_nodeState.setLightStatus(false);
+            m_Node.data[1]=='1' ? m_nodeState.setFanStatus(true) : m_nodeState.setFanStatus(false);
         }
         if(m_Node.cmd[0]=='T'&&m_Node.cmd[1]=='H')
         {
-            m_nodeStatus.temperature = QString(m_Node.data[0]) + QString(m_Node.data[1]);
-            m_nodeStatus.humidity = QString(m_Node.data[2]) + QString(m_Node.data[3]);
+            m_nodeState.setTemperature(QString(m_Node.data[0]) + QString(m_Node.data[1]));
+            m_nodeState.setHumidity(QString(m_Node.data[2]) + QString(m_Node.data[3]));
         }
         if(m_Node.cmd[0]=='S'&&m_Node.cmd[1]=='-')
         {
-            if(!m_nodeAddr.contains(addr))
+            if(!m_nodeAddrList.contains(m_Node.addr))
             {
-                m_nodeAddr.append(addr);
+                m_nodeAddrList.append(m_Node.addr);
             }
-            m_Node.data[0]=='1' ? m_nodeStatus.hasLight = true : m_nodeStatus.hasLight = false;
-            m_Node.data[1]=='1' ? m_nodeStatus.hasFan = true : m_nodeStatus.hasFan = false;
-            m_Node.data[2]=='1' ? m_nodeStatus.hasTH = true : m_nodeStatus.hasTH = false;
-            m_Node.data[3]=='1' ? m_nodeStatus.hasBeep = true : m_nodeStatus.hasBeep = false;
+            bool hasLight, hasFan, hasBeep, hasTH;
+            m_Node.data[0]=='1' ? hasLight = true : hasLight = false;
+            m_Node.data[1]=='1' ? hasFan = true : hasFan = false;
+            m_Node.data[2]=='1' ? hasBeep = true : hasBeep = false;
+            m_Node.data[3]=='1' ? hasTH = true : hasTH = false;
+            m_nodeState.setExUnit(hasLight,hasFan,hasBeep,hasTH);
         }
     }
+    m_nodeStateVector.append(m_nodeState);
 }
 
 void node::commandReceive()
@@ -340,16 +337,16 @@ void node::commandReceive()
     nodeMsg m_nodeMsg;
     //QString msg = rcvMsg.dequeue();
     QString msg =  N->getData();
-    if(msg.at(4)=="#"&&msg.size()<100)
+    if(msg.at(4)=="#")
     {
         qDebug()<<msg;
         if(msg.mid(0, 4)=="0000")
         {
-            m_nodeMsg.nodeAddr.append("FFFF");
+            m_nodeMsg.addr.append("FFFF");
         }
         else
         {
-            m_nodeMsg.nodeAddr.append(msg.mid(0, 4));    //节点地址
+            m_nodeMsg.addr.append(msg.mid(0, 4));    //节点地址
         }
         m_nodeMsg.cmd[0] = msg.at(5);     //命令位
         m_nodeMsg.cmd[1] = msg.at(6);     //命令位
@@ -359,8 +356,145 @@ void node::commandReceive()
         m_nodeMsg.data[3] = msg.at(10);    //数据位
         QString parity_data = msg.at(11); //校验位
         nodeSetting(m_nodeMsg);
-        this->setNode();
         this->setTree();
     }
     qDebug()<<msg;
 }
+
+nodeState::nodeState()
+{
+    this->addr="无";
+    this->nodeType="无";
+    this->hasLightUnit=false;
+    this->hasFanUnit=false;
+    this->hasTHUnit=false;
+    this->hasBeepUnit=false;
+    this->lightStatus=false;
+    this->fanStatus=false;
+    this->beepStatus=false;
+    this->temperature="无";
+    this->humidity="无";
+}
+
+nodeState::nodeState(QString type)
+{
+    if(type == "协调器")
+    {
+        this->addr="FFFF";
+        this->nodeType="协调器";
+        this->hasLightUnit=false;
+        this->hasFanUnit=false;
+        this->hasTHUnit=false;
+        this->hasBeepUnit=true;
+        this->lightStatus=false;
+        this->fanStatus=false;
+        this->beepStatus=false;
+        this->temperature="无";
+        this->humidity="无";
+    }
+    else if(type == "终端")
+    {
+        this->addr="无";
+        this->nodeType="终端";
+        this->hasLightUnit=true;
+        this->hasFanUnit=true;
+        this->hasTHUnit=true;
+        this->hasBeepUnit=false;
+        this->lightStatus=false;
+        this->fanStatus=false;
+        this->beepStatus=false;
+        this->temperature="无";
+        this->humidity="无";
+    }
+}
+
+nodeState::~nodeState()
+{
+
+}
+
+QString nodeState::getAddr()
+{
+    return this->addr;
+}
+QString nodeState::getNodeType()
+{
+    return this->nodeType;
+}
+bool nodeState::getLightStatus()
+{
+    return this->lightStatus;
+}
+bool nodeState::getFanStatus()
+{
+    return this->fanStatus;
+}
+bool nodeState::getBeepStatus()
+{
+    return this->beepStatus;
+}
+QString nodeState::getTemperature()
+{
+    return this->temperature;
+}
+QString nodeState::getHumidity()
+{
+    return this->humidity;
+}
+
+bool nodeState::hasLight()
+{
+    return this->hasLightUnit;
+}
+bool nodeState::hasFan()
+{
+    return this->hasFanUnit;
+}
+bool nodeState::hasTH()
+{
+    return this->hasTHUnit;
+}
+bool nodeState::hasBeep()
+{
+    return this->hasBeepUnit;
+}
+
+void nodeState::setAddr(QString addr)
+{
+    this->addr =addr;
+}
+void nodeState::setNodeType(QString nodetype)
+{
+    this->nodeType = nodetype;
+}
+void nodeState::setLightStatus(bool ls)
+{
+    this->lightStatus = ls;
+}
+void nodeState::setFanStatus(bool fs)
+{
+    this->fanStatus = fs;
+}
+void nodeState::setBeepStatus(bool bs)
+{
+    this->beepStatus = bs;
+}
+void nodeState::setTemperature(QString temp)
+{
+    this->temperature = temp;
+}
+void nodeState::setHumidity(QString humi)
+{
+    this->humidity = humi;
+}
+
+void nodeState::setExUnit(bool hsL,bool hsF,bool hsB,bool hsTH)
+{
+    this->hasLightUnit = hsL;
+    this->hasFanUnit = hsF;
+    this->hasBeepUnit = hsB;
+    this->hasTHUnit = hsTH;
+}
+
+//setNode()调用setName(),setSwitch(),setFuncAvable(),setTH();
+//setNode应当接收一个参数，用来
