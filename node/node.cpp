@@ -41,7 +41,7 @@ void node::initNode()
 
     connect(N, SIGNAL(hasReadData()), this, SLOT(commandReceive()));
 
-    connect(ui->treeView->selectionModel(),&QItemSelectionModel::currentRowChanged,this,&node::slotCurrentRowChanged);
+    //connect(ui->treeView->selectionModel(),&QItemSelectionModel::currentRowChanged,this,&node::slotCurrentRowChanged);
 
     //m_nodeAddrList.append("FFFF");
 
