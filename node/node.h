@@ -18,9 +18,10 @@ class nodeState
 {
 public:
     nodeState();
-    nodeState(QString);
+
     ~nodeState();
 
+    void initNodeState(QString);
     QString getAddr();
     QString getNodeType();
     bool getLightStatus();
@@ -89,8 +90,6 @@ public:
     //设置节点
     void setNode();
 
-    //获取节点地址
-    void getNodeAddr();
     //根据收到的信息，设置节点数据
 
     void nodeSetting(nodeMsg);
@@ -130,8 +129,9 @@ private:
     //生成树
     //QQueue<QString> rcvMsg;
     //用于存储接收到的消息队列
-    QVector<nodeState> m_nodeStateVector;
-    //储存每个节点
+    QQueue<nodeState> m_nodeStateQueue;
+    //储存每次节点发送来的消息状态
+    bool isRootNodeSet;
 };
 
 #endif // NODE_H
