@@ -71,8 +71,8 @@ private:
     //------------------------
     QTcpServer *m_tcpServer = nullptr;
     QTcpSocket *m_tcpSocket = nullptr;
-    QList<QTcpSocket *> tcpSocketList;
-    int tcpSocket_Max;
+    //QList<QTcpSocket *> tcpSocketList;
+    //int tcpSocket_Max;
     HeartBeat *heart;
 };
 

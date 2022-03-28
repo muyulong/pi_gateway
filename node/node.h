@@ -115,6 +115,14 @@ private slots:
 
     void on_toolButton_init_clicked();
 
+    void on_pushButton_opLight_clicked();
+
+    void on_pushButton_clLight_clicked();
+
+    void on_pushButton_opFan_clicked();
+
+    void on_pushButton_clFan_clicked();
+
 private:
     Ui::node *ui;
 

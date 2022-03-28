@@ -43,7 +43,7 @@ void node::initNode()
 
     //connect(ui->treeView->selectionModel(),&QItemSelectionModel::currentRowChanged,this,&node::slotCurrentRowChanged);
 
-    //m_nodeAddrList.append("FFFF");
+    m_nodeAddrList.append("FFFF");
 
     //this->setNode();
     isRootNodeSet = false;
@@ -69,6 +69,26 @@ void node::on_toolButton_refresh_clicked()
 void node::on_toolButton_init_clicked()
 {
     commandSend(0,"初始化");
+}
+
+void node::on_pushButton_opLight_clicked()
+{
+    commandSend(0,"开灯");
+}
+
+void node::on_pushButton_clLight_clicked()
+{
+    commandSend(0,"关灯");
+}
+
+void node::on_pushButton_opFan_clicked()
+{
+    commandSend(0,"开风");
+}
+
+void node::on_pushButton_clFan_clicked()
+{
+    commandSend(0,"关风");
 }
 
 void node::setNode()
