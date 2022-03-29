@@ -20,5 +20,6 @@
         <file>pic/stop.png</file>
         <file>pic/refresh.png</file>
         <file>pic/init.png</file>
+        <file>pic/queryTH.png</file>
     </qresource>
 </RCC>

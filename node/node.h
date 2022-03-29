@@ -123,6 +123,8 @@ private slots:
 
     void on_pushButton_clFan_clicked();
 
+    void on_toolButton_TH_clicked();
+
 private:
     Ui::node *ui;
 
