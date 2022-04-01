@@ -247,6 +247,14 @@ void log::addLog(QString user, int eventId)
         event = "初始化系统";
         type = "操作日志";
         break;
+    case 4:
+        event = "温度异常";
+        type = "警告";
+        break;
+    case 5:
+        event = "湿度异常";
+        type = "警告";
+        break;
     default:
         event = "未知事件";
         type = "全部";

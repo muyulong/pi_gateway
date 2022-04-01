@@ -10,7 +10,6 @@
 #include <QDateTimeAxis>
 #include <QValueAxis>
 #include <QDebug>
-//#include <node/node.h>
 QT_CHARTS_USE_NAMESPACE
 
 namespace Ui {
@@ -48,7 +47,6 @@ private:
     qint64 rcvTime;
     int temp;
     int humi;
-    //node *m_node;
 };
 
 #endif // THCHART_H

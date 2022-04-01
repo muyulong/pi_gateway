@@ -99,6 +99,10 @@ public:
 
     void getNodeMsg();
 
+    bool checkTemp(int);
+
+    bool checkHumi(int);
+
 signals:
     void sendTip(QString);
     void sendTH(qint64,int,int);
@@ -109,6 +113,7 @@ private slots:
     //设置树
     void setTree();
     //--------------------
+    void treeItemCkicked(const QModelIndex &index);
 
     void on_toolButton_start_clicked();
 
@@ -125,8 +130,6 @@ private slots:
     void on_pushButton_opFan_clicked();
 
     void on_pushButton_clFan_clicked();
-
-    void on_toolButton_TH_clicked();
 
 private:
     Ui::node *ui;

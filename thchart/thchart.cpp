@@ -7,16 +7,7 @@ THchart::THchart(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //m_node = new node;
-
     connect(this,SIGNAL(gotData()),this,SLOT(DrawChart()));
-    //connect(m_node,&node::sendTH,this,&THchart::setTHchart);
-
-    //timer = new QTimer(this);                                        //创建定时器
-    //connect(timer,SIGNAL(timeout()),this,SLOT(DrawChart()));         //连接定时器与定时溢出处理槽函数
-
-    //timer->start();
-    //timer->setInterval(500);    //设置定时周期
 
     InitChart();
 }
@@ -32,7 +23,6 @@ void THchart::setTHchart(qint64 pTime,int pTemp,int pHumi)
     temp = pTemp;
     humi = pHumi;
     emit gotData();
-    //qDebug()<<rcvTime<<temp<<humi;
 }
 
 void THchart::InitChart()
@@ -77,20 +67,5 @@ void THchart::DrawChart()
     chart->axes(Qt::Horizontal).back()->setRange(QDateTime::currentDateTime().addSecs(-60 * 1), QDateTime::currentDateTime().addSecs(0));
     Tseries->append(rcvTime, temp);
     Hseries->append(rcvTime, humi);
-    qDebug()<<rcvTime<<temp<<humi;
-
-
-//    int i,j;
-//    QDateTime currentTime = QDateTime::currentDateTime();
-//    //设置坐标轴显示范围
-//   chart->axes(Qt::Horizontal).back()->setRange(QDateTime::currentDateTime().addSecs(-60 * 1), QDateTime::currentDateTime().addSecs(0));
-
-//    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));                          //这里生成随机数做测试
-//    i = qrand() % 9*10;
-//    j = qrand() % 9*10;
-//    //增加新的点到曲线末端
-//    Tseries->append(currentTime.toMSecsSinceEpoch(), i);
-//    Hseries->append(currentTime.toMSecsSinceEpoch(), j);
-//    qDebug()<<currentTime.toMSecsSinceEpoch()<<i<<j;
-//    //1648776193941 10 60
+    //qDebug()<<rcvTime<<temp<<humi;
 }

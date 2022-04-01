@@ -41,7 +41,7 @@ void node::initNode()
 
     connect(N,&netCom::hasReadData,this,&node::commandReceive);
 
-    //connect(ui->treeView->selectionModel(),&QItemSelectionModel::currentRowChanged,this,&node::slotCurrentRowChanged);
+    connect(ui->treeView,&ui->treeView->QTreeView::doubleClicked,this,&node::treeItemCkicked);
 
     isRootNodeSet = false;
 }
@@ -61,6 +61,10 @@ void node::on_toolButton_stop_clicked()
 void node::on_toolButton_refresh_clicked()
 {
     commandSend(ui->lb_nodeName->text(),"状态");
+    QEventLoop eventloop;
+    QTimer::singleShot(100, &eventloop, SLOT(quit()));
+    eventloop.exec();
+    commandSend(ui->lb_nodeName->text(),"查温湿度");
 }
 
 void node::on_toolButton_init_clicked()
@@ -88,9 +92,18 @@ void node::on_pushButton_clFan_clicked()
     commandSend(ui->lb_nodeName->text(),"关风");
 }
 
-void node::on_toolButton_TH_clicked()
+void node::treeItemCkicked(const QModelIndex &index)
 {
-    commandSend(ui->lb_nodeName->text(),"查温湿度");
+    QString selectedRowTxt = ui->treeView->model()->itemData(index).values()[0].toString();
+    if(selectedRowTxt == "终端" || selectedRowTxt == "协调器")
+    {
+        selectedRowTxt = "FFFF";
+    }
+    commandSend(selectedRowTxt,"状态");
+    QEventLoop eventloop;
+    QTimer::singleShot(100, &eventloop, SLOT(quit()));
+    eventloop.exec();
+    commandSend(selectedRowTxt,"查温湿度");
 }
 
 void node::setNode()
@@ -109,10 +122,11 @@ void node::initTree()
     model->setHorizontalHeaderLabels(QStringList() << "节点编号"<< "节点类型"); //设置列头
     // 2，给QTreeView应用model
     ui->treeView->setModel(model);
-    ui->treeView->setAlternatingRowColors(true);
+    //ui->treeView->setAlternatingRowColors(true);
     ui->treeView->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
     ui->treeView->header()->setSectionsMovable(false);
     ui->treeView->setSelectionBehavior(QAbstractItemView::SelectRows);   //选中行
+    ui->treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->treeView->expandAll();
 }
 
@@ -282,6 +296,30 @@ int parityCheck(QString nMsg)
     }
 }
 
+bool node::checkTemp(int temp)
+{
+    if(temp>30)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+bool node::checkHumi(int humi)
+{
+    if(humi>70)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 void node::commandSend(QString nodeAddr, QString msg)
 {
     if(nodeAddr == "0000")
@@ -304,6 +342,14 @@ void node::nodeSetting(nodeMsg m_Node)
         int humi = QString(m_Node.data[2]).toInt()*10 + QString(m_Node.data[3]).toInt();
         emit sendTH(time,temp,humi);
         //qDebug()<<time<<temp<<humi;
+        if(checkTemp(temp))
+        {
+            L.addLog("温度监控",4);
+        }
+        if(checkHumi(humi))
+        {
+            L.addLog("湿度监控",5);
+        }
     }
     else
     {
