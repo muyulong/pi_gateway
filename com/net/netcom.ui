@@ -108,7 +108,7 @@
      <item>
       <widget class="QLabel" name="lbListen">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -126,7 +126,7 @@
      <item>
       <widget class="QLabel" name="label_socket">
        <property name="text">
-        <string>TextLabel</string>
+        <string/>
        </property>
       </widget>
      </item>

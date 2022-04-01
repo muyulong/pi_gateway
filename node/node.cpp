@@ -39,13 +39,10 @@ void node::initNode()
     ui->pushButton_opFan->setDisabled(1);
     ui->pushButton_clFan->setDisabled(1);
 
-    connect(N, SIGNAL(hasReadData()), this, SLOT(commandReceive()));
+    connect(N,&netCom::hasReadData,this,&node::commandReceive);
 
     //connect(ui->treeView->selectionModel(),&QItemSelectionModel::currentRowChanged,this,&node::slotCurrentRowChanged);
 
-    //m_nodeAddrList.append("FFFF");
-
-    //this->setNode();
     isRootNodeSet = false;
 }
 
@@ -63,37 +60,37 @@ void node::on_toolButton_stop_clicked()
 
 void node::on_toolButton_refresh_clicked()
 {
-    commandSend(0,"状态");
+    commandSend(ui->lb_nodeName->text(),"状态");
 }
 
 void node::on_toolButton_init_clicked()
 {
-    commandSend(0,"初始化");
+    commandSend(ui->lb_nodeName->text(),"初始化");
 }
 
 void node::on_pushButton_opLight_clicked()
 {
-    commandSend(0,"开灯");
+    commandSend(ui->lb_nodeName->text(),"开灯");
 }
 
 void node::on_pushButton_clLight_clicked()
 {
-    commandSend(0,"关灯");
+    commandSend(ui->lb_nodeName->text(),"关灯");
 }
 
 void node::on_pushButton_opFan_clicked()
 {
-    commandSend(0,"开风");
+    commandSend(ui->lb_nodeName->text(),"开风");
 }
 
 void node::on_pushButton_clFan_clicked()
 {
-    commandSend(0,"关风");
+    commandSend(ui->lb_nodeName->text(),"关风");
 }
 
 void node::on_toolButton_TH_clicked()
 {
-    commandSend(0,"查温湿度");
+    commandSend(ui->lb_nodeName->text(),"查温湿度");
 }
 
 void node::setNode()
@@ -256,7 +253,7 @@ QString str2cmd(QString str)
     }
     if (str == "查温湿度")
     {
-        cmd = "TH";
+        cmd = "AQ";
     }
     if (str == "初始化")
     {
@@ -285,18 +282,13 @@ int parityCheck(QString nMsg)
     }
 }
 
-void node::commandSend(int nodeID, QString msg)
+void node::commandSend(QString nodeAddr, QString msg)
 {
-    QString node_add;
-    if(m_nodeAddrList.isEmpty()&&nodeID==0)
+    if(nodeAddr == "0000")
     {
-        node_add = "FFFF";
+        nodeAddr = "FFFF";
     }
-    else
-    {
-        node_add = m_nodeAddrList.at(nodeID);
-    }
-    QString cmd_str = node_add + "#" + str2cmd(msg);
+    QString cmd_str = nodeAddr + "#" + str2cmd(msg);
     //QString parityNum = QString::number(parityCheck(cmd_str));
     QString parityNum = "1";
     cmd_str = cmd_str + parityNum;
@@ -305,63 +297,75 @@ void node::commandSend(int nodeID, QString msg)
 
 void node::nodeSetting(nodeMsg m_Node)
 {
-    nodeState m_nodeState;
-    if(m_Node.addr=="FFFF")
+    if(m_Node.cmd[0]=='T'&&m_Node.cmd[1]=='H')
     {
-        m_nodeState.initNodeState("协调器");
-        m_nodeState.setAddr(m_Node.addr);
-        if(!m_nodeAddrList.contains(m_Node.addr))
-        {
-            m_nodeAddrList.append(m_Node.addr);
-        }
+        qint64 time = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        int temp = QString(m_Node.data[0]).toInt()*10 + QString(m_Node.data[1]).toInt();
+        int humi = QString(m_Node.data[2]).toInt()*10 + QString(m_Node.data[3]).toInt();
+        emit sendTH(time,temp,humi);
+        //qDebug()<<time<<temp<<humi;
     }
     else
     {
-        m_nodeState.initNodeState("终端");
-        m_nodeState.setAddr(m_Node.addr);
-        if(m_Node.cmd[0]=='O')
+        nodeState m_nodeState;
+        if(m_Node.addr=="FFFF")
         {
-            if(m_Node.cmd[1]=='L')
+            m_nodeState.initNodeState("协调器");
+            m_nodeState.setAddr(m_Node.addr);
+            if(!m_nodeAddrList.contains(m_Node.addr))
             {
-                m_Node.data[3]=='1' ? m_nodeState.setLightStatus(true) : m_nodeState.setLightStatus(false);
-            }
-            if(m_Node.cmd[1]=='F')
-            {
-                m_Node.data[3]=='1' ? m_nodeState.setFanStatus(true) : m_nodeState.setFanStatus(false);
+                m_nodeAddrList.append(m_Node.addr);
             }
         }
-        if(m_Node.cmd[0]=='C')
+        else
         {
-            if(m_Node.cmd[1]=='L')
+            m_nodeState.initNodeState("终端");
+            m_nodeState.setAddr(m_Node.addr);
+            if(m_Node.cmd[0]=='O')
             {
-                m_Node.data[3]=='1' ? m_nodeState.setLightStatus(false) : m_nodeState.setLightStatus(true);
+                if(m_Node.cmd[1]=='L')
+                {
+                    m_Node.data[3]=='1' ? m_nodeState.setLightStatus(true) : m_nodeState.setLightStatus(false);
+                }
+                if(m_Node.cmd[1]=='F')
+                {
+                    m_Node.data[3]=='1' ? m_nodeState.setFanStatus(true) : m_nodeState.setFanStatus(false);
+                }
             }
-            if(m_Node.cmd[1]=='F')
+            if(m_Node.cmd[0]=='C')
             {
-                m_Node.data[3]=='1' ? m_nodeState.setFanStatus(false) : m_nodeState.setFanStatus(true);
+                if(m_Node.cmd[1]=='L')
+                {
+                    m_Node.data[3]=='1' ? m_nodeState.setLightStatus(false) : m_nodeState.setLightStatus(true);
+                }
+                if(m_Node.cmd[1]=='F')
+                {
+                    m_Node.data[3]=='1' ? m_nodeState.setFanStatus(false) : m_nodeState.setFanStatus(true);
+                }
+            }
+            if(m_Node.cmd[0]=='I'&&m_Node.cmd[1]=='N')
+            {
+                m_Node.data[0]=='1' ? m_nodeState.setLightStatus(true) : m_nodeState.setLightStatus(false);
+                m_Node.data[1]=='1' ? m_nodeState.setFanStatus(true) : m_nodeState.setFanStatus(false);
+            }
+            if(m_Node.cmd[0]=='A'&&m_Node.cmd[1]=='Q')
+            {
+                m_nodeState.setTemperature(QString(m_Node.data[0]) + QString(m_Node.data[1]));
+                m_nodeState.setHumidity(QString(m_Node.data[2]) + QString(m_Node.data[3]));
+            }
+            if(m_Node.cmd[0]=='S'&&m_Node.cmd[1]=='-')
+            {
+                bool hasLight, hasFan, hasBeep, hasTH;
+                m_Node.data[0]=='1' ? hasLight = true : hasLight = false;
+                m_Node.data[1]=='1' ? hasFan = true : hasFan = false;
+                m_Node.data[2]=='1' ? hasBeep = true : hasBeep = false;
+                m_Node.data[3]=='1' ? hasTH = true : hasTH = false;
+                m_nodeState.setExUnit(hasLight,hasFan,hasBeep,hasTH);
             }
         }
-        if(m_Node.cmd[0]=='I'&&m_Node.cmd[1]=='N')
-        {
-            m_Node.data[0]=='1' ? m_nodeState.setLightStatus(true) : m_nodeState.setLightStatus(false);
-            m_Node.data[1]=='1' ? m_nodeState.setFanStatus(true) : m_nodeState.setFanStatus(false);
-        }
-        if(m_Node.cmd[0]=='T'&&m_Node.cmd[1]=='H')
-        {
-            m_nodeState.setTemperature(QString(m_Node.data[0]) + QString(m_Node.data[1]));
-            m_nodeState.setHumidity(QString(m_Node.data[2]) + QString(m_Node.data[3]));
-        }
-        if(m_Node.cmd[0]=='S'&&m_Node.cmd[1]=='-')
-        {
-            bool hasLight, hasFan, hasBeep, hasTH;
-            m_Node.data[0]=='1' ? hasLight = true : hasLight = false;
-            m_Node.data[1]=='1' ? hasFan = true : hasFan = false;
-            m_Node.data[2]=='1' ? hasBeep = true : hasBeep = false;
-            m_Node.data[3]=='1' ? hasTH = true : hasTH = false;
-            m_nodeState.setExUnit(hasLight,hasFan,hasBeep,hasTH);
-        }
+        m_nodeStateQueue.enqueue(m_nodeState);
+        this->setTree();
     }
-    m_nodeStateQueue.enqueue(m_nodeState);
 }
 
 void node::commandReceive()
@@ -387,7 +391,6 @@ void node::commandReceive()
         m_nodeMsg.data[3] = msg.at(10);    //数据位
         QString parity_data = msg.at(11); //校验位
         nodeSetting(m_nodeMsg);
-        this->setTree();
     }
     qDebug()<<msg;
 }

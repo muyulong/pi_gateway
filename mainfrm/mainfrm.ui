@@ -78,7 +78,7 @@
          <item>
           <widget class="QLabel" name="label_tips">
            <property name="text">
-            <string>TextLabel</string>
+            <string/>
            </property>
           </widget>
          </item>
@@ -225,7 +225,7 @@
            <item>
             <widget class="QLabel" name="lb_online">
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -249,7 +249,7 @@
            <item>
             <widget class="QLabel" name="lb_tasks">
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
             </widget>
            </item>

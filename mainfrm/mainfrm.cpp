@@ -166,6 +166,7 @@ void mainFrm::initFrm()
     }
 
     connect(NNode,SIGNAL(sendTip(QString)),this,SLOT(setTip(QString)));
+    connect(NNode, &node::sendTH, TH, &THchart::setTHchart);
 
     ui->toolButton_main->click();
 }

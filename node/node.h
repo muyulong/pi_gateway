@@ -8,6 +8,7 @@
 #include <QQueue>
 #include <QVector>
 #include <QDebug>
+#include <QMap>
 
 namespace Ui
 {
@@ -94,15 +95,17 @@ public:
 
     void nodeSetting(nodeMsg);
 
-    void commandSend(int,QString);
+    void commandSend(QString,QString);
 
     void getNodeMsg();
 
 signals:
     void sendTip(QString);
+    void sendTH(qint64,int,int);
 
-private slots:
+public slots:
     void commandReceive();
+private slots:
     //设置树
     void setTree();
     //--------------------

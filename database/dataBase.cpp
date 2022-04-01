@@ -1,4 +1,4 @@
-﻿#include "dataBase.h"
+#include "dataBase.h"
 
 dataBase::dataBase()
 {
@@ -17,7 +17,7 @@ void dataBase::initDatebase()
     }
     if (db.open())
     {
-        qDebug() << "connect database success!";
+        //qDebug() << "connect database success!";
     }
     else
     {
@@ -30,7 +30,7 @@ void dataBase::createTable(QString tableName, QString columnName[], QString data
     query = QSqlQuery(db);
     if (isTableExist(query, tableName))
     {
-        qDebug() << "Table has created!";
+        //qDebug() << "Table has created!";
     }
     else
     {

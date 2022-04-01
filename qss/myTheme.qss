@@ -146,7 +146,7 @@ background-color:#22577E;
 }
 
 QWidget#widget_node_panel>QToolButton#toolButton_refresh:pressed{
-transform:rotate(360deg);
+/*transform:rotate(360deg);*/
 }
 
 QWidget#widget_node_panel>QPushButton#pushButton_opLight,QWidget#widget_node_panel>QPushButton#pushButton_opFan{
