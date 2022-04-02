@@ -438,6 +438,7 @@ void node::commandReceive()
         QString parity_data = msg.at(11); //校验位
         nodeSetting(m_nodeMsg);
     }
+    emit sendOnline(QString::number(m_nodeAddrList.count()));
     qDebug()<<msg;
 }
 

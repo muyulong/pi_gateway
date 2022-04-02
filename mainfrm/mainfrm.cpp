@@ -21,8 +21,11 @@ void mainFrm::initFrm()
     // this->resize(1920,1030);
     this->resize(1200, 540);
 
-    // this->resize(QGuiApplication::primaryScreen()->availableGeometry().width(),QGuiApplication::primaryScreen()->availableGeometry().height());
-    // qDebug()<<this;
+
+    connect(NNode,SIGNAL(sendTip(QString)),this,SLOT(setTip(QString)));
+    connect(NNode,SIGNAL(sendOnline(QString)),this,SLOT(setOnline(QString)));
+    connect(TT,SIGNAL(sendTaskNum(QString)),this,SLOT(setTaskNum(QString)));
+    connect(NNode, &node::sendTH, TH, &THchart::setTHchart);
 
     ui->label_tile->setText("网络节点智能管理系统");
     ui->label_tile->setFont(QFont("Microsoft Yahei", 20));
@@ -165,15 +168,29 @@ void mainFrm::initFrm()
         connect(lbtn, SIGNAL(clicked()), this, SLOT(buttonClick()));
     }
 
-    connect(NNode,SIGNAL(sendTip(QString)),this,SLOT(setTip(QString)));
-    connect(NNode, &node::sendTH, TH, &THchart::setTHchart);
+    ui->lb_online->setText("0");
+    ui->lb_tasks->setText("0");
 
     ui->toolButton_main->click();
+
+    QString strExplain = "使用说明";
+    ui->label_explain->setText(strExplain);
+    ui->label_explain->setAlignment(Qt::AlignCenter);
 }
 
 void mainFrm::setTip(QString tip)
 {
     ui->label_tips->setText(tip);
+}
+
+void mainFrm::setOnline(QString online)
+{
+    ui->lb_online->setText(online);
+}
+
+void mainFrm::setTaskNum(QString tasks)
+{
+    ui->lb_tasks->setText(tasks);
 }
 
 void mainFrm::RoundedRect(int w, int h)
@@ -275,7 +292,10 @@ void mainFrm::mouseMoveEvent(QMouseEvent *event)
 void mainFrm::mouseReleaseEvent(QMouseEvent *event)
 {
     //设置鼠标为未被按下
-    mouse_press = false;
+    if(event)
+    {
+         mouse_press = false;
+    }
 }
 
 void mainFrm::onMin(bool)
@@ -336,21 +356,27 @@ void mainFrm::ShowDateTime()
     ui->label_bottom_time->setText(dtm);
 }
 
-void mainFrm::initSystem()
-{
-    initDevices();
-    checkTasks();
-    L.addLog("系统", 3);
-    N.Start();
-}
+//void mainFrm::initSystem()
+//{
+//    initDevices();
+//    checkTasks();
+//    L.addLog("系统", 3);
+//    N.Start();
+//}
 
-void mainFrm::initDevices()
-{
-    // dvInfo[0][0]=".ffff";
-    // dvInfo[0][1]="0";
-    //-----------
-}
+//void mainFrm::initDevices()
+//{
+//    // dvInfo[0][0]=".ffff";
+//    // dvInfo[0][1]="0";
+//    //-----------
+//}
 
-void mainFrm::checkTasks()
+//void mainFrm::checkTasks()
+//{
+//}
+
+void mainFrm::on_pushButton_about_clicked()
 {
+    QString msg = "Repository:<a href='https://github.com/muyulong/pi_gateway'>GitHub</a> <a href='https://gitee.com/muyulong/pi_gateway'>Gitee</a><br>Develop:<a href='https://github.com/muyulong'>muyulong</a><br>Blog:<a href='https://mmyyll.ml/'>Muyulong’s Blog</a>" ;
+    QMessageBox::about(nullptr,"关于",msg);
 }

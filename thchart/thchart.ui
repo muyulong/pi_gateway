@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QChartView" name="widget" native="true"/>
+    <widget class="QChartView" name="chartView" native="true"/>
    </item>
   </layout>
  </widget>

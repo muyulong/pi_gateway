@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
-    <height>372</height>
+    <width>530</width>
+    <height>580</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>task</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
     <number>10</number>
    </property>
@@ -27,10 +27,10 @@
     <number>10</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
         <widget class="QRadioButton" name="radioButton_time">
          <property name="layoutDirection">
           <enum>Qt::RightToLeft</enum>
@@ -40,17 +40,10 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="0" column="1">
         <widget class="QTimeEdit" name="timeEdit"/>
        </item>
-       <item>
-        <widget class="QComboBox" name="comboBox_event"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
+       <item row="1" column="0">
         <widget class="QRadioButton" name="radioButton_dateTime">
          <property name="layoutDirection">
           <enum>Qt::RightToLeft</enum>
@@ -60,52 +53,76 @@
          </property>
         </widget>
        </item>
-       <item>
+       <item row="1" column="1">
         <widget class="QDateTimeEdit" name="dateTimeEdit"/>
        </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_setTask">
+      </layout>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
          <property name="text">
-          <string>设定</string>
+          <string>条件：</string>
          </property>
         </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="comboBox_condition"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>事件：</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="comboBox_event"/>
        </item>
       </layout>
      </item>
      <item>
-      <widget class="QTableView" name="tableView_task"/>
+      <widget class="QPushButton" name="pushButton_setTask">
+       <property name="text">
+        <string>设定</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTableView" name="tableView_task"/>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label_currentSelect">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="label_currentSelect">
-         <property name="text">
-          <string>已选中第1个</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_startTask">
-         <property name="text">
-          <string>启用</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_stopTask">
-         <property name="text">
-          <string>停止</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_delTask">
-         <property name="text">
-          <string>删除</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QPushButton" name="pushButton_startTask">
+       <property name="text">
+        <string>启用</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_stopTask">
+       <property name="text">
+        <string>停止</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_delTask">
+       <property name="text">
+        <string>删除</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

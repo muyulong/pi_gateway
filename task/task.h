@@ -22,7 +22,7 @@ public:
     explicit task(QWidget *parent = nullptr);
 
     void initTask();
-    void addTask(QDateTime dateTime, QTime time, int taskContentID, bool radioSelect);
+    void addTask(QDateTime dateTime, QTime time, int conditionID, int taskContentID, bool radioSelect);
     vector<vector<QString>> getTask();
     bool delTask(int taskID);
     bool isTaskActive(int taskID);
@@ -32,10 +32,15 @@ public:
     void taskViewer();
     // void taskTable();
 
+    void runTask();
+
     bool taskStatus;
     bool radioSelect;
 
     ~task();
+
+signals:
+    sendTaskNum(QString);
 
 private slots:
 
@@ -51,6 +56,8 @@ private slots:
 
     void on_pushButton_delTask_clicked();
 
+    void currentRowCkicked(const QModelIndex &index);
+
 private:
     Ui::task *ui;
 
@@ -58,6 +65,14 @@ private:
     // QString hBoxLay = "HBL";
     vector<vector<QString>> viewTask;
     int size_row;
+
+#pragma pack(push,1)
+    typedef struct
+    {
+        QDateTime taskDataTime;
+        QString taskEvent;
+    }taskStruct;
+#pragma pack(pop)
 };
 
 #endif // TASK_H

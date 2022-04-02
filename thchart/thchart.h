@@ -1,6 +1,7 @@
 #ifndef THCHART_H
 #define THCHART_H
 #include <QSplineSeries>
+#include <QScatterSeries>
 #include <QChartView>
 #include <QChart>
 #include <QWidget>
@@ -10,6 +11,7 @@
 #include <QDateTimeAxis>
 #include <QValueAxis>
 #include <QDebug>
+#include <QLabel>
 QT_CHARTS_USE_NAMESPACE
 
 namespace Ui {
@@ -34,12 +36,14 @@ public slots:
 
 private slots:
     void DrawChart();
+    void slotPointHoverd(const QPointF &point, bool state);
 
 private:
     Ui::THchart *ui;
 
     QSplineSeries *Tseries;
     QSplineSeries *Hseries;
+    QScatterSeries *Point;
     QTimer *timer;                           //计时器
     QChart *chart;                           //画布
     QDateTimeAxis *axisX;                    //轴
@@ -47,6 +51,7 @@ private:
     qint64 rcvTime;
     int temp;
     int humi;
+    QLabel *m_valueLabel;
 };
 
 #endif // THCHART_H

@@ -106,6 +106,7 @@ public:
 signals:
     void sendTip(QString);
     void sendTH(qint64,int,int);
+    void sendOnline(QString);
 
 public slots:
     void commandReceive();
@@ -143,8 +144,6 @@ private:
     QStandardItem* rootNode;
     QStandardItem* endNode;
     //生成树
-    //QQueue<QString> rcvMsg;
-    //用于存储接收到的消息队列
     QQueue<nodeState> m_nodeStateQueue;
     //储存每次节点发送来的消息状态
     bool isRootNodeSet;

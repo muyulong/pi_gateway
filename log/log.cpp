@@ -91,7 +91,7 @@ void log::tableCreator(int size_row)
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     // qDebug() <<tableView->horizontalHeader();
     /* 行颜色交替显示 */
-    tableView->setAlternatingRowColors(true);
+    //tableView->setAlternatingRowColors(true);
     /* 不允许在图形界面修改内容 */
     //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //需要在表格使用右键菜单，需要启动该属性
     //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //表格第0列，按降序排列

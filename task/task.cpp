@@ -6,6 +6,8 @@ task::task(QWidget *parent)
 {
     ui->setupUi(this);
     this->initTask();
+    connect(ui->tableView_task,&ui->tableView_task->QTableView::clicked,this,&task::currentRowCkicked);
+
 }
 
 task::~task()
@@ -24,60 +26,134 @@ void task::initTask()
     initDatebase();
     createTable(tableName, columnName, dataType, columnNum);
 
-    ui->comboBox_event->addItems(QStringList() << "打开灯泡"
-                                               << "关闭灯泡"
-                                               << "打开风扇"
-                                               << "关闭风扇"
-                                               << "监测温度");
+    ui->comboBox_event->addItems(QStringList()
+                                 << "打开照明"
+                                 << "关闭照明"
+                                 << "打开通风"
+                                 << "关闭通风"
+                                 << "监测温度"
+                                 << "监测湿度"
+                                 << "监测温湿度");
+    ui->comboBox_condition->addItems(QStringList()
+                                     <<"无"
+                                     << "温度异常"
+                                     << "湿度异常");
     radioSelect = 0;
     ui->radioButton_time->click();
+    ui->label_currentSelect->setText("未选择任何任务");
+}
+
+bool checkTask(int cID, int tID)
+{
+    bool result = true;
+    //温度异常->监测温度
+    if(cID==1&&tID==4)
+    {
+        result = false;
+    }
+    //温度异常->监测湿度
+    if(cID==1&&tID==5)
+    {
+        result = false;
+    }
+    //温度异常->监测温湿度
+    if(cID==1&&tID==6)
+    {
+        result = false;
+    }
+    //湿度异常->监测温度
+    if(cID==2&&tID==4)
+    {
+        result = false;
+    }
+    //湿度异常->监测湿度
+    if(cID==2&&tID==5)
+    {
+        result = false;
+    }
+    //湿度异常->监测温湿度
+    if(cID==2&&tID==6)
+    {
+        result = false;
+    }
+    return result;
 }
 
 //添加任务
-void task::addTask(QDateTime dateTime, QTime time, int taskContentID, bool radioSelect)
+void task::addTask(QDateTime dateTime, QTime time, int conditionID, int taskContentID, bool radioSelect)
 {
     query = QSqlQuery(db);
+    taskStatus = 0;
     QString time_sql = "每天" + time.toString();
     QString dataTime_sql = dateTime.toString("yyyy-MM-dd hh:mm");
-    QString content_sql = QString::fromLocal8Bit("");
-    taskStatus = 0;
-    switch (taskContentID)
+    QString eventStr = QString::fromLocal8Bit("");
+    QString conditionStr =QString::fromLocal8Bit("");
+    switch (conditionID)
     {
     case 0:
-        content_sql = "打开灯泡";
+        conditionStr = "温度异常";
         break;
     case 1:
-        content_sql = "关闭灯泡";
-        break;
-    case 2:
-        content_sql = "打开风扇";
-        break;
-    case 3:
-        content_sql = "关闭风扇";
-        break;
-    case 4:
-        content_sql = "监测温度";
+        conditionStr = "湿度异常";
         break;
     default:
         break;
     }
-    query.prepare("INSERT INTO tasks (time, content,isActive) "
-                  "VALUES (?, ?, ?)");
-    if (radioSelect)
+    switch (taskContentID)
     {
-        query.addBindValue(time_sql);
-        query.addBindValue(content_sql);
-        query.addBindValue(taskStatus);
+    case 0:
+        eventStr = "打开照明";
+        break;
+    case 1:
+        eventStr = "关闭照明";
+        break;
+    case 2:
+        eventStr = "打开通风";
+        break;
+    case 3:
+        eventStr = "关闭通风";
+        break;
+    case 4:
+        eventStr = "监测温度";
+        break;
+    case 5:
+        eventStr = "监测湿度";
+        break;
+    case 6:
+        eventStr = "监测温湿度";
+        break;
+    default:
+        break;
+    }
+    if(checkTask(conditionID,taskContentID))
+    {
+        QString content_sql = eventStr;
+        if(conditionStr!="无")
+        {
+            content_sql = conditionStr+"->"+eventStr;
+        }
+        query.prepare("INSERT INTO tasks (time, content,isActive) "
+                      "VALUES (?, ?, ?)");
+        if (radioSelect)
+        {
+            query.addBindValue(time_sql);
+            query.addBindValue(content_sql);
+            query.addBindValue(taskStatus);
+        }
+        else
+        {
+            query.addBindValue(dataTime_sql);
+            query.addBindValue(content_sql);
+            query.addBindValue(taskStatus);
+        }
+        query.exec();
+        // qDebug()<<time<<" "<<dateTime<<" "<<taskContentID<<" "<<radioSelect;
+        // qDebug()<<time_sql<<" "<<dataTime_sql;
     }
     else
     {
-        query.addBindValue(dataTime_sql);
-        query.addBindValue(content_sql);
-        query.addBindValue(taskStatus);
+        QMessageBox::warning(this, "错误", "无法在此条件下设置该任务！", QMessageBox::Ok, QMessageBox::NoButton);
     }
-    query.exec();
-    // qDebug()<<time<<" "<<dateTime<<" "<<taskContentID<<" "<<radioSelect;
-    // qDebug()<<time_sql<<" "<<dataTime_sql;
 }
 //获取任务
 vector<vector<QString>> task::getTask()
@@ -143,6 +219,47 @@ void task::setTask(int taskID, bool status)
     query.exec();
 }
 
+void task::runTask()
+{
+    //Qtime time
+    //if（time = ）
+}
+
+QString taskStr2Cmd(QString taskStr)
+{
+
+}
+
+void task::getTask2Run()
+{
+    QString taskContent;
+    vector<vector<QString>> tasks = getTask();
+    taskStruct m_task;
+    for(auto task : tasks)
+    {
+        if(task.at(2)=="1")
+        {
+            //qDebug<<task.at(0);
+            //<<task.at(1)<<task.at(2);
+            //qDebug()<<"待执行";
+        }
+    }
+    if(taskContent.contains("->"))
+    {
+        if(taskContent.mid(0,4)=="温度异常")
+        {
+
+        }
+        if(taskContent.mid(0,4)=="湿度异常")
+        {
+
+        }
+    }
+    else
+    {
+        //m_task.taskEvent = taskContent
+    }
+}
 //----------------------------------
 //从主界面移植的代码
 
@@ -151,10 +268,12 @@ void task::on_pushButton_setTask_clicked()
     QDateTime datetime;
     QTime time;
     int taskContentID;
+    int conditionID;
     datetime = ui->dateTimeEdit->dateTime();
     time = ui->timeEdit->time();
     taskContentID = ui->comboBox_event->currentIndex();
-    addTask(datetime, time, taskContentID, radioSelect);
+    conditionID = ui->comboBox_condition->currentIndex();
+    addTask(datetime, time, conditionID, taskContentID, radioSelect);
     taskViewer();
 }
 
@@ -178,6 +297,7 @@ void task::taskViewer()
     size_row = viewTask.size();
     qDebug() << "接收到任务数量：" << viewTask.size();
     taskTable(size_row);
+    emit sendTaskNum(QString::number(size_row));
 }
 
 void task::taskTable(int size_row)
@@ -224,12 +344,13 @@ void task::taskTable(int size_row)
     ui->tableView_task->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     // qDebug() <<tableView->horizontalHeader();
     /* 行颜色交替显示 */
-    ui->tableView_task->setAlternatingRowColors(true);
+    //ui->tableView_task->setAlternatingRowColors(true);
     /* 不允许在图形界面修改内容 */
     //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //需要在表格使用右键菜单，需要启动该属性
     //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //表格第0列，按降序排列
     ui->tableView_task->setSelectionMode(QAbstractItemView::SingleSelection);
     //。。。。。。。。。。。。。
+    runTask();
 }
 
 void task::on_pushButton_startTask_clicked()
@@ -273,4 +394,17 @@ void task::on_pushButton_delTask_clicked()
     }
     QMessageBox::information(this, dlgTitle, strInfo, QMessageBox::Ok, QMessageBox::NoButton);
     taskViewer();
+}
+
+void task::currentRowCkicked(const QModelIndex &index)
+{
+    emit sendTaskNum(QString::number(size_row));
+    int row = index.row();
+    QString selectStr = "未选择任何任务";
+    if(row >= 0)
+    {
+        row++;
+        selectStr = "已选中第"+QString::number(row)+"个";
+    }
+    ui->label_currentSelect->setText(selectStr);
 }

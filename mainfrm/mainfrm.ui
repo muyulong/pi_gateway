@@ -744,16 +744,9 @@
            <widget class="QWidget" name="page3">
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
-              <widget class="QLabel" name="label_8">
+              <widget class="QLabel" name="label_explain">
                <property name="text">
-                <string>使用说明</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_16">
-               <property name="text">
-                <string>TextLabel</string>
+                <string/>
                </property>
               </widget>
              </item>

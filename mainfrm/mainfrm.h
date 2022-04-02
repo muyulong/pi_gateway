@@ -29,11 +29,11 @@ public:
     explicit mainFrm(QWidget *parent = nullptr);
     void getLoginUser(QString user);
 
-    void initSystem();
+    //void initSystem();
     //初始化非主页面的系统基本功能
-    void initDevices();
+    //void initDevices();
     //初始化节点数据
-    void checkTasks();
+    //void checkTasks();
     //检查待执行计划任务
 
     QString usr;
@@ -78,6 +78,9 @@ private:
 public slots:
         void setTip(QString);
 
+        void setOnline(QString);
+
+        void setTaskNum(QString);
 private slots:
 
     void ShowDateTime();
@@ -85,6 +88,8 @@ private slots:
     void initFrm();
 
     void buttonClick();
+
+    void on_pushButton_about_clicked();
 
     /* custom system btn */
     void onMin(bool);
