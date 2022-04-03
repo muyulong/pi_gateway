@@ -144,6 +144,7 @@ QString netCom::getData()
     {
         result = "empty data!";
     }
+    m_msg = result;
     return result;
 }
 
@@ -158,7 +159,7 @@ void netCom::sendData(QString data)
     //{
     //    tcpSocketList.at(i)->write(data.toLatin1());
     //}
-    //ui->plainTextEdit->appendPlainText("[out]" + data);
+    ui->plainTextEdit->appendPlainText("[out]:" + data);
     m_tcpSocket->write(data.toLatin1());
 }
 
@@ -183,7 +184,7 @@ void netCom::on_btnClear_clicked()
 void netCom::onReadyRead()
 {
     emit hasReadData();
-    ui->plainTextEdit->appendPlainText("[in] " + this->getData());
+    ui->plainTextEdit->appendPlainText("[IN]: " + m_msg);
 }
 
 void netCom::on_btnSend_clicked()

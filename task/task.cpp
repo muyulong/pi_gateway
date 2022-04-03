@@ -31,8 +31,6 @@ void task::initTask()
                                  << "关闭照明"
                                  << "打开通风"
                                  << "关闭通风"
-                                 << "监测温度"
-                                 << "监测湿度"
                                  << "监测温湿度");
     ui->comboBox_condition->addItems(QStringList()
                                      <<"无"
@@ -41,33 +39,15 @@ void task::initTask()
     radioSelect = 0;
     ui->radioButton_time->click();
     ui->label_currentSelect->setText("未选择任何任务");
+    ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
+    ui->timeEdit->setTime(QTime::currentTime());
 }
 
 bool checkTask(int cID, int tID)
 {
     bool result = true;
-    //温度异常->监测温度
-    if(cID==1&&tID==4)
-    {
-        result = false;
-    }
-    //温度异常->监测湿度
-    if(cID==1&&tID==5)
-    {
-        result = false;
-    }
     //温度异常->监测温湿度
     if(cID==1&&tID==6)
-    {
-        result = false;
-    }
-    //湿度异常->监测温度
-    if(cID==2&&tID==4)
-    {
-        result = false;
-    }
-    //湿度异常->监测湿度
-    if(cID==2&&tID==5)
     {
         result = false;
     }
@@ -85,15 +65,18 @@ void task::addTask(QDateTime dateTime, QTime time, int conditionID, int taskCont
     query = QSqlQuery(db);
     taskStatus = 0;
     QString time_sql = "每天" + time.toString();
-    QString dataTime_sql = dateTime.toString("yyyy-MM-dd hh:mm");
+    QString dataTime_sql = dateTime.toString("yyyy-MM-dd hh:mm:ss");
     QString eventStr = QString::fromLocal8Bit("");
     QString conditionStr =QString::fromLocal8Bit("");
     switch (conditionID)
     {
     case 0:
-        conditionStr = "温度异常";
+        conditionStr = "无";
         break;
     case 1:
+        conditionStr = "温度异常";
+        break;
+    case 2:
         conditionStr = "湿度异常";
         break;
     default:
@@ -114,12 +97,6 @@ void task::addTask(QDateTime dateTime, QTime time, int conditionID, int taskCont
         eventStr = "关闭通风";
         break;
     case 4:
-        eventStr = "监测温度";
-        break;
-    case 5:
-        eventStr = "监测湿度";
-        break;
-    case 6:
         eventStr = "监测温湿度";
         break;
     default:
@@ -156,7 +133,7 @@ void task::addTask(QDateTime dateTime, QTime time, int conditionID, int taskCont
     }
 }
 //获取任务
-vector<vector<QString>> task::getTask()
+QVector<QVector<QString>> task::getTask()
 {
     query = QSqlQuery(db);
     QString search_sql = "select * from tasks";
@@ -164,7 +141,7 @@ vector<vector<QString>> task::getTask()
     query.exec();
     qDebug() << "查找全部计划任务";
     int row = 0, col = 3;
-    vector<vector<QString>> tasks(sqlSize(query), vector<QString>(col, 0));
+    QVector<QVector<QString>> tasks(sqlSize(query), QVector<QString>(col, 0));
     while (query.next() && row <= sqlSize(query))
     {
         tasks[row][0] = query.value(0).toString();
@@ -219,47 +196,91 @@ void task::setTask(int taskID, bool status)
     query.exec();
 }
 
-void task::runTask()
-{
-    //Qtime time
-    //if（time = ）
-}
-
 QString taskStr2Cmd(QString taskStr)
 {
-
+    QString result;
+    if(taskStr == "打开照明")
+    {
+        result = "开灯";
+    }
+    if(taskStr == "关闭照明")
+    {
+        result = "关灯";
+    }
+    if(taskStr == "打开通风")
+    {
+        result = "开风";
+    }
+    if(taskStr == "关闭通风")
+    {
+        result = "关风";
+    }
+    if(taskStr == "监测温湿度")
+    {
+        result = "查温湿度";
+    }
+    return result;
 }
 
-void task::getTask2Run()
+void task::runTask(QString taskContent)
 {
-    QString taskContent;
-    vector<vector<QString>> tasks = getTask();
-    taskStruct m_task;
-    for(auto task : tasks)
-    {
-        if(task.at(2)=="1")
-        {
-            //qDebug<<task.at(0);
-            //<<task.at(1)<<task.at(2);
-            //qDebug()<<"待执行";
-        }
-    }
     if(taskContent.contains("->"))
     {
         if(taskContent.mid(0,4)=="温度异常")
         {
-
+            emit sendTaskCmd("FFFF","查温湿度");
+            if(isOverTemp())
+            {
+                emit sendTaskCmd("FFFF",taskStr2Cmd(taskContent.mid(6)));
+            }
         }
         if(taskContent.mid(0,4)=="湿度异常")
         {
-
+            emit sendTaskCmd("FFFF","查温湿度");
+            if(isOverHumi())
+            {
+                emit sendTaskCmd("FFFF",taskStr2Cmd(taskContent.mid(6)));
+            }
         }
     }
     else
     {
-        //m_task.taskEvent = taskContent
+        emit sendTaskCmd("FFFF",taskStr2Cmd(taskContent));
     }
 }
+
+void task::getTask2Run()
+{
+    m_taskStructVec.clear();
+    QVector<QVector<QString>> tasks = getTask();
+    taskStruct m_task;
+    runTaskNum = 0;
+    for(auto task : tasks)
+    {
+        if(task.at(2)=="1")
+        {
+            runTaskNum++;
+            QString dataTime;
+            if(task.at(0).contains("每天"))
+            {
+                dataTime = QDateTime::currentDateTime().toString("yyyy-MM-dd ")+task.at(0).mid(2);
+            }
+            else
+            {
+                dataTime = task.at(0);
+            }
+            m_task.taskDataTime = dataTime;
+            m_task.taskEvent = task.at(1);
+            m_taskStructVec.push_back(m_task);
+        }
+    }
+}
+
+QString task::getRunTaskNum()
+{
+    return QString::number(runTaskNum);
+}
+
 //----------------------------------
 //从主界面移植的代码
 
@@ -297,7 +318,7 @@ void task::taskViewer()
     size_row = viewTask.size();
     qDebug() << "接收到任务数量：" << viewTask.size();
     taskTable(size_row);
-    emit sendTaskNum(QString::number(size_row));
+    getTask2Run();
 }
 
 void task::taskTable(int size_row)
@@ -350,7 +371,6 @@ void task::taskTable(int size_row)
     //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //表格第0列，按降序排列
     ui->tableView_task->setSelectionMode(QAbstractItemView::SingleSelection);
     //。。。。。。。。。。。。。
-    runTask();
 }
 
 void task::on_pushButton_startTask_clicked()
@@ -398,7 +418,6 @@ void task::on_pushButton_delTask_clicked()
 
 void task::currentRowCkicked(const QModelIndex &index)
 {
-    emit sendTaskNum(QString::number(size_row));
     int row = index.row();
     QString selectStr = "未选择任何任务";
     if(row >= 0)

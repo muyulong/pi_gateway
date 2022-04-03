@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "user/regist.h"
 #include "user/login.h"
+#include "user/user.h"
 
 namespace Ui
 {
@@ -27,8 +28,9 @@ private slots:
 
 private:
     Ui::welcome *ui;
-    regist r;
-    login l;
+    regist *m_regist = new regist;
+    login *m_login = new login;
+    user *m_user = new user;
 };
 
 #endif // WELCOME_H

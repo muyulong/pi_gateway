@@ -88,14 +88,13 @@ public:
     void setFuncAvable();
     void setTH();
 
+
     //设置节点
     void setNode();
 
     //根据收到的信息，设置节点数据
 
     void nodeSetting(nodeMsg);
-
-    void commandSend(QString,QString);
 
     void getNodeMsg();
 
@@ -107,9 +106,19 @@ signals:
     void sendTip(QString);
     void sendTH(qint64,int,int);
     void sendOnline(QString);
+    void netStart();
+    void netStop();
+    QString getNetAdd();
+    void sendData(QString);
+    QString getData();
+
 
 public slots:
     void commandReceive();
+    void commandSend(QString, QString);
+    bool isOverTemp();
+    bool isOverHumi();
+
 private slots:
     //设置树
     void setTree();
@@ -147,6 +156,8 @@ private:
     QQueue<nodeState> m_nodeStateQueue;
     //储存每次节点发送来的消息状态
     bool isRootNodeSet;
+    bool tempOver = false;
+    bool humiOver = false;
 };
 
 #endif // NODE_H

@@ -39,8 +39,6 @@ void node::initNode()
     ui->pushButton_opFan->setDisabled(1);
     ui->pushButton_clFan->setDisabled(1);
 
-    connect(N,&netCom::hasReadData,this,&node::commandReceive);
-
     connect(ui->treeView,&ui->treeView->QTreeView::doubleClicked,this,&node::treeItemCkicked);
 
     isRootNodeSet = false;
@@ -48,13 +46,13 @@ void node::initNode()
 
 void node::on_toolButton_start_clicked()
 {
-    N->Start();
-    emit sendTip(N->getNetAdd());
+    emit netStart();
+    emit sendTip(getNetAdd());
 }
 
 void node::on_toolButton_stop_clicked()
 {
-    N->Stop();
+    emit netStart();
     emit sendTip("停止传输");
 }
 
@@ -300,24 +298,36 @@ bool node::checkTemp(int temp)
 {
     if(temp>30)
     {
-        return true;
+        tempOver = true;
     }
     else
     {
-        return false;
+        tempOver = false;
     }
+    return tempOver;
 }
 
 bool node::checkHumi(int humi)
 {
     if(humi>70)
     {
-        return true;
+        humiOver = true;
     }
     else
     {
-        return false;
+        humiOver = false;
     }
+    return humiOver;
+}
+
+bool node::isOverTemp()
+{
+    return tempOver;
+}
+
+bool node::isOverHumi()
+{
+    return humiOver;
 }
 
 void node::commandSend(QString nodeAddr, QString msg)
@@ -330,7 +340,7 @@ void node::commandSend(QString nodeAddr, QString msg)
     //QString parityNum = QString::number(parityCheck(cmd_str));
     QString parityNum = "1";
     cmd_str = cmd_str + parityNum;
-    N->sendData(cmd_str);
+    sendData(cmd_str);
 }
 
 void node::nodeSetting(nodeMsg m_Node)
@@ -341,7 +351,6 @@ void node::nodeSetting(nodeMsg m_Node)
         int temp = QString(m_Node.data[0]).toInt()*10 + QString(m_Node.data[1]).toInt();
         int humi = QString(m_Node.data[2]).toInt()*10 + QString(m_Node.data[3]).toInt();
         emit sendTH(time,temp,humi);
-        //qDebug()<<time<<temp<<humi;
         if(checkTemp(temp))
         {
             L.addLog("温度监控",4);
@@ -418,7 +427,7 @@ void node::commandReceive()
 {
     nodeMsg m_nodeMsg;
     //QString msg = rcvMsg.dequeue();
-    QString msg =  N->getData();
+    QString msg = getData();
     if(msg.at(4)=="#")
     {
         if(msg.mid(0, 4)=="0000")

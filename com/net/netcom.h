@@ -74,6 +74,7 @@ private:
     //QList<QTcpSocket *> tcpSocketList;
     //int tcpSocket_Max;
     HeartBeat *heart;
+    QString m_msg;
 };
 
 #endif // NETCOM_H

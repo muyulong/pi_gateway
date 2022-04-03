@@ -25,13 +25,12 @@ void login::on_pushButton_login_clicked()
     else
     {
         //在数据库中进行查询验证
-        bool login = U.compareUser(user, pwd);
+        bool login = compareUser(user, pwd);
         if (login)
         {
-            m.L.addLog(user, 1);
-            m.getLoginUser(user);
-            m.show();
-            // m.taskViewer();
+           m_mainFrm->addLog(user, 1);
+            m_mainFrm->getLoginUser(user);
+            m_mainFrm->show();
             this->close();
             emit exitWelcome();
         }

@@ -1,8 +1,10 @@
 #include "user.h"
 
-user::user()
+user::user(QObject *parent) : QObject(parent)
 {
+
 }
+
 bool user::compareUser(QString s1, QString s2)
 {
     //在数据库中检索s1对应的结果串，然后与s2进行比对

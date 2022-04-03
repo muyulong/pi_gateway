@@ -17,7 +17,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class mainFrm;
+class mainFrm;
 }
 QT_END_NAMESPACE
 
@@ -36,29 +36,25 @@ public:
     //void checkTasks();
     //检查待执行计划任务
 
-    QString usr;
-
-    class log *LL = new class log;
-    class log L;
-    task *TT = new task;
-    task T;
-    netCom *NN = new netCom;
-    netCom N;
-    serialCom *SS = new serialCom;
-    serialCom S;
-    node *NNode = new node;
-    node Node;
-
-    THchart *TH = new THchart;
-
-
     ~mainFrm();
 
 signals:
     void setBtnClicked();
+    void addLog(QString, int);
+    QString getRunTaskNum();
 
 private:
     Ui::mainFrm *ui;
+
+
+    QString usr;
+
+    class log *m_log = new class log;
+    task *m_task = new task;
+    netCom *m_netCom = new netCom;
+    serialCom *m_serialCom = new serialCom;
+    node *m_node = new node;
+    THchart *m_THchart = new THchart;
 
     void closeEvent(QCloseEvent *event);
 
@@ -74,13 +70,13 @@ private:
     void RoundedRect(int w, int h);
     //绘制圆角矩形
 
+    void checkTime2RunTask(QString);
+
     bool maxOrNormal; // true表示当前窗口状态为normal，图标应显示为max
 public slots:
-        void setTip(QString);
+    void setTip(QString);
 
-        void setOnline(QString);
-
-        void setTaskNum(QString);
+    void setOnline(QString);
 private slots:
 
     void ShowDateTime();

@@ -5,9 +5,12 @@ welcome::welcome(QWidget *parent) : QWidget(parent),
                                     ui(new Ui::welcome)
 {
     ui->setupUi(this);
-    connect(&r, SIGNAL(exitRegist()), this, SLOT(show()));
-    connect(&l, SIGNAL(exitLogin()), this, SLOT(show()));
-    connect(&l, SIGNAL(exitWelcome()), this, SLOT(close()));
+
+    connect(m_regist,&regist::exitRegist,this,&welcome::show);
+    connect(m_login,&login::exitLogin,this,&welcome::show);
+    connect(m_login,&login::exitWelcome,this,&welcome::close);
+    connect(m_regist,&regist::setUser,m_user,&user::setUser);
+    connect(m_login,&login::compareUser,m_user,&user::compareUser);
 }
 
 welcome::~welcome()
@@ -23,18 +26,18 @@ void welcome::on_pushButton_register_clicked()
     QString dataType[2] = {"varchar", "varchar"};
     int columnNum = 2;
     // name varchar, pwd varchar
-    r.U.initDatebase();
-    r.U.createTable(tableName, columnName, dataType, columnNum);
-    r.setModal(true);
-    r.show();
+    m_user->initDatebase();
+    m_user->createTable(tableName, columnName, dataType, columnNum);
+    m_regist->setModal(true);
+    m_regist->show();
     this->hide();
 }
 
 void welcome::on_pushButton_login_clicked()
 {
-    l.U.initDatebase();
-    l.setModal(true);
-    l.show();
+    m_user->initDatebase();
+    m_login->setModal(true);
+    m_login->show();
     this->close();
 }
 

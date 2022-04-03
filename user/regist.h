@@ -3,10 +3,12 @@
 
 #include <QDialog>
 #include <user/user.h>
+#include <QMessageBox>
+
 
 namespace Ui
 {
-    class regist;
+class regist;
 }
 
 class regist : public QDialog
@@ -24,6 +26,7 @@ private slots:
     void on_pushButton_register_clicked();
 signals:
     void exitRegist(); //新建一个信号槽
+    int setUser(QString, QString);
 private:
     Ui::regist *ui;
 };

@@ -218,7 +218,7 @@
               </size>
              </property>
              <property name="text">
-              <string>在线：</string>
+              <string>在线节点：</string>
              </property>
             </widget>
            </item>
@@ -242,7 +242,7 @@
               </size>
              </property>
              <property name="text">
-              <string>任务：</string>
+              <string>运行任务：</string>
              </property>
             </widget>
            </item>

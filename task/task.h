@@ -4,16 +4,25 @@
 #include <QWidget>
 #include <database/dataBase.h>
 #include <QCheckBox>
-#include <vector>
+#include <QVector>
 #include <QStandardItemModel>
 #include "QHBoxLayout"
 #include <QTableView>
 #include <QHeaderView>
+#include <node/node.h>
 
 namespace Ui
 {
-    class task;
+class task;
 }
+
+#pragma pack(push,1)
+typedef struct
+{
+    QString taskDataTime;
+    QString taskEvent;
+}taskStruct;
+#pragma pack(pop)
 
 class task : public QWidget, public dataBase
 {
@@ -23,7 +32,7 @@ public:
 
     void initTask();
     void addTask(QDateTime dateTime, QTime time, int conditionID, int taskContentID, bool radioSelect);
-    vector<vector<QString>> getTask();
+    QVector<QVector<QString>> getTask();
     bool delTask(int taskID);
     bool isTaskActive(int taskID);
     void setTask(int taskID, bool status);
@@ -32,15 +41,23 @@ public:
     void taskViewer();
     // void taskTable();
 
-    void runTask();
+    void runTask(QString);
+
+    void getTask2Run();
 
     bool taskStatus;
     bool radioSelect;
 
+    QVector<taskStruct> m_taskStructVec;
+
     ~task();
 
 signals:
-    sendTaskNum(QString);
+    void sendTaskCmd(QString nodeAddr, QString msg);
+    bool isOverTemp();
+    bool isOverHumi();
+public slots:
+    QString getRunTaskNum();
 
 private slots:
 
@@ -63,16 +80,9 @@ private:
 
     // QStringList buttonNameList;
     // QString hBoxLay = "HBL";
-    vector<vector<QString>> viewTask;
+    QVector<QVector<QString>> viewTask;
     int size_row;
-
-#pragma pack(push,1)
-    typedef struct
-    {
-        QDateTime taskDataTime;
-        QString taskEvent;
-    }taskStruct;
-#pragma pack(pop)
+    int runTaskNum;
 };
 
 #endif // TASK_H

@@ -137,7 +137,7 @@ void log::on_pushButton_delLog_clicked()
         qDebug() << tableView->selectionModel()->selectedRows();
         QModelIndexList indexList = tableView->selectionModel()->selectedRows();
         int count = 0;
-        vector<int> mutiRow;
+        QVector<int> mutiRow;
         foreach (QModelIndex index, indexList)
         {
             // mutiRow[count] = index.row();
@@ -167,7 +167,7 @@ void log::on_pushButton_delLog_clicked()
         int i;
         i = tableView->currentIndex().row() + 1;
         qDebug() << i;
-        vector<int> singleRow(1, i);
+        QVector<int> singleRow(1, i);
         delLogs(singleRow, 1, 1);
         qDebug() << singleRow;
         strInfo = QString("已删除第%1条记录！").arg(singleRow[0]);
@@ -270,7 +270,7 @@ void log::addLog(QString user, int eventId)
     query.exec();
 }
 
-vector<vector<QString>> log::getLog(QString type)
+QVector<QVector<QString>> log::getLog(QString type)
 {
     //在数据库中检索对应类型的日志
     query = QSqlQuery(db);
@@ -297,7 +297,7 @@ vector<vector<QString>> log::getLog(QString type)
     // qDebug() << "一共有"<<sqlSize(query)<<"条日志";
     int row = 0, col = 3;
     //    QString logs[i][3];
-    vector<vector<QString>> logs(sqlSize(query), vector<QString>(col, 0));
+    QVector<QVector<QString>> logs(sqlSize(query), QVector<QString>(col, 0));
     while (query.next() && row <= sqlSize(query))
     {
         //        logs[i-1][0]=query.value(0).toString();
@@ -337,7 +337,7 @@ vector<vector<QString>> log::getLog(QString type)
 //     }
 // }
 
-void log::delLogs(vector<int> row, int delType, int count)
+void log::delLogs(QVector<int> row, int delType, int count)
 {
     query = QSqlQuery(db);
     switch (delType)

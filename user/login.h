@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <mainfrm/mainfrm.h>
 #include <user/user.h>
+#include <QMessageBox>
 
 namespace Ui
 {
@@ -17,8 +18,6 @@ class login : public QDialog
 public:
     explicit login(QWidget *parent = nullptr);
     void closeEvent(QCloseEvent *);
-    mainFrm m;
-    user U;
     ~login();
 
 private slots:
@@ -28,9 +27,11 @@ private slots:
 signals:
     void exitLogin(); //新建一个信号槽
     void exitWelcome();
+    bool compareUser(QString s1, QString s2);
 
 private:
     Ui::login *ui;
+    mainFrm *m_mainFrm = new mainFrm;
 };
 
 #endif // LOGIN_H

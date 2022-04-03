@@ -29,7 +29,7 @@ void regist::on_pushButton_register_clicked()
         QMessageBox::warning(this, "", QString::fromLocal8Bit("两次输入密码必须相同！"));
     else
     {
-        int reg = U.setUser(user, pwd);
+        int reg = setUser(user, pwd);
         if (reg == 1)
         {
             QMessageBox::information(NULL, QString::fromLocal8Bit("注册成功"), QString::fromLocal8Bit("注册成功！！！"), QMessageBox::Yes);

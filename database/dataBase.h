@@ -3,10 +3,6 @@
 
 #include <QtSql>
 #include <QSqlQuery>
-#include <QMessageBox>
-//#include <QCloseEvent>
-
-using namespace std;
 
 class dataBase
 {

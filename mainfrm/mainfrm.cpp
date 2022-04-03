@@ -15,52 +15,28 @@ mainFrm::~mainFrm()
 
 void mainFrm::initFrm()
 {
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint);
-    // setPalette(QPalette(QColor(132,223,255)));//设置窗口背景
-    // setAutoFillBackground(true);
-    // this->resize(1920,1030);
-    this->resize(1200, 540);
-
-
-    connect(NNode,SIGNAL(sendTip(QString)),this,SLOT(setTip(QString)));
-    connect(NNode,SIGNAL(sendOnline(QString)),this,SLOT(setOnline(QString)));
-    connect(TT,SIGNAL(sendTaskNum(QString)),this,SLOT(setTaskNum(QString)));
-    connect(NNode, &node::sendTH, TH, &THchart::setTHchart);
-
-    ui->label_tile->setText("网络节点智能管理系统");
-    ui->label_tile->setFont(QFont("Microsoft Yahei", 20));
-    this->setWindowTitle(ui->label_tile->text());
-
     //初始化日志表
-    ui->stackedWidget->addWidget(LL);
-    LL->logViewer(1);
+    ui->stackedWidget->addWidget(m_log);
+    m_log->logViewer(1);
 
     //初始化图表
-    ui->stackedWidget->addWidget(TH);
+    ui->stackedWidget->addWidget(m_THchart);
 
     //初始化任务表
     QGridLayout *gridTask = new QGridLayout;
-    gridTask->addWidget(TT, 0, 0);
+    gridTask->addWidget(m_task, 0, 0);
     ui->widget_task->setLayout(gridTask);
-    TT->taskViewer();
+    m_task->taskViewer();
 
     //初始化网络连接调试
     QGridLayout *gridNet = new QGridLayout;
-    gridNet->addWidget(NN, 0, 0);
+    gridNet->addWidget(m_netCom, 0, 0);
     ui->widget_2net->setLayout(gridNet);
 
     //初始化串口连接调试
     QGridLayout *gridSerial = new QGridLayout;
-    gridSerial->addWidget(SS, 0, 0);
+    gridSerial->addWidget(m_serialCom, 0, 0);
     ui->widget_2serial->setLayout(gridSerial);
-
-    //    //单独设置指示器大小
-    //    int addWidth = 20;
-    //    int addHeight = 10;
-    //    int rbtnWidth = 15;
-    //    int ckWidth = 13;
-    //    int scrWidth = 12;
-    //    int borderWidth = 3;
 
     //右下角时间
     QTimer *timer = new QTimer(this);
@@ -71,51 +47,27 @@ void mainFrm::initFrm()
 
     //初始化节点界面
     QGridLayout *gridNode = new QGridLayout;
-    gridNode->addWidget(NNode, 0, 0);
+    gridNode->addWidget(m_node, 0, 0);
     ui->widget_node->setLayout(gridNode);
-    //
 
-    //圆角矩形
-    //绘制背景图
-    // this->RoundedRect(norSize.width(),norSize.width());
-
-    //---------------
-
-    //设置窗体透明
-    // this->setAttribute(Qt::WA_TranslucentBackground, true);
-    //设置无边框
-    // this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
-    //实例阴影shadow
-    // QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
-    //设置阴影距离
-    // shadow->setOffset(0,0);
-    //设置阴影颜色
-    // shadow->setColor(QColor("#444444"));
-    //设置阴影圆角
-    // shadow->setBlurRadius(15);
-    //给嵌套QWidget设置阴影
-    // ui->widget_bg->setGraphicsEffect(shadow);
-    //给垂直布局器设置边距(此步很重要, 设置宽度为阴影的宽度)
-    // ui->lay_bg->setMargin(1);
-    // ui->widget_bg->setStyleSheet("background-color:white");
+    connect(this,&mainFrm::addLog,m_log,&log::addLog);
+    connect(m_node,&node::sendTip,this,&mainFrm::setTip);
+    connect(m_node,&node::sendOnline,this,&mainFrm::setOnline);
+    connect(this,&mainFrm::getRunTaskNum,m_task,&task::getRunTaskNum);
+    connect(m_node, &node::sendTH, m_THchart, &THchart::setTHchart);
+    connect(m_task,&task::isOverTemp,m_node,&node::isOverTemp);
+    connect(m_task,&task::isOverHumi,m_node,&node::isOverHumi);
+    connect(m_task,&task::sendTaskCmd,m_node,&node::commandSend);
+    connect(m_node,&node::netStart,m_netCom,&netCom::Start);
+    connect(m_node,&node::netStop,m_netCom,&netCom::Stop);
+    connect(m_node,&node::getNetAdd,m_netCom,&netCom::getNetAdd);
+    connect(m_netCom,&netCom::hasReadData,m_node,&node::commandReceive);
+    connect(m_node,&node::sendData,m_netCom,&netCom::sendData);
+    connect(m_node,&node::getData,m_netCom,&netCom::getData);
 
     /* custom system btn */
     int wide = width(); //获取界面的宽度
     maxOrNormal = true;
-    //    QIcon icon;
-    //    icon = style()->standardIcon( QStyle::SP_TitleBarMinButton );
-    //    ui->pushButton_min->setIcon( icon );
-    //    if( maxOrNormal ){// true represents Max
-    //        icon = style()->standardIcon( QStyle::SP_TitleBarMaxButton );
-    //        ui->pushButton_max->setIcon( icon );
-    //    }else{
-    //        icon = style()->standardIcon( QStyle::SP_TitleBarNormalButton );
-    //        ui->pushButton_max->setIcon( icon );
-    //    }
-    //    icon = style()->standardIcon( QStyle::SP_TitleBarCloseButton );
-    //    ui->pushButton_close->setIcon( icon );
-
-    // this->location = this->geometry();
 
     //设置最小化最大化关闭三个按钮
 
@@ -153,20 +105,20 @@ void mainFrm::initFrm()
     QList<QPushButton *> lbtns = ui->widget_left->findChildren<QPushButton *>();
     foreach (QToolButton *tbtn, tbtns)
     {
-        // btn->setIconSize(icoSize);
-        // btn->setMinimumWidth(icoWidth);
         tbtn->setCheckable(true);
-        //tbtn->setStyleSheet("background-color:transparent;border:none;");
         connect(tbtn, SIGNAL(clicked()), this, SLOT(buttonClick()));
     }
     foreach (QPushButton *lbtn, lbtns)
     {
-        // btn->setIconSize(icoSize);
-        // btn->setMinimumWidth(icoWidth);
         lbtn->setCheckable(true);
-        //lbtn->setStyleSheet("background-color:transparent;border:none;");
         connect(lbtn, SIGNAL(clicked()), this, SLOT(buttonClick()));
     }
+
+    ui->label_tile->setText("网络节点智能管理系统");
+    ui->label_tile->setFont(QFont("Microsoft Yahei", 20));
+    this->setWindowTitle(ui->label_tile->text());
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint);
+    this->resize(1200, 540);
 
     ui->lb_online->setText("0");
     ui->lb_tasks->setText("0");
@@ -188,23 +140,15 @@ void mainFrm::setOnline(QString online)
     ui->lb_online->setText(online);
 }
 
-void mainFrm::setTaskNum(QString tasks)
-{
-    ui->lb_tasks->setText(tasks);
-}
-
 void mainFrm::RoundedRect(int w, int h)
 {
-    //圆角矩形
     //绘制背景图
     QBitmap bmp(w, h);
-    // qDebug()<<this->size();
     bmp.fill();
     QPainter p(&bmp);
     p.setPen(Qt::NoPen);
     p.setBrush(Qt::black);
     p.drawRoundedRect(bmp.rect(), 15, 15);
-    // ui->widget_bg->setMask(bmp);
     ui->widget_bg->setMask(bmp);
 }
 
@@ -247,8 +191,8 @@ void mainFrm::buttonClick()
     else if (tname == "系统设置")
     {
         ui->stackedWidget->setCurrentIndex(1);
-        NN->initNet();
-        SS->initMycom();
+        m_netCom->initNet();
+        m_serialCom->initMycom();
     }
     else if (tname == "使用说明")
     {
@@ -256,11 +200,11 @@ void mainFrm::buttonClick()
     }
     else if (lname == "日志查看")
     {
-        ui->stackedWidget->setCurrentWidget(LL);
+        ui->stackedWidget->setCurrentWidget(m_log);
     }
     else if (lname == "温度湿度表")
     {
-        ui->stackedWidget->setCurrentWidget(TH);
+        ui->stackedWidget->setCurrentWidget(m_THchart);
     }
     else if (tname == "退出系统")
     {
@@ -294,7 +238,7 @@ void mainFrm::mouseReleaseEvent(QMouseEvent *event)
     //设置鼠标为未被按下
     if(event)
     {
-         mouse_press = false;
+        mouse_press = false;
     }
 }
 
@@ -334,7 +278,7 @@ void mainFrm::closeEvent(QCloseEvent *event)
     switch (QMessageBox::information(this, tr("提示"), tr("确定退出系统?"), tr("确定"), tr("取消"), 0, 1))
     {
     case 0:
-        this->L.addLog(usr, 2);
+        this->m_log->addLog(usr, 2);
         event->accept();
         break;
     case 1:
@@ -352,28 +296,24 @@ void mainFrm::getLoginUser(QString user)
 
 void mainFrm::ShowDateTime()
 {
-    QString dtm = QDateTime::currentDateTime().toString("yyyy年MM月dd日 hh:mm:ss ddd");
+    QDateTime currentTime = QDateTime::currentDateTime();
+    QString dtm = currentTime.toString("yyyy年MM月dd日 hh:mm:ss ddd");
+    QString taskTime = currentTime.toString("yyyy-MM-dd hh:mm:ss");
     ui->label_bottom_time->setText(dtm);
+    this->checkTime2RunTask(taskTime);
+    ui->lb_tasks->setText(getRunTaskNum());
 }
 
-//void mainFrm::initSystem()
-//{
-//    initDevices();
-//    checkTasks();
-//    L.addLog("系统", 3);
-//    N.Start();
-//}
-
-//void mainFrm::initDevices()
-//{
-//    // dvInfo[0][0]=".ffff";
-//    // dvInfo[0][1]="0";
-//    //-----------
-//}
-
-//void mainFrm::checkTasks()
-//{
-//}
+void mainFrm::checkTime2RunTask(QString time)
+{
+    for(auto task : m_task->m_taskStructVec)
+    {
+        if(time == task.taskDataTime)
+        {
+            m_task->runTask(task.taskEvent);
+        }
+    }
+}
 
 void mainFrm::on_pushButton_about_clicked()
 {

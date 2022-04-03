@@ -3,11 +3,12 @@
 
 #include <QWidget>
 #include <database/dataBase.h>
-#include <vector>
+#include <QVector>
 #include <QStandardItemModel>
 #include "QHBoxLayout"
 #include <QTableView>
 #include <QHeaderView>
+#include <QMessageBox>
 
 namespace Ui
 {
@@ -25,8 +26,8 @@ public:
     void tableCreator(int size_row);
 
     void addLog(QString user, int eventId);
-    vector<vector<QString>> getLog(QString type);
-    void delLogs(vector<int> row, int delType, int count);
+    QVector<QVector<QString>> getLog(QString type);
+    void delLogs(QVector<int> row, int delType, int count);
 
     ~log();
 
@@ -42,7 +43,7 @@ private slots:
 private:
     Ui::log *ui;
     QTableView *tableView;
-    vector<vector<QString>> viewLog;
+    QVector<QVector<QString>> viewLog;
     int currentTab;
     bool checkState;
     int size_row;
