@@ -36,14 +36,16 @@ public slots:
 
 private slots:
     void DrawChart();
-    void slotPointHoverd(const QPointF &point, bool state);
+    void slotTPointHoverd(const QPointF &point, bool state);
+    void slotHPointHoverd(const QPointF &point, bool state);
 
 private:
     Ui::THchart *ui;
 
     QSplineSeries *Tseries;
     QSplineSeries *Hseries;
-    QScatterSeries *Point;
+    QScatterSeries *TPoint;
+    QScatterSeries *HPoint;
     QTimer *timer;                           //计时器
     QChart *chart;                           //画布
     QDateTimeAxis *axisX;                    //轴
