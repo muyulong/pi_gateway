@@ -51,6 +51,8 @@ void mainFrm::initFrm()
     ui->widget_node->setLayout(gridNode);
 
     connect(this,&mainFrm::addLog,m_log,&log::addLog);
+    connect(m_node,&node::addLog,m_log,&log::addLog);
+    connect(m_task,&task::addLog,m_log,&log::addLog);
     connect(m_node,&node::sendTip,this,&mainFrm::setTip);
     connect(m_node,&node::sendOnline,this,&mainFrm::setOnline);
     connect(this,&mainFrm::getRunTaskNum,m_task,&task::getRunTaskNum);
@@ -278,7 +280,7 @@ void mainFrm::closeEvent(QCloseEvent *event)
     switch (QMessageBox::information(this, tr("提示"), tr("确定退出系统?"), tr("确定"), tr("取消"), 0, 1))
     {
     case 0:
-        this->m_log->addLog(usr, 2);
+        this->m_log->addLog(usr, 2, "");
         event->accept();
         break;
     case 1:

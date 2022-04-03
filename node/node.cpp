@@ -353,11 +353,11 @@ void node::nodeSetting(nodeMsg m_Node)
         emit sendTH(time,temp,humi);
         if(checkTemp(temp))
         {
-            L.addLog("温度监控",4);
+            addLog("温度监控",4 , " "+QString::number(temp)+"℃");
         }
         if(checkHumi(humi))
         {
-            L.addLog("湿度监控",5);
+            addLog("湿度监控",5,  " "+QString::number(temp)+"%");
         }
     }
     else

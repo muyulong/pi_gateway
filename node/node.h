@@ -111,7 +111,7 @@ signals:
     QString getNetAdd();
     void sendData(QString);
     QString getData();
-
+    void addLog(QString, int, QString);
 
 public slots:
     void commandReceive();
@@ -145,8 +145,6 @@ private:
     Ui::node *ui;
 
     //-------------
-    class log L;
-    netCom *N = new netCom;
     QStringList m_nodeAddrList;
     //用于存储节点地址
     QStandardItemModel *model;

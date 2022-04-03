@@ -247,6 +247,7 @@ void task::runTask(QString taskContent)
     {
         emit sendTaskCmd("FFFF",taskStr2Cmd(taskContent));
     }
+    addLog("计划任务",6," "+taskContent);
 }
 
 void task::getTask2Run()

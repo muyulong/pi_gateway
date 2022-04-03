@@ -40,7 +40,7 @@ public:
 
 signals:
     void setBtnClicked();
-    void addLog(QString, int);
+    void addLog(QString, int, QString);
     QString getRunTaskNum();
 
 private:

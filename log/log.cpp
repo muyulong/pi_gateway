@@ -227,7 +227,7 @@ void log::on_pushButton_delAllTab_clicked()
     //删除多行数据库速度很慢
 }
 
-void log::addLog(QString user, int eventId)
+void log::addLog(QString user, int eventId,QString eventContent)
 {
     // QString newLog = user+" do "+event+" at "+"time";
     QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ddd");
@@ -248,12 +248,16 @@ void log::addLog(QString user, int eventId)
         type = "操作日志";
         break;
     case 4:
-        event = "温度异常";
+        event = "温度异常"+eventContent;
         type = "警告";
         break;
     case 5:
-        event = "湿度异常";
+        event = "湿度异常"+eventContent;
         type = "警告";
+        break;
+    case 6:
+        event = "执行"+eventContent;
+        type = "定时任务";
         break;
     default:
         event = "未知事件";

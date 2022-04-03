@@ -28,7 +28,7 @@ void login::on_pushButton_login_clicked()
         bool login = compareUser(user, pwd);
         if (login)
         {
-           m_mainFrm->addLog(user, 1);
+           m_mainFrm->addLog(user, 1, "");
             m_mainFrm->getLoginUser(user);
             m_mainFrm->show();
             this->close();

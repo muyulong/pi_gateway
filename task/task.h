@@ -56,6 +56,8 @@ signals:
     void sendTaskCmd(QString nodeAddr, QString msg);
     bool isOverTemp();
     bool isOverHumi();
+    void addLog(QString, int, QString);
+
 public slots:
     QString getRunTaskNum();
 
