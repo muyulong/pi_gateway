@@ -29,10 +29,6 @@ public:
 private slots:
     //---------------------
     //网络调试
-    void on_btnStart_clicked();
-
-    void on_btnStop_clicked();
-
     void on_btnClear_clicked();
 
     void onReadyRead();
@@ -69,8 +65,8 @@ private:
     Ui::netCom *ui;
 
     //------------------------
-    QTcpServer *m_tcpServer = nullptr;
-    QTcpSocket *m_tcpSocket = nullptr;
+    QTcpServer *m_tcpServer = new QTcpServer;
+    QTcpSocket *m_tcpSocket = new QTcpSocket;
     //QList<QTcpSocket *> tcpSocketList;
     //int tcpSocket_Max;
     HeartBeat *heart;

@@ -52,7 +52,7 @@ void node::on_toolButton_start_clicked()
 
 void node::on_toolButton_stop_clicked()
 {
-    emit netStart();
+    emit netStop();
     emit sendTip("停止传输");
 }
 

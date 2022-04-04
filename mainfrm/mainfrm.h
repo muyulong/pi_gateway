@@ -27,15 +27,6 @@ class mainFrm : public QWidget
 
 public:
     explicit mainFrm(QWidget *parent = nullptr);
-    void getLoginUser(QString user);
-
-    //void initSystem();
-    //初始化非主页面的系统基本功能
-    //void initDevices();
-    //初始化节点数据
-    //void checkTasks();
-    //检查待执行计划任务
-
     ~mainFrm();
 
 signals:
@@ -47,7 +38,7 @@ private:
     Ui::mainFrm *ui;
 
 
-    QString usr;
+    QString loginUser;
 
     class log *m_log = new class log;
     task *m_task = new task;
@@ -75,8 +66,9 @@ private:
     bool maxOrNormal; // true表示当前窗口状态为normal，图标应显示为max
 public slots:
     void setTip(QString);
-
     void setOnline(QString);
+    void getLoginUser(QString);
+
 private slots:
 
     void ShowDateTime();

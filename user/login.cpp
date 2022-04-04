@@ -2,9 +2,10 @@
 #include "ui_login.h"
 
 login::login(QWidget *parent) : QDialog(parent),
-                                ui(new Ui::login)
+    ui(new Ui::login)
 {
     ui->setupUi(this);
+    connect(this,&login::sendLoginUser,m_mainFrm,&mainFrm::getLoginUser);
 }
 
 login::~login()
@@ -14,8 +15,6 @@ login::~login()
 
 void login::on_pushButton_login_clicked()
 {
-    QString user;
-    QString pwd;
     user = ui->username->text(); //获取用户名
     pwd = ui->password->text();  //获取密码
     if (user == "")
@@ -28,8 +27,8 @@ void login::on_pushButton_login_clicked()
         bool login = compareUser(user, pwd);
         if (login)
         {
-           m_mainFrm->addLog(user, 1, "");
-            m_mainFrm->getLoginUser(user);
+            emit sendLoginUser(user);
+            m_mainFrm->addLog(user, 1, "");
             m_mainFrm->show();
             this->close();
             emit exitWelcome();

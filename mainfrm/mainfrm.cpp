@@ -11,6 +11,12 @@ mainFrm::mainFrm(QWidget *parent)
 mainFrm::~mainFrm()
 {
     delete ui;
+    m_log->deleteLater();
+    m_task->deleteLater();
+    m_netCom->deleteLater();
+    m_serialCom->deleteLater();
+    m_node->deleteLater();
+    m_THchart->deleteLater();
 }
 
 void mainFrm::initFrm()
@@ -32,11 +38,13 @@ void mainFrm::initFrm()
     QGridLayout *gridNet = new QGridLayout;
     gridNet->addWidget(m_netCom, 0, 0);
     ui->widget_2net->setLayout(gridNet);
+    m_netCom->initNet();
 
     //初始化串口连接调试
     QGridLayout *gridSerial = new QGridLayout;
     gridSerial->addWidget(m_serialCom, 0, 0);
     ui->widget_2serial->setLayout(gridSerial);
+    m_serialCom->initMycom();
 
     //右下角时间
     QTimer *timer = new QTimer(this);
@@ -142,6 +150,12 @@ void mainFrm::setOnline(QString online)
     ui->lb_online->setText(online);
 }
 
+void mainFrm::getLoginUser(QString user)
+{
+    loginUser = user;
+    ui->label_bottom_user->setText(loginUser + "，欢迎使用！");
+}
+
 void mainFrm::RoundedRect(int w, int h)
 {
     //绘制背景图
@@ -193,8 +207,6 @@ void mainFrm::buttonClick()
     else if (tname == "系统设置")
     {
         ui->stackedWidget->setCurrentIndex(1);
-        m_netCom->initNet();
-        m_serialCom->initMycom();
     }
     else if (tname == "使用说明")
     {
@@ -280,7 +292,7 @@ void mainFrm::closeEvent(QCloseEvent *event)
     switch (QMessageBox::information(this, tr("提示"), tr("确定退出系统?"), tr("确定"), tr("取消"), 0, 1))
     {
     case 0:
-        this->m_log->addLog(usr, 2, "");
+        this->m_log->addLog(loginUser, 2, "");
         event->accept();
         break;
     case 1:
@@ -288,12 +300,6 @@ void mainFrm::closeEvent(QCloseEvent *event)
         event->ignore();
         break;
     }
-}
-
-void mainFrm::getLoginUser(QString user)
-{
-    usr = user;
-    ui->label_bottom_user->setText(usr + "，欢迎使用！");
 }
 
 void mainFrm::ShowDateTime()

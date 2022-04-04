@@ -28,10 +28,13 @@ signals:
     void exitLogin(); //新建一个信号槽
     void exitWelcome();
     bool compareUser(QString s1, QString s2);
+    void sendLoginUser(QString);
 
 private:
     Ui::login *ui;
     mainFrm *m_mainFrm = new mainFrm;
+    QString user;
+    QString pwd;
 };
 
 #endif // LOGIN_H

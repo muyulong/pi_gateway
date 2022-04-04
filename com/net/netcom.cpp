@@ -11,45 +11,16 @@ netCom::netCom(QWidget *parent) : QWidget(parent),
 netCom::~netCom()
 {
     delete ui;
+    m_tcpServer->deleteLater();
+    m_tcpSocket->deleteLater();
 }
 
 void netCom::initNet()
 {
-    //--
-
     heart = new HeartBeat(this, 5000);
-    // socket = new StringTcpSocket(this);
-    // connect(m_tcpSocket, SIGNAL(dataRead(QString)),this,   SLOT(onDataRead(QString)));
     connect(heart, SIGNAL(dead()), this, SLOT(onDead()));
     connect(this, SIGNAL(stopListen()), this, SLOT(onDead()));
-    //--
-
-    //重置ComboBox内容
     ui->comboBox->clear();
-    //定义最大连接数
-    //tcpSocket_Max = 1;
-    //--------------------------------------------
-    //本地主机名
-
-    //QString hostName = QHostInfo::localHostName();
-
-    //本机IP地址
-    //QHostInfo hostInfo = QHostInfo::fromName(hostName);
-
-    // IP地址列表
-    //QList<QHostAddress> addrList = hostInfo.addresses();
-    //for (int i = 0; i < addrList.count(); i++)
-    //{
-    //    QHostAddress host = addrList.at(i);
-
-    //    if (QAbstractSocket::IPv4Protocol == host.protocol())
-    //    {
-    //        QString ip = host.toString();
-    //        ui->comboBox->addItem(ip);
-    //    }
-    //}
-
-    //---
     QList<QHostAddress> addrList = QNetworkInterface::allAddresses();
     foreach (QHostAddress address, addrList)
     {
@@ -67,13 +38,7 @@ void netCom::initNet()
             }
         }
     }
-    //---
-
-    m_tcpServer = new QTcpServer(this);
-    connect(m_tcpServer, &QTcpServer::newConnection, this, &netCom::on_newConnection);
     ui->lineEditPort->setText("8080");
-
-    ui->btnStop->setEnabled(false);
 }
 
 //供其他函数调用的方法
@@ -90,9 +55,8 @@ void netCom::Start()
     ui->plainTextEdit->appendPlainText("**开始监听...");
     ui->plainTextEdit->appendPlainText("**服务器地址: " + m_tcpServer->serverAddress().toString());
     ui->plainTextEdit->appendPlainText("**服务器端口: " + QString::number(m_tcpServer->serverPort()));
-    ui->btnStart->setEnabled(false);
-    ui->btnStop->setEnabled(true);
     ui->lbListen->setText("正在监听");
+    connect(m_tcpServer, &QTcpServer::newConnection, this, &netCom::on_newConnection);
 }
 
 QString netCom::getNetAdd()
@@ -117,11 +81,8 @@ void netCom::Stop()
     if (m_tcpServer->isListening())
     {
         m_tcpServer->close();
-        ui->btnStart->setEnabled(true);
-        ui->btnStop->setEnabled(false);
         ui->lbListen->setText("停止监听");
         ui->plainTextEdit->appendPlainText("**停止监听**");
-        // m_tcpSocket->close();
         emit stopListen();
     }
 }
@@ -131,15 +92,11 @@ QString netCom::getData()
 {
     QString result;
     QByteArray byteStr;
-    //for (int i = 0; i < tcpSocketList.count(); i++)
-    //{
-        //QTcpSocket *tcpSocket = m_tcpSocket;tcpSocketList.at(i);
-        while (!m_tcpSocket->atEnd()) //没有读到末尾一直读
-        {
-            byteStr.append(m_tcpSocket->readAll());
-        }
-        result.prepend(byteStr).remove(QRegExp("\\s"));
-   // }
+    while (!m_tcpSocket->atEnd()) //没有读到末尾一直读
+    {
+        byteStr.append(m_tcpSocket->readAll());
+    }
+    result.prepend(byteStr).remove(QRegExp("\\s"));
     if(result == "")
     {
         result = "empty data!";
@@ -147,33 +104,11 @@ QString netCom::getData()
     m_msg = result;
     return result;
 }
-
-//断开连接和发送消息要对多连接状态进行处理
-//切记切记，不然会闪退
-//已解决
-
 //发送数据
 void netCom::sendData(QString data)
 {
-    //for (int i = 0; i < tcpSocketList.length(); i++) //遍历客户端
-    //{
-    //    tcpSocketList.at(i)->write(data.toLatin1());
-    //}
     ui->plainTextEdit->appendPlainText("[out]:" + data);
     m_tcpSocket->write(data.toLatin1());
-}
-
-//--------------------------
-//网络调试
-
-void netCom::on_btnStart_clicked()
-{
-    this->Start();
-}
-
-void netCom::on_btnStop_clicked()
-{
-    this->Stop();
 }
 
 void netCom::on_btnClear_clicked()
@@ -191,56 +126,24 @@ void netCom::on_btnSend_clicked()
 {
     QString msg = ui->lineEdit->text();
     this->sendData(msg);
-    // ui->plainTextEdit->appendPlainText("[out]"+msg);
+    ui->plainTextEdit->appendPlainText("[out]:"+msg);
 }
 
 void netCom::on_newConnection()
 {
-
-    //if (tcpSocketList.count() < tcpSocket_Max)
-   // {
-        // QThread *thread = new QThread;        //不可以有parent
-        // connect(thread, &QThread::finished, thread, &QThread::deleteLater);    //线程结束后自动删除自己
-
-        m_tcpSocket = m_tcpServer->nextPendingConnection();
-        connect(m_tcpSocket, &QTcpSocket::connected, this, &netCom::onConnected);
-        connect(m_tcpSocket, &QTcpSocket::disconnected, this, &netCom::onDisConnected);
-        connect(m_tcpSocket, &QTcpSocket::stateChanged, this, &netCom::onStateChanged);
-        connect(m_tcpSocket, &QTcpSocket::readyRead, this, &netCom::onReadyRead);
-
-        //tcpSocketList.append(m_tcpSocket);
-
-        QString msg = QString("客户端[%1:%2]已连接!").arg(m_tcpSocket->peerAddress().toString()).arg(m_tcpSocket->peerPort());
-        ui->plainTextEdit->appendPlainText(msg);
-
-        // m_tcpSocket->moveToThread(thread);            //注意,使用moveToThread方法将socket转移到新线程中
-        // m_heartbeat->start();                 //开始心跳
-        heart->beat();
-
-        ui->plainTextEdit->appendPlainText("**开始心跳");
-        // thread->start();
-
-        // ui->plainTextEdit->appendPlainText("** client socket connected");
-        // ui->plainTextEdit->appendPlainText("** peer address: "+m_tcpSocket->peerAddress().toString());
-        // ui->plainTextEdit->appendPlainText("** peer port: "+QString::number(m_tcpSocket->peerPort()));
-   // }
-    //else
-   // {
-        //m_tcpSocket = m_tcpServer->nextPendingConnection();
-        //m_tcpSocket->close();
-        //QString str = QString("最多建立%1个连接！").arg(tcpSocket_Max);
-        //QMessageBox::information(this, "警告", str, QMessageBox::Ok, QMessageBox::NoButton);
-   // }
+    m_tcpSocket = m_tcpServer->nextPendingConnection();
+    //connect(m_tcpSocket, &QTcpSocket::connected, this, &netCom::onConnected);
+    //connect(m_tcpSocket, &QTcpSocket::disconnected, this, &netCom::onDisConnected);
+    //connect(m_tcpSocket, &QTcpSocket::stateChanged, this, &netCom::onStateChanged);
+    connect(m_tcpSocket, &QTcpSocket::readyRead, this, &netCom::onReadyRead);
 }
 
 void netCom::onConnected()
 {
     QString msg = QString("客户端[%1:%2]已连接!").arg(m_tcpSocket->peerAddress().toString()).arg(m_tcpSocket->peerPort());
     ui->plainTextEdit->appendPlainText(msg);
-
-    // ui->plainTextEdit->appendPlainText("** client socket connected");
-    // ui->plainTextEdit->appendPlainText("** peer address: "+m_tcpSocket->peerAddress().toString());
-    // ui->plainTextEdit->appendPlainText("** peer port: "+QString::number(m_tcpSocket->peerPort()));
+    heart->beat();
+    ui->plainTextEdit->appendPlainText("**开始心跳");
 }
 
 void netCom::onDisConnected()
@@ -248,25 +151,7 @@ void netCom::onDisConnected()
     m_tcpSocket = (QTcpSocket *)this->sender();
     QString msg = QString("客户端[%1:%2]已退出!").arg(m_tcpSocket->peerAddress().toString()).arg(m_tcpSocket->peerPort());
     ui->plainTextEdit->appendPlainText(msg);
-
-    // m_heartbeat->stop();
     emit onDead();
-
-    //删除断开的客户端
-    /*for (int i = 0; i < tcpSocketList.length(); i++)
-    {
-        if (tcpSocketList.at(i)->peerAddress() == m_tcpSocket->peerAddress())
-        {
-            if (tcpSocketList.at(i)->peerPort() == m_tcpSocket->peerPort())
-            {
-                tcpSocketList.removeAt(i);
-                break;
-            }
-        }
-    }*/
-    // ui->plainTextEdit->appendPlainText("** client socket disconnected");
-    // m_tcpSocket->deleteLater();
-    // m_tcpServer->close();
 }
 
 void netCom::onStateChanged(QAbstractSocket::SocketState socketState)
