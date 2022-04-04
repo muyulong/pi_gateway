@@ -6,7 +6,7 @@ task::task(QWidget *parent)
 {
     ui->setupUi(this);
     this->initTask();
-    connect(ui->tableView_task,&ui->tableView_task->QTableView::clicked,this,&task::currentRowCkicked);
+    connect(ui->tableView_task,&QTableView::clicked,this,&task::currentRowCkicked);
 
 }
 
