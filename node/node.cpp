@@ -26,7 +26,7 @@ node::~node()
 //初始化节点
 void node::initNode()
 {
-    ui->lb_nodeName->setText("");
+    ui->lb_nodeName->setText("FFFF");
     ui->lb_nodeType->setText("无");
     ui->lb_temperature->setText("0");
     ui->lb_humidity->setText("0");
@@ -265,7 +265,7 @@ QString str2cmd(QString str)
     }
     if (str == "查温湿度")
     {
-        cmd = "AQ";
+        cmd = "QA";
     }
     if (str == "初始化")
     {
@@ -403,7 +403,7 @@ void node::nodeSetting(nodeMsg m_Node)
                 m_Node.data[0]=='1' ? m_nodeState.setLightStatus(true) : m_nodeState.setLightStatus(false);
                 m_Node.data[1]=='1' ? m_nodeState.setFanStatus(true) : m_nodeState.setFanStatus(false);
             }
-            if(m_Node.cmd[0]=='A'&&m_Node.cmd[1]=='Q')
+            if(m_Node.cmd[0]=='Q'&&m_Node.cmd[1]=='A')
             {
                 m_nodeState.setTemperature(QString(m_Node.data[0]) + QString(m_Node.data[1]));
                 m_nodeState.setHumidity(QString(m_Node.data[2]) + QString(m_Node.data[3]));

@@ -228,7 +228,7 @@ void task::runTask(QString taskContent)
     {
         if(taskContent.mid(0,4)=="温度异常")
         {
-            emit sendTaskCmd("FFFF","查温湿度");
+            //emit sendTaskCmd("FFFF","查温湿度");
             if(isOverTemp())
             {
                 emit sendTaskCmd("FFFF",taskStr2Cmd(taskContent.mid(6)));
@@ -236,7 +236,7 @@ void task::runTask(QString taskContent)
         }
         if(taskContent.mid(0,4)=="湿度异常")
         {
-            emit sendTaskCmd("FFFF","查温湿度");
+            //emit sendTaskCmd("FFFF","查温湿度");
             if(isOverHumi())
             {
                 emit sendTaskCmd("FFFF",taskStr2Cmd(taskContent.mid(6)));
