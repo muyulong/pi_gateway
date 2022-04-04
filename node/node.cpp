@@ -26,8 +26,8 @@ node::~node()
 //初始化节点
 void node::initNode()
 {
-    ui->lb_nodeName->setText("0000");
-    ui->lb_nodeType->setText("协调器");
+    ui->lb_nodeName->setText("");
+    ui->lb_nodeType->setText("无");
     ui->lb_temperature->setText("0");
     ui->lb_humidity->setText("0");
     ui->checkBox_fan->setChecked(0);
@@ -39,7 +39,7 @@ void node::initNode()
     ui->pushButton_opFan->setDisabled(1);
     ui->pushButton_clFan->setDisabled(1);
 
-    connect(ui->treeView,&ui->treeView->QTreeView::doubleClicked,this,&node::treeItemCkicked);
+    connect(ui->treeView,&QTreeView::doubleClicked,this,&node::treeItemCkicked);
 
     isRootNodeSet = false;
 }
