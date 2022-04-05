@@ -6,142 +6,175 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>585</width>
-    <height>517</height>
+    <width>281</width>
+    <height>350</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>200</width>
+    <height>350</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_7">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
-    <number>10</number>
+    <number>5</number>
    </property>
    <property name="topMargin">
-    <number>20</number>
+    <number>5</number>
    </property>
    <property name="rightMargin">
-    <number>10</number>
+    <number>5</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>5</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QPushButton" name="openMyComBtn">
-     <property name="text">
-      <string>打开串口</string>
+   <item>
+    <widget class="QGroupBox" name="groupBox_s2serial">
+     <property name="title">
+      <string>串口调试</string>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="closeMyComBtn">
-     <property name="text">
-      <string>关闭串口</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLineEdit" name="sendMsgLineEdit"/>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="sendMsgBtn">
-     <property name="text">
-      <string>发送数据</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" rowspan="6">
-    <widget class="QTextBrowser" name="textBrowser"/>
-   </item>
-   <item row="2" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>串口选择</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="portNameComboBox"/>
-     </item>
-    </layout>
-   </item>
-   <item row="3" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>波特率</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="baudRateComboBox"/>
-     </item>
-    </layout>
-   </item>
-   <item row="4" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>数据位</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="dataBitsComboBox"/>
-     </item>
-    </layout>
-   </item>
-   <item row="5" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>奇偶校验</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="parityComboBox"/>
-     </item>
-    </layout>
-   </item>
-   <item row="6" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_5">
-     <item>
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>停止位</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="stopBitsComboBox"/>
-     </item>
-    </layout>
-   </item>
-   <item row="7" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <item>
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>流控制</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="flowComboBox"/>
-     </item>
-    </layout>
-   </item>
-   <item row="8" column="0">
-    <widget class="QPushButton" name="pushButton_clear">
-     <property name="text">
-      <string>清除</string>
-     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="leftMargin">
+       <number>10</number>
+      </property>
+      <property name="topMargin">
+       <number>25</number>
+      </property>
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="openMyComBtn">
+        <property name="text">
+         <string>打开串口</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="closeMyComBtn">
+        <property name="text">
+         <string>关闭串口</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLineEdit" name="sendMsgLineEdit"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QPushButton" name="sendMsgBtn">
+        <property name="text">
+         <string>发送数据</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" rowspan="3">
+       <widget class="QTextBrowser" name="textBrowser"/>
+      </item>
+      <item row="2" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>串口选择</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="portNameComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>波特率</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="baudRateComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>数据位</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="dataBitsComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="5" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>奇偶校验</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="parityComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="6" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>停止位</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="stopBitsComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="7" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>流控制</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="flowComboBox"/>
+        </item>
+       </layout>
+      </item>
+      <item row="8" column="0">
+       <widget class="QPushButton" name="pushButton_clear">
+        <property name="text">
+         <string>清除</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

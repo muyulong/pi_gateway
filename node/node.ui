@@ -6,441 +6,468 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
-    <height>405</height>
+    <width>974</width>
+    <height>575</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_9">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
-    <number>10</number>
+    <number>15</number>
    </property>
    <property name="topMargin">
-    <number>10</number>
+    <number>15</number>
    </property>
    <property name="rightMargin">
-    <number>10</number>
+    <number>15</number>
    </property>
    <property name="bottomMargin">
-    <number>10</number>
+    <number>15</number>
    </property>
    <item>
-    <widget class="QWidget" name="widget_node_tree" native="true">
-     <property name="maximumSize">
-      <size>
-       <width>500</width>
-       <height>16777215</height>
-      </size>
+    <widget class="QGroupBox" name="node_group">
+     <property name="title">
+      <string>设备信息</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QGridLayout" name="gridLayout">
       <property name="leftMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>25</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
-      <item>
-       <widget class="QTreeView" name="treeView">
-        <property name="frameShape">
-         <enum>QFrame::WinPanel</enum>
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QWidget" name="widget_node_tree" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>500</width>
+          <height>16777215</height>
+         </size>
         </property>
-        <property name="animated">
-         <bool>true</bool>
-        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="leftMargin">
+          <number>10</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QTreeView" name="treeView">
+           <property name="frameShape">
+            <enum>QFrame::WinPanel</enum>
+           </property>
+           <property name="animated">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="widget_node_panel" native="true">
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
-          <item>
-           <widget class="QToolButton" name="toolButton_start">
-            <property name="minimumSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>开始</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/start.png</normaloff>:/pic/start.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>true</bool>
-            </property>
-            <property name="arrowType">
-             <enum>Qt::NoArrow</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="toolButton_refresh">
-            <property name="minimumSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>刷新</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/refresh.png</normaloff>:/pic/refresh.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="toolButton_init">
-            <property name="minimumSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>初始化</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/init.png</normaloff>:/pic/init.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>true</bool>
-            </property>
-            <property name="arrowType">
-             <enum>Qt::NoArrow</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="toolButton_stop">
-            <property name="minimumSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>停止</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/stop.png</normaloff>:/pic/stop.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>节点名称</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lb_nodeName">
-            <property name="text">
-             <string>0bca</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>节点类型</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lb_nodeType">
-            <property name="text">
-             <string>协调器</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QCheckBox" name="checkBox_temperature">
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="text">
-             <string>温度</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/temperature.png</normaloff>:/pic/temperature.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="tristate">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lb_temperature">
-            <property name="text">
-             <string>28</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="checkBox_humidity">
-            <property name="text">
-             <string>湿度</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/humidity.png</normaloff>:/pic/humidity.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lb_humidity">
-            <property name="text">
-             <string>28</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QCheckBox" name="checkBox_light">
-            <property name="text">
-             <string>照明</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/light.png</normaloff>:/pic/light.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lb_lightStatus">
-            <property name="text">
-             <string>未开启</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_opLight">
-            <property name="text">
-             <string>打开</string>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-            <property name="default">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_clLight">
-            <property name="text">
-             <string>关闭</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QCheckBox" name="checkBox_fan">
-            <property name="text">
-             <string>风扇</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../resource.qrc">
-              <normaloff>:/pic/fan.png</normaloff>:/pic/fan.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>32</width>
-              <height>32</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lb_fanStatus">
-            <property name="text">
-             <string>未开启</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_opFan">
-            <property name="text">
-             <string>打开</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_clFan">
-            <property name="text">
-             <string>关闭</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
+      <item row="0" column="1">
+       <widget class="QWidget" name="widget_node_panel" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>10</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_7">
+             <item>
+              <widget class="QToolButton" name="toolButton_start">
+               <property name="minimumSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>微软雅黑</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>开始</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/start.png</normaloff>:/pic/start.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::NoArrow</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_refresh">
+               <property name="minimumSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>微软雅黑</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>刷新</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/refresh.png</normaloff>:/pic/refresh.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_init">
+               <property name="minimumSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>微软雅黑</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>初始化</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/init.png</normaloff>:/pic/init.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+               <property name="arrowType">
+                <enum>Qt::NoArrow</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_stop">
+               <property name="minimumSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>微软雅黑</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>停止</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/stop.png</normaloff>:/pic/stop.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>48</width>
+                 <height>48</height>
+                </size>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonTextBesideIcon</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>节点名称</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lb_nodeName">
+               <property name="text">
+                <string>0bca</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>节点类型</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lb_nodeType">
+               <property name="text">
+                <string>协调器</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QCheckBox" name="checkBox_temperature">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string>温度</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/temperature.png</normaloff>:/pic/temperature.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="tristate">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lb_temperature">
+               <property name="text">
+                <string>28</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QCheckBox" name="checkBox_humidity">
+               <property name="text">
+                <string>湿度</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/humidity.png</normaloff>:/pic/humidity.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lb_humidity">
+               <property name="text">
+                <string>28</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QCheckBox" name="checkBox_light">
+               <property name="text">
+                <string>照明</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/light.png</normaloff>:/pic/light.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lb_lightStatus">
+               <property name="text">
+                <string>未开启</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_opLight">
+               <property name="text">
+                <string>打开</string>
+               </property>
+               <property name="checkable">
+                <bool>false</bool>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_clLight">
+               <property name="text">
+                <string>关闭</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QCheckBox" name="checkBox_fan">
+               <property name="text">
+                <string>风扇</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../resource.qrc">
+                 <normaloff>:/pic/fan.png</normaloff>:/pic/fan.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lb_fanStatus">
+               <property name="text">
+                <string>未开启</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_opFan">
+               <property name="text">
+                <string>打开</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_clFan">
+               <property name="text">
+                <string>关闭</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
       </item>
      </layout>
     </widget>

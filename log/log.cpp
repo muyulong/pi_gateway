@@ -2,7 +2,7 @@
 #include "ui_log.h"
 
 log::log(QWidget *parent) : QWidget(parent),
-                            ui(new Ui::log)
+    ui(new Ui::log)
 {
     //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     //QTextCodec *codec = QTextCodec::codecForName("UTF-8");
@@ -23,6 +23,9 @@ log::log(QWidget *parent) : QWidget(parent),
 log::~log()
 {
     delete ui;
+    tableView->deleteLater();
+    mainLayout->deleteLater();
+    standItemModel->deleteLater();
 }
 
 void log::logViewer(int typeId)
@@ -53,9 +56,9 @@ void log::logViewer(int typeId)
 }
 void log::tableCreator(int size_row)
 {
+    standItemModel = new QStandardItemModel;
+    mainLayout = new QVBoxLayout; //垂直布局
     //。。。。。。。。。。。。。
-    QStandardItemModel *standItemModel = new QStandardItemModel(this);
-    QVBoxLayout *mainLayout = new QVBoxLayout; //垂直布局
     mainLayout->setSpacing(10);                //设置控件间距
     mainLayout->setMargin(30);                 //设置边缘间距
     // mainLayout.
@@ -65,7 +68,7 @@ void log::tableCreator(int size_row)
     standItemModel->setColumnCount(3);
     standItemModel->setHeaderData(0, Qt::Horizontal, ("时间")); //设置表头内容
     standItemModel->setHeaderData(1, Qt::Horizontal, ("事件"));
-    standItemModel->setHeaderData(2, Qt::Horizontal, ("用户"));
+    standItemModel->setHeaderData(2, Qt::Horizontal, ("发起者"));
     //向表格添加内容
     for (int i = 0; i < size_row; ++i)
     {
@@ -97,7 +100,7 @@ void log::tableCreator(int size_row)
     //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //表格第0列，按降序排列
     tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     mainLayout->addWidget(tableView); //添加控件
-    this->ui->tabWidget->setLayout(mainLayout);
+    ui->tabWidget->setLayout(mainLayout);
     // setLayout(mainLayout);        //显示垂直布局
     //。。。。。。。。。。。。。
 }
@@ -229,7 +232,6 @@ void log::on_pushButton_delAllTab_clicked()
 
 void log::addLog(QString user, int eventId,QString eventContent)
 {
-    // QString newLog = user+" do "+event+" at "+"time";
     QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ddd");
     QString event;
     QString type;
@@ -258,6 +260,10 @@ void log::addLog(QString user, int eventId,QString eventContent)
     case 6:
         event = "执行"+eventContent;
         type = "定时任务";
+        break;
+    case 7:
+        event = eventContent;
+        type = "操作日志";
         break;
     default:
         event = "未知事件";

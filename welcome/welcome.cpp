@@ -16,6 +16,9 @@ welcome::welcome(QWidget *parent) : QWidget(parent),
 welcome::~welcome()
 {
     delete ui;
+    m_regist->deleteLater();
+    m_login->deleteLater();
+    m_user->deleteLater();
 }
 
 void welcome::on_pushButton_register_clicked()

@@ -13,6 +13,7 @@ node::node(QWidget *parent) : QWidget(parent),
 node::~node()
 {
     delete ui;
+    model->deleteLater();
 }
 
 /*
@@ -153,14 +154,6 @@ void node::setSwitch()
     {
         ui->lb_fanStatus->setText("未开启");
     }
-    if(m_nodeStateQueue.first().getBeepStatus())
-    {
-
-    }
-    else
-    {
-
-    }
 }
 
 void node::setFuncAvable()
@@ -199,14 +192,6 @@ void node::setFuncAvable()
         ui->pushButton_opFan->setDisabled(1);
         ui->pushButton_clFan->setDisabled(1);
     }
-    if(m_nodeStateQueue.first().hasBeep())
-    {
-
-    }
-    else
-    {
-
-    }
 }
 
 void node::setTH()
@@ -227,6 +212,8 @@ void node::setTree()
             model->setItem(model->indexFromItem(rootNode).row(),1,new QStandardItem(m_nodeStateQueue.last().getNodeType()));
             ui->treeView->setCurrentIndex(rootNode->index());
             isRootNodeSet = true;
+            addLog("无线节点",7,  "协调器["+m_nodeAddrList.first()+"]接入");
+
         }
         if(!m_nodeAddrList.contains(m_nodeStateQueue.last().getAddr()))
         {
@@ -235,6 +222,7 @@ void node::setTree()
             rootNode->appendRow(endNode);
             rootNode->setChild(endNode->index().row(),1,new QStandardItem(m_nodeStateQueue.last().getNodeType()));
             ui->treeView->setCurrentIndex(endNode->index());
+            addLog("无线节点",7,  "终端["+m_nodeAddrList.last()+"]接入");
         }
         this->setNode();
         m_nodeStateQueue.dequeue();
@@ -274,6 +262,14 @@ QString str2cmd(QString str)
     if (str == "状态")
     {
         cmd = "S-";
+    }
+    if(str == "开警")
+    {
+        cmd = "OB";
+    }
+    if(str == "关警")
+    {
+        cmd = "CB";
     }
     return cmd;
 }

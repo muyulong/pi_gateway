@@ -31,6 +31,8 @@ void task::initTask()
                                  << "关闭照明"
                                  << "打开通风"
                                  << "关闭通风"
+                                 << "打开警报"
+                                 << "关闭警报"
                                  << "监测温湿度");
     ui->comboBox_condition->addItems(QStringList()
                                      <<"无"
@@ -97,6 +99,12 @@ void task::addTask(QDateTime dateTime, QTime time, int conditionID, int taskCont
         eventStr = "关闭通风";
         break;
     case 4:
+        eventStr = "打开警报";
+        break;
+    case 5:
+        eventStr = "关闭警报";
+        break;
+    case 6:
         eventStr = "监测温湿度";
         break;
     default:
@@ -214,6 +222,14 @@ QString taskStr2Cmd(QString taskStr)
     if(taskStr == "关闭通风")
     {
         result = "关风";
+    }
+    if(taskStr == "打开警报")
+    {
+        result = "开警";
+    }
+    if(taskStr == "关闭警报")
+    {
+        result = "关警";
     }
     if(taskStr == "监测温湿度")
     {

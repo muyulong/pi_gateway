@@ -7,7 +7,7 @@ user::user(QObject *parent) : QObject(parent)
 
 bool user::compareUser(QString s1, QString s2)
 {
-    //ÔÚÊı¾İ¿âÖĞ¼ìË÷s1¶ÔÓ¦µÄ½á¹û´®£¬È»ºóÓës2½øĞĞ±È¶Ô
+    //åœ¨æ•°æ®åº“ä¸­æ£€ç´¢s1å¯¹åº”çš„ç»“æœä¸²ï¼Œç„¶åä¸s2è¿›è¡Œæ¯”å¯¹
     QSqlQuery query(db);
     QString search_sql = "select pwd from userInfo where name=(?)";
     query.prepare(search_sql);
@@ -22,7 +22,7 @@ bool user::compareUser(QString s1, QString s2)
         qDebug() << "Search Success !";
     }
 
-    //±¨´í£º QSqlQuery::value: not positioned on a valid record
+    //æŠ¥é”™ï¼š QSqlQuery::value: not positioned on a valid record
     QString pass;
 
     if (query.next())
@@ -39,7 +39,7 @@ bool user::compareUser(QString s1, QString s2)
     }
 }
 
-// Driver not loadÔ­Òò£º ÊÇÒòÎªQSQLQuery¶ÔÏóÃ»ÓĞºÍdb¹ØÁª
+// Driver not loadåŸå› ï¼š æ˜¯å› ä¸ºQSQLQueryå¯¹è±¡æ²¡æœ‰å’Œdbå…³è”
 
 int user::setUser(QString name, QString pwd)
 {

@@ -30,6 +30,7 @@
 |--|--|
 |com|网络通信和串口通信及界面|
 |dataBase|数据库|
+|instruction|说明页面|
 |log|日志功能及日志界面|
 |mainfrm|主界面|
 |node|节点功能及界面|

@@ -13,6 +13,7 @@ netCom::~netCom()
     delete ui;
     m_tcpServer->deleteLater();
     m_tcpSocket->deleteLater();
+    heart->deleteLater();
 }
 
 void netCom::initNet()

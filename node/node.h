@@ -148,8 +148,8 @@ private:
     QStringList m_nodeAddrList;
     //用于存储节点地址
     QStandardItemModel *model;
-    QStandardItem* rootNode;
-    QStandardItem* endNode;
+    QStandardItem *rootNode;
+    QStandardItem *endNode;
     //生成树
     QQueue<nodeState> m_nodeStateQueue;
     //储存每次节点发送来的消息状态

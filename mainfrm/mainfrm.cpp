@@ -17,6 +17,10 @@ mainFrm::~mainFrm()
     m_serialCom->deleteLater();
     m_node->deleteLater();
     m_THchart->deleteLater();
+    m_instruction->deleteLater();
+    m_settings->deleteLater();
+    gridSettings->deleteLater();
+    vlayout->deleteLater();
 }
 
 void mainFrm::initFrm()
@@ -28,23 +32,25 @@ void mainFrm::initFrm()
     //初始化图表
     ui->stackedWidget->addWidget(m_THchart);
 
+    //初始化使用说明
+    ui->stackedWidget->addWidget(m_instruction);
+
+    //初始化设置页
+    ui->stackedWidget->addWidget(m_settings);
+
+    gridSettings->setSpacing(0);
+    vlayout->setSpacing(0);
     //初始化任务表
-    QGridLayout *gridTask = new QGridLayout;
-    gridTask->addWidget(m_task, 0, 0);
-    ui->widget_task->setLayout(gridTask);
+    gridSettings->addLayout(vlayout, 0, 0);
+    gridSettings->addWidget(m_task, 0, 1);
     m_task->taskViewer();
-
     //初始化网络连接调试
-    QGridLayout *gridNet = new QGridLayout;
-    gridNet->addWidget(m_netCom, 0, 0);
-    ui->widget_2net->setLayout(gridNet);
+    vlayout->addWidget(m_netCom);
     m_netCom->initNet();
-
     //初始化串口连接调试
-    QGridLayout *gridSerial = new QGridLayout;
-    gridSerial->addWidget(m_serialCom, 0, 0);
-    ui->widget_2serial->setLayout(gridSerial);
+    vlayout->addWidget(m_serialCom);
     m_serialCom->initMycom();
+    m_settings->setLayout(gridSettings);
 
     //右下角时间
     QTimer *timer = new QTimer(this);
@@ -54,9 +60,7 @@ void mainFrm::initFrm()
     timer->start(1000);
 
     //初始化节点界面
-    QGridLayout *gridNode = new QGridLayout;
-    gridNode->addWidget(m_node, 0, 0);
-    ui->widget_node->setLayout(gridNode);
+    ui->stackedWidget->addWidget(m_node);
 
     connect(this,&mainFrm::addLog,m_log,&log::addLog);
     connect(m_node,&node::addLog,m_log,&log::addLog);
@@ -134,10 +138,6 @@ void mainFrm::initFrm()
     ui->lb_tasks->setText("0");
 
     ui->toolButton_main->click();
-
-    QString strExplain = "使用说明";
-    ui->label_explain->setText(strExplain);
-    ui->label_explain->setAlignment(Qt::AlignCenter);
 }
 
 void mainFrm::setTip(QString tip)
@@ -202,15 +202,15 @@ void mainFrm::buttonClick()
 
     if (tname == "主界面" || lname == "设备信息")
     {
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentWidget(m_node);
     }
     else if (tname == "系统设置")
     {
-        ui->stackedWidget->setCurrentIndex(1);
+        ui->stackedWidget->setCurrentWidget(m_settings);
     }
     else if (tname == "使用说明")
     {
-        ui->stackedWidget->setCurrentIndex(2);
+        ui->stackedWidget->setCurrentWidget(m_instruction);
     }
     else if (lname == "日志查看")
     {

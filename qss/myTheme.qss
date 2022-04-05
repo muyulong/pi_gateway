@@ -105,7 +105,7 @@ min-width:60px;
 QWidget#widget_left,QWidget#widget_top,QWidget#widget_main{
 border-image: url(:/pic/top_bg.png);
 }
-QWidget#node{
+#node_group{
 border-radius:15px;
 border-image: url(:/pic/top_bg_main.png);
 color:#FFFFFF;
@@ -255,16 +255,15 @@ font-size:16px;
 font-family:"Microsoft Yahei";
 }
 
-#netCom>QLabel,#serialCom>QLabel,#task>QLabel,#radioButton_MutiSelect,#radioButton_time,#radioButton_dateTime{
+#groupBox_s2net>QLabel,#groupBox_s2serial>QLabel,#groupBox_task>QLabel,#radioButton_MutiSelect,#radioButton_time,#radioButton_dateTime{
 color:#FFFFFF;
 font-size:16px;
 font-family:"Microsoft Yahei";
 }
-/*主界面的温度页*/
-QWidget#page2{
 
-}
 /*主界面的使用说明页*/
-QWidget#page3{
-
+#instruction>QLabel{
+color:#FFFFFF;
+font-size:16px;
+font-family:"Microsoft Yahei";
 }

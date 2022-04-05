@@ -13,6 +13,7 @@
 #include <QGraphicsEffect>
 #include <QPaintEvent>
 #include "thchart/thchart.h"
+#include <instruction/instruction.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -46,6 +47,11 @@ private:
     serialCom *m_serialCom = new serialCom;
     node *m_node = new node;
     THchart *m_THchart = new THchart;
+    instruction *m_instruction = new instruction;
+
+    QWidget *m_settings = new QWidget;
+    QGridLayout *gridSettings = new QGridLayout;
+    QVBoxLayout* vlayout = new QVBoxLayout;
 
     void closeEvent(QCloseEvent *event);
 

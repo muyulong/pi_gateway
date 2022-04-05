@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     database\dataBase.cpp \
+    instruction\instruction.cpp \
     log\log.cpp \
     thchart\thchart.cpp \
     user\login.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 HEADERS += \
     com\net\heartbeat.h \
     database\dataBase.h \
+    instruction\instruction.h \
     log\log.h \
     thchart\thchart.h \
     user\login.h \
@@ -39,6 +41,7 @@ HEADERS += \
     mainfrm\mainfrm.h
 
 FORMS += \
+    instruction\instruction.ui \
     log\log.ui \
     thchart\thchart.ui \
     user\login.ui \

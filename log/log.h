@@ -43,6 +43,8 @@ private slots:
 private:
     Ui::log *ui;
     QTableView *tableView;
+    QVBoxLayout *mainLayout;
+    QStandardItemModel *standItemModel;
     QVector<QVector<QString>> viewLog;
     int currentTab;
     bool checkState;
