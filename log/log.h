@@ -28,6 +28,7 @@ public:
     void addLog(QString user, int eventId, QString eventContent);
     QVector<QVector<QString>> getLog(QString type);
     void delLogs(QVector<int> row, int delType, int count);
+    void initLog();
 
     ~log();
 
@@ -42,9 +43,9 @@ private slots:
 
 private:
     Ui::log *ui;
-    QTableView *tableView;
-    QVBoxLayout *mainLayout;
-    QStandardItemModel *standItemModel;
+    QTableView *tableView = nullptr;
+    QVBoxLayout *mainLayout = nullptr;
+    QStandardItemModel *standItemModel = nullptr;
     QVector<QVector<QString>> viewLog;
     int currentTab;
     bool checkState;

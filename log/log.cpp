@@ -15,6 +15,7 @@ log::log(QWidget *parent) : QWidget(parent),
     initDatebase();
     createTable(tableName, columnName, dataType, columnNum);
     ui->setupUi(this);
+    this->initLog();
 
     ui->radioButton_MutiSelect->setChecked(false);
     checkState = 0;
@@ -23,9 +24,9 @@ log::log(QWidget *parent) : QWidget(parent),
 log::~log()
 {
     delete ui;
-    tableView->deleteLater();
-    mainLayout->deleteLater();
-    standItemModel->deleteLater();
+    //tableView->deleteLater();
+    //mainLayout->deleteLater();
+    //standItemModel->deleteLater();
 }
 
 void log::logViewer(int typeId)
@@ -52,57 +53,48 @@ void log::logViewer(int typeId)
 
     size_row = viewLog.size();
     qDebug() << "接收到日志数量：" << viewLog.size();
+    if(standItemModel!=nullptr)
+    {
+        standItemModel->clear();
+    }
     tableCreator(size_row);
 }
-void log::tableCreator(int size_row)
+
+void log::initLog()
 {
-    standItemModel = new QStandardItemModel;
-    mainLayout = new QVBoxLayout; //垂直布局
-    //。。。。。。。。。。。。。
+    mainLayout = new QVBoxLayout(this); //垂直布局
     mainLayout->setSpacing(10);                //设置控件间距
     mainLayout->setMargin(30);                 //设置边缘间距
-    // mainLayout.
-    //添加QTableView代码
-    tableView = new QTableView;
-    //添加表头
+    tableView = new QTableView(this);
+
+    tableView->setSelectionBehavior(QAbstractItemView::SelectRows); //设置选中时整行选中
+    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);  //设置表格属性只读，不能编辑
+    tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    mainLayout->addWidget(tableView); //添加控件
+    ui->tabWidget->setLayout(mainLayout);
+}
+
+void log::tableCreator(int size_row)
+{
+    standItemModel = new QStandardItemModel(this);
     standItemModel->setColumnCount(3);
+    standItemModel->setRowCount(size_row);
     standItemModel->setHeaderData(0, Qt::Horizontal, ("时间")); //设置表头内容
     standItemModel->setHeaderData(1, Qt::Horizontal, ("事件"));
     standItemModel->setHeaderData(2, Qt::Horizontal, ("发起者"));
     //向表格添加内容
     for (int i = 0; i < size_row; ++i)
     {
-        QString time = viewLog[i][0];
-        QString user = viewLog[i][1];
-        QString event = viewLog[i][2];
-        standItemModel->setItem(i, 0, new QStandardItem(time));
-        standItemModel->setItem(i, 1, new QStandardItem(event));
-        standItemModel->setItem(i, 2, new QStandardItem(user));
-        standItemModel->item(i, 0)->setTextAlignment(Qt::AlignCenter); //设置表格内容居中
-        standItemModel->item(i, 1)->setTextAlignment(Qt::AlignCenter); //设置表格内容居中
-        standItemModel->item(i, 2)->setTextAlignment(Qt::AlignCenter); //设置表格内容居中
+        //这儿有内存泄漏，基本解决了
+        standItemModel->setData(standItemModel->index(i,0),viewLog.at(i).at(0),Qt::DisplayRole);
+        standItemModel->setData(standItemModel->index(i,1),viewLog.at(i).at(1),Qt::DisplayRole);
+        standItemModel->setData(standItemModel->index(i,2),viewLog.at(i).at(2),Qt::DisplayRole);
+        standItemModel->setData(standItemModel->index(i,0), int(Qt::AlignCenter | Qt::AlignVCenter),Qt::TextAlignmentRole);
+        standItemModel->setData(standItemModel->index(i,1), int(Qt::AlignCenter | Qt::AlignVCenter),Qt::TextAlignmentRole);
+        standItemModel->setData(standItemModel->index(i,2), int(Qt::AlignCenter | Qt::AlignVCenter),Qt::TextAlignmentRole);
     }
     tableView->setModel(standItemModel); //挂载表格模型
-    //设置表格属性
-    // tableView->horizontalHeader()->setDefaultAlignment(Qt::AlignCenter);        //表头信息显示居中
-    tableView->setColumnWidth(0, 100); //设定表格第0列宽度
-    tableView->setColumnWidth(1, 200);
-    // tableView->verticalHeader()->hide();    //隐藏默认显示的行头
-    tableView->setSelectionBehavior(QAbstractItemView::SelectRows); //设置选中时整行选中
-    tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);  //设置表格属性只读，不能编辑
-    /* 设置列宽在可视界面自适应宽度 */
-    tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    // qDebug() <<tableView->horizontalHeader();
-    /* 行颜色交替显示 */
-    //tableView->setAlternatingRowColors(true);
-    /* 不允许在图形界面修改内容 */
-    //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //需要在表格使用右键菜单，需要启动该属性
-    //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //表格第0列，按降序排列
-    tableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    mainLayout->addWidget(tableView); //添加控件
-    ui->tabWidget->setLayout(mainLayout);
-    // setLayout(mainLayout);        //显示垂直布局
-    //。。。。。。。。。。。。。
 }
 void log::on_tabWidget_currentChanged(int index)
 {

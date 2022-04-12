@@ -18,9 +18,9 @@ void login::on_pushButton_login_clicked()
     user = ui->username->text(); //获取用户名
     pwd = ui->password->text();  //获取密码
     if (user == "")
-        QMessageBox::warning(this, "", QString::fromLocal8Bit("用户名不能为空！"));
+        QMessageBox::warning(this, "", QString("用户名不能为空！"));
     else if (pwd == "")
-        QMessageBox::warning(this, "", QString::fromLocal8Bit("密码不能为空！"));
+        QMessageBox::warning(this, "", QString("密码不能为空！"));
     else
     {
         //在数据库中进行查询验证
@@ -34,7 +34,7 @@ void login::on_pushButton_login_clicked()
             emit exitWelcome();
         }
         else
-            QMessageBox::warning(NULL, "Error", QString::fromLocal8Bit("用户名或密码错误！！！"));
+            QMessageBox::warning(NULL, "Error", QString("用户名或密码错误！！！"));
     }
 }
 void login::closeEvent(QCloseEvent *)

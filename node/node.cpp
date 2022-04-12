@@ -98,11 +98,11 @@ void node::treeItemCkicked(const QModelIndex &index)
     {
         selectedRowTxt = "FFFF";
     }
-    commandSend(selectedRowTxt,"状态");
-    QEventLoop eventloop;
-    QTimer::singleShot(100, &eventloop, SLOT(quit()));
-    eventloop.exec();
     commandSend(selectedRowTxt,"查温湿度");
+    QEventLoop eventloop;
+    QTimer::singleShot(50, &eventloop, SLOT(quit()));
+    eventloop.exec();
+    commandSend(selectedRowTxt,"状态");
 }
 
 void node::setNode()
@@ -358,7 +358,6 @@ void node::nodeSetting(nodeMsg m_Node)
     }
     else
     {
-        nodeState m_nodeState;
         if(m_Node.addr=="FFFF")
         {
             m_nodeState.initNodeState("协调器");
@@ -370,7 +369,9 @@ void node::nodeSetting(nodeMsg m_Node)
         }
         else
         {
-            m_nodeState.initNodeState("终端");
+            //m_nodeState.initNodeState("终端");
+            m_nodeState.setNodeType("终端");
+            m_nodeState.setBeepStatus(false);
             m_nodeState.setAddr(m_Node.addr);
             if(m_Node.cmd[0]=='O')
             {
@@ -401,8 +402,10 @@ void node::nodeSetting(nodeMsg m_Node)
             }
             if(m_Node.cmd[0]=='Q'&&m_Node.cmd[1]=='A')
             {
-                m_nodeState.setTemperature(QString(m_Node.data[0]) + QString(m_Node.data[1]));
-                m_nodeState.setHumidity(QString(m_Node.data[2]) + QString(m_Node.data[3]));
+                //m_nodeState.setTemperature(QString(m_Node.data[0]) + QString(m_Node.data[1]));
+                //m_nodeState.setHumidity(QString(m_Node.data[2]) + QString(m_Node.data[3]));
+                t_Temp = QString(m_Node.data[0]) + QString(m_Node.data[1]);
+                t_Humi = QString(m_Node.data[2]) + QString(m_Node.data[3]);
             }
             if(m_Node.cmd[0]=='S'&&m_Node.cmd[1]=='-')
             {
@@ -412,6 +415,8 @@ void node::nodeSetting(nodeMsg m_Node)
                 m_Node.data[2]=='1' ? hasBeep = true : hasBeep = false;
                 m_Node.data[3]=='1' ? hasTH = true : hasTH = false;
                 m_nodeState.setExUnit(hasLight,hasFan,hasBeep,hasTH);
+                m_nodeState.setTemperature(t_Temp);
+                m_nodeState.setHumidity(t_Humi);
             }
         }
         m_nodeStateQueue.enqueue(m_nodeState);

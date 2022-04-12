@@ -133,9 +133,11 @@ void netCom::on_btnSend_clicked()
 void netCom::on_newConnection()
 {
     m_tcpSocket = m_tcpServer->nextPendingConnection();
-    //connect(m_tcpSocket, &QTcpSocket::connected, this, &netCom::onConnected);
-    //connect(m_tcpSocket, &QTcpSocket::disconnected, this, &netCom::onDisConnected);
-    //connect(m_tcpSocket, &QTcpSocket::stateChanged, this, &netCom::onStateChanged);
+    Q_ASSERT(m_tcpSocket != nullptr);
+    Q_ASSERT(this != nullptr);
+    connect(m_tcpSocket, &QTcpSocket::connected, this, &netCom::onConnected);
+    connect(m_tcpSocket, &QTcpSocket::disconnected, this, &netCom::onDisConnected);
+    connect(m_tcpSocket, &QTcpSocket::stateChanged, this, &netCom::onStateChanged);
     connect(m_tcpSocket, &QTcpSocket::readyRead, this, &netCom::onReadyRead);
 }
 

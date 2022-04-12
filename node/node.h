@@ -156,6 +156,9 @@ private:
     bool isRootNodeSet;
     bool tempOver = false;
     bool humiOver = false;
+    QString t_Temp;
+    QString t_Humi;
+    nodeState m_nodeState;
 };
 
 #endif // NODE_H

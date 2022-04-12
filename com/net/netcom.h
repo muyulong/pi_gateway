@@ -67,8 +67,6 @@ private:
     //------------------------
     QTcpServer *m_tcpServer = new QTcpServer;
     QTcpSocket *m_tcpSocket = new QTcpSocket;
-    //QList<QTcpSocket *> tcpSocketList;
-    //int tcpSocket_Max;
     HeartBeat *heart;
     QString m_msg;
 };
