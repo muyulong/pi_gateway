@@ -24,9 +24,6 @@ log::log(QWidget *parent) : QWidget(parent),
 log::~log()
 {
     delete ui;
-    //tableView->deleteLater();
-    //mainLayout->deleteLater();
-    //standItemModel->deleteLater();
 }
 
 void log::logViewer(int typeId)
@@ -62,22 +59,23 @@ void log::logViewer(int typeId)
 
 void log::initLog()
 {
+    tableView = new QTableView(this);
+    standItemModel = new QStandardItemModel(this);
     mainLayout = new QVBoxLayout(this); //垂直布局
     mainLayout->setSpacing(10);                //设置控件间距
     mainLayout->setMargin(30);                 //设置边缘间距
-    tableView = new QTableView(this);
-
     tableView->setSelectionBehavior(QAbstractItemView::SelectRows); //设置选中时整行选中
     tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);  //设置表格属性只读，不能编辑
     tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     mainLayout->addWidget(tableView); //添加控件
     ui->tabWidget->setLayout(mainLayout);
+    tableView->setModel(standItemModel); //挂载表格模型
+    currentTab = 1;
 }
 
 void log::tableCreator(int size_row)
 {
-    standItemModel = new QStandardItemModel(this);
     standItemModel->setColumnCount(3);
     standItemModel->setRowCount(size_row);
     standItemModel->setHeaderData(0, Qt::Horizontal, ("时间")); //设置表头内容
@@ -86,19 +84,17 @@ void log::tableCreator(int size_row)
     //向表格添加内容
     for (int i = 0; i < size_row; ++i)
     {
-        //这儿有内存泄漏，基本解决了
-        standItemModel->setData(standItemModel->index(i,0),viewLog.at(i).at(0),Qt::DisplayRole);
-        standItemModel->setData(standItemModel->index(i,1),viewLog.at(i).at(1),Qt::DisplayRole);
-        standItemModel->setData(standItemModel->index(i,2),viewLog.at(i).at(2),Qt::DisplayRole);
-        standItemModel->setData(standItemModel->index(i,0), int(Qt::AlignCenter | Qt::AlignVCenter),Qt::TextAlignmentRole);
-        standItemModel->setData(standItemModel->index(i,1), int(Qt::AlignCenter | Qt::AlignVCenter),Qt::TextAlignmentRole);
-        standItemModel->setData(standItemModel->index(i,2), int(Qt::AlignCenter | Qt::AlignVCenter),Qt::TextAlignmentRole);
+        //这儿之前有内存泄漏，解决了
+        standItemModel->setData(standItemModel->index(i,0),viewLog[i][0],Qt::DisplayRole);
+        standItemModel->setData(standItemModel->index(i,1),viewLog[i][1],Qt::DisplayRole);
+        standItemModel->setData(standItemModel->index(i,2),viewLog[i][2],Qt::DisplayRole);
+        standItemModel->setData(standItemModel->index(i,0), int(Qt::AlignCenter),Qt::TextAlignmentRole);
+        standItemModel->setData(standItemModel->index(i,1), int(Qt::AlignCenter ),Qt::TextAlignmentRole);
+        standItemModel->setData(standItemModel->index(i,2), int(Qt::AlignCenter),Qt::TextAlignmentRole);
     }
-    tableView->setModel(standItemModel); //挂载表格模型
 }
 void log::on_tabWidget_currentChanged(int index)
 {
-    delete ui->tabWidget->layout();
     currentTab = index + 1;
     logViewer(currentTab);
 }
@@ -177,7 +173,6 @@ void log::on_pushButton_delLog_clicked()
         strInfo = "未选中任何行！";
     }
     QMessageBox::information(this, dlgTitle, strInfo, QMessageBox::Ok, QMessageBox::NoButton);
-    delete ui->tabWidget->layout();
     logViewer(currentTab);
     ui->radioButton_MutiSelect->setChecked(false);
     checkState = 0;
