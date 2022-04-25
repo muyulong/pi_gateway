@@ -25,7 +25,7 @@ public:
     void logViewer(int typeId);
     void tableCreator(int size_row);
 
-    void addLog(QString user, int eventId, QString eventContent);
+    void addLog(QString originator, int eventId, QString eventContent);
     QVector<QVector<QString>> getLog(QString type);
     void delLogs(QVector<int> row, int delType, int count);
     void initLog();

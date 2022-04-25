@@ -8,10 +8,10 @@ log::log(QWidget *parent) : QWidget(parent),
     //QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     //初始化数据库和日志表
     QString tableName = "logs";
-    QString columnName[4] = {"time", "user", "event", "type"};
+    QString columnName[4] = {"time", "originator", "event", "type"};
     QString dataType[4] = {"varchar", "varchar", "varchar", "varchar"};
     int columnNum = 4;
-    // time varchar,user vachar,event varchar,type varchar
+    // time varchar,originator vachar,event varchar,type varchar
     initDatebase();
     createTable(tableName, columnName, dataType, columnNum);
     ui->setupUi(this);
@@ -217,7 +217,7 @@ void log::on_pushButton_delAllTab_clicked()
     //删除多行数据库速度很慢
 }
 
-void log::addLog(QString user, int eventId,QString eventContent)
+void log::addLog(QString originator, int eventId,QString eventContent)
 {
     QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss ddd");
     QString event;
@@ -258,10 +258,10 @@ void log::addLog(QString user, int eventId,QString eventContent)
         break;
     }
     query = QSqlQuery(db);
-    query.prepare("INSERT INTO logs (time, user, event, type) "
+    query.prepare("INSERT INTO logs (time, originator, event, type) "
                   "VALUES (?, ?, ?, ?)");
     query.addBindValue(time);
-    query.addBindValue(user);
+    query.addBindValue(originator);
     query.addBindValue(event);
     query.addBindValue(type);
     query.exec();
