@@ -62,20 +62,6 @@
       <property name="spacing">
        <number>5</number>
       </property>
-      <item row="0" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_15">
-        <item>
-         <widget class="QPushButton" name="btnSend">
-          <property name="text">
-           <string>发送消息</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="lineEdit"/>
-        </item>
-       </layout>
-      </item>
       <item row="1" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_12">
         <item>
@@ -89,6 +75,9 @@
          <widget class="QComboBox" name="comboBox"/>
         </item>
        </layout>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPlainTextEdit" name="plainTextEdit"/>
       </item>
       <item row="2" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_14">
@@ -111,9 +100,6 @@
         </item>
        </layout>
       </item>
-      <item row="3" column="0">
-       <widget class="QPlainTextEdit" name="plainTextEdit"/>
-      </item>
       <item row="4" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_11">
         <item>
@@ -132,21 +118,17 @@
         </item>
        </layout>
       </item>
-      <item row="5" column="0">
-       <layout class="QHBoxLayout" name="horizontalLayout_13">
+      <item row="0" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_15">
         <item>
-         <widget class="QLabel" name="label_19">
+         <widget class="QPushButton" name="btnSend">
           <property name="text">
-           <string>socket状态</string>
+           <string>发送消息</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_socket">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
+         <widget class="QLineEdit" name="lineEdit"/>
         </item>
        </layout>
       </item>

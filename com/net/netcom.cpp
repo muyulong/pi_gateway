@@ -137,7 +137,6 @@ void netCom::on_newConnection()
     Q_ASSERT(this != nullptr);
     connect(m_tcpSocket, &QTcpSocket::connected, this, &netCom::onConnected);
     connect(m_tcpSocket, &QTcpSocket::disconnected, this, &netCom::onDisConnected);
-    connect(m_tcpSocket, &QTcpSocket::stateChanged, this, &netCom::onStateChanged);
     connect(m_tcpSocket, &QTcpSocket::readyRead, this, &netCom::onReadyRead);
 }
 
@@ -155,32 +154,4 @@ void netCom::onDisConnected()
     QString msg = QString("客户端[%1:%2]已退出!").arg(m_tcpSocket->peerAddress().toString()).arg(m_tcpSocket->peerPort());
     ui->plainTextEdit->appendPlainText(msg);
     emit onDead();
-}
-
-void netCom::onStateChanged(QAbstractSocket::SocketState socketState)
-{
-    switch (socketState)
-    {
-    case QAbstractSocket::UnconnectedState:
-        ui->label_socket->setText("UnconnectedState");
-        break;
-    case QAbstractSocket::HostLookupState:
-        ui->label_socket->setText("HostLookupState");
-        break;
-    case QAbstractSocket::ConnectedState:
-        ui->label_socket->setText("ConnectedState");
-        break;
-    case QAbstractSocket::ConnectingState:
-        ui->label_socket->setText("ConnectingState");
-        break;
-    case QAbstractSocket::BoundState:
-        ui->label_socket->setText("BoundState");
-        break;
-    case QAbstractSocket::ClosingState:
-        ui->label_socket->setText("ClosingState");
-        break;
-    case QAbstractSocket::ListeningState:
-        ui->label_socket->setText("ListeningState");
-        break;
-    }
 }

@@ -20,5 +20,6 @@
         <file>pic/stop.png</file>
         <file>pic/refresh.png</file>
         <file>pic/init.png</file>
+        <file>instruction.md</file>
     </qresource>
 </RCC>

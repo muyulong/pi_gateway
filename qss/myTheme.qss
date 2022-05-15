@@ -262,8 +262,10 @@ font-family:"Microsoft Yahei";
 }
 
 /*主界面的使用说明页*/
-#instruction>QLabel{
+#instruction>QTextBrowser{
 color:#FFFFFF;
-font-size:16px;
+border-image: url(:/pic/top_bg_main.png);
+border-radius:15px;
+font-size:20px;
 font-family:"Microsoft Yahei";
 }

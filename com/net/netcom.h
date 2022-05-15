@@ -41,8 +41,6 @@ private slots:
 
     void onDisConnected();
 
-    void onStateChanged(QAbstractSocket::SocketState socketState);
-
 public slots:
     //供其他函数调用的方法
     void Start();
